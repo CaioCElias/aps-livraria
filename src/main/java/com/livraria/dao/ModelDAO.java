@@ -1,4 +1,4 @@
-package main.java.com.livraria.dao;
+package com.livraria.dao;
 
 public class ModelDAO {
     

@@ -1,4 +1,4 @@
-package main.java.com.livraria.view;
+package com.livraria.view;
 
 public class View {
     

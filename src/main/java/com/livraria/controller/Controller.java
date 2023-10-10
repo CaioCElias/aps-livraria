@@ -1,4 +1,4 @@
-package main.java.com.livraria.controller;
+package com.livraria.controller;
 
 public class Controller {
     
