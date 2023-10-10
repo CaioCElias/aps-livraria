@@ -1,22 +1,28 @@
 package com.livraria.dao;
 
-// Classe para conectar e interagir com o banco de dados
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+// Classe para conectar com o banco de dados
 public class LivroDAO {
-    private Connection conexao;
+    private static String USER = "root";
+    private static String PASS = "";
+    private static String DATABASE = "veterinario22";
+    private static String URL = "jdbc:mysql://localhost:3306/" + DATABASE;
 
-    public LivroDAO() {
+    public static Connection getConnection() {
         try {
-            String url = "jdbc:mysql://localhost:3306/seu_banco_de_dados";
-            String usuario = "seu_usuario";
-            String senha = "sua_senha";
-
-            conexao = DriverManager.getConnection(url, usuario, senha);
+            return DriverManager.getConnection(URL, USER, PASS);
         } catch (SQLException e) {
+            throw new RuntimeException("Erro ao conectar ao banco de dados: " + e.getMessage(), e);
+        }
+    }
+
+    public static void testaConnection() {
+        try (Connection c = getConnection()) {
+            System.out.println("Conexão estabelecida");
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
