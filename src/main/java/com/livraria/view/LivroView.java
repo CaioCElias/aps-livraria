@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class LivroView extends JFrame {
 
-    private JPanel buttonPanel;
+    private JPanel actionPanel;
     private CardLayout cardLayout;
 
     public void initializeView() {
@@ -19,112 +19,81 @@ public class LivroView extends JFrame {
     }
 
     public LivroView() {
-        JFrame mainFrame = new JFrame("Livro View");
+        JFrame mainFrame = new JFrame("Livraria UNIP");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(400, 300);
 
+        //Painel principal
         JPanel painel = new JPanel();
-
         JButton btnPesquisar = new JButton("Pesquisar");
         JButton btnIncluir = new JButton("Incluir");
         JButton btnModificar = new JButton("Modificar");
         JButton btnExcluir = new JButton("Excluir");
 
-        buttonPanel = new JPanel();
+        actionPanel = new JPanel();
         cardLayout = new CardLayout();
-        buttonPanel.setLayout(cardLayout);
+        actionPanel.setLayout(cardLayout);
+        //constraints deve ser adicionado a cada elemento do painel para que sejam dispostos
+        // verticalmente e com o padding correto
 
-        GridBagConstraints constraints = new GridBagConstraints();
-        int padding = 10;
-        constraints.insets = new Insets(padding, padding, padding, padding);
-
-        //Painel de pesquisa
+        //Painel geral de pesquisa
         JPanel pesquisarPanel = new JPanel(new GridBagLayout());
-        //constraints deve ser adicionado a cada elemento do painelpara que sejam dispostos
-        // verticalmente
-        buttonPanel.add(pesquisarPanel, "Pesquisar");
+        actionPanel.add(pesquisarPanel, "Pesquisar");
         JButton btnPesquisarLivro = new JButton("Livro");
         JButton btnPesquisarAutor = new JButton("Autor");
         JButton btnPesquisarEditora = new JButton("Editora");
-        //define o layout do painel
-        constraints.gridy = 0;
-        pesquisarPanel.add(new JLabel("Pesquisar"));
-        constraints.gridy = 1;
-        pesquisarPanel.add(btnPesquisarLivro, constraints);
-        constraints.gridy = 2;
-        pesquisarPanel.add(btnPesquisarAutor, constraints);
-        constraints.gridy = 3;
-        pesquisarPanel.add(btnPesquisarEditora, constraints);
+        definePanelConstraints(pesquisarPanel, btnPesquisarLivro, btnPesquisarAutor, btnPesquisarEditora, "Pesquisar");
 
-        //Painel de inclusão
+        //Painel geral de inclusão
         JPanel incluirPanel = new JPanel(new GridBagLayout());
-        buttonPanel.add(incluirPanel, "Incluir");
+        actionPanel.add(incluirPanel, "Incluir");
         JButton btnIncluirLivro = new JButton("Livro");
         JButton btnIncluirAutor = new JButton("Autor");
         JButton btnIncluirEditora = new JButton("Editora");
-        //define o layout do painel
-        constraints.gridy = 0;
-        incluirPanel.add(new JLabel("Incluir"));
-        constraints.gridy = 1;
-        incluirPanel.add(btnIncluirLivro, constraints);
-        constraints.gridy = 2;
-        incluirPanel.add(btnIncluirAutor, constraints);
-        constraints.gridy = 3;
-        incluirPanel.add(btnIncluirEditora, constraints);
+        definePanelConstraints(incluirPanel, btnIncluirLivro, btnIncluirAutor, btnIncluirEditora, "Incluir");
 
-        //Painel de modificação
+        //Painel geral de modificação
         JPanel modificarPanel = new JPanel(new GridBagLayout());
-        buttonPanel.add(modificarPanel, "Modificar");
+        actionPanel.add(modificarPanel, "Modificar");
         JButton btnModificarLivro = new JButton("Livro");
         JButton btnModificarAutor = new JButton("Autor");
         JButton btnModificarEditora= new JButton("Editora");
-        //define o layout do painel
-        constraints.gridy = 0;
-        modificarPanel.add(new JLabel("Modificar"));
-        constraints.gridy = 1;
-        modificarPanel.add(btnModificarLivro, constraints);
-        constraints.gridy = 2;
-        modificarPanel.add(btnModificarAutor, constraints);
-        constraints.gridy = 3;
-        modificarPanel.add(btnModificarEditora, constraints);
+        definePanelConstraints(modificarPanel, btnModificarLivro, btnModificarAutor, btnModificarEditora, "Modificar");
 
+        //Painel geral de exclusão
         JPanel excluirPanel = new JPanel(new GridBagLayout());
-        buttonPanel.add(excluirPanel, "Excluir");
+        actionPanel.add(excluirPanel, "Excluir");
         JButton btnExcluirLivro = new JButton("Livro");
         JButton btnExcluirAutor = new JButton("Autor");
         JButton btnExcluirEditora = new JButton("Editora");
-        //define o layout do painel
-        constraints.gridy = 0;
-        excluirPanel.add(new JLabel("Excluir"));
-        constraints.gridy = 1;
-        excluirPanel.add(btnExcluirLivro, constraints);
-        constraints.gridy = 2;
-        excluirPanel.add(btnExcluirAutor, constraints);
-        constraints.gridy = 3;
-        excluirPanel.add(btnExcluirEditora, constraints);
+        definePanelConstraints(excluirPanel, btnExcluirLivro, btnExcluirAutor, btnExcluirEditora, "Excluir");
 
-        // Ação dos botões
+        //Botões do painel principal
         btnPesquisar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(buttonPanel, "Pesquisar");
+                cardLayout.show(actionPanel, "Pesquisar");
             }
         });
-
         btnIncluir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(buttonPanel, "Incluir");
+                cardLayout.show(actionPanel, "Incluir");
             }
         });
-
         btnModificar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(buttonPanel, "Modificar");
+                cardLayout.show(actionPanel, "Modificar");
+            }
+        });
+        btnExcluir.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(actionPanel, "Excluir");
             }
         });
 
-        btnExcluir.addActionListener(new ActionListener() {
+        //Botões do painel de pesquisa
+        btnPesquisarLivro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(buttonPanel, "Excluir");
+                cardLayout.show(actionPanel, "Pesquisar livro");
             }
         });
 
@@ -134,8 +103,25 @@ public class LivroView extends JFrame {
         painel.add(btnExcluir);
 
         mainFrame.add(painel, BorderLayout.NORTH);
-        mainFrame.add(buttonPanel, BorderLayout.CENTER);
+        mainFrame.add(actionPanel, BorderLayout.CENTER);
 
         mainFrame.setVisible(true);
+    }
+
+    //Define um painel com layout vertical e 10px de padding em todas as direções
+    private void definePanelConstraints(JPanel panel, JButton btnBook, JButton btnAuthor, JButton btnEditor,
+                                        String jlabel) {
+        GridBagConstraints constraints = new GridBagConstraints();
+        int padding = 10;
+        constraints.insets = new Insets(padding, padding, padding, padding);
+        //define o layout do painel
+        constraints.gridy = 0;
+        panel.add(new JLabel(jlabel));
+        constraints.gridy = 1;
+        panel.add(btnBook, constraints);
+        constraints.gridy = 2;
+        panel.add(btnAuthor, constraints);
+        constraints.gridy = 3;
+        panel.add(btnEditor, constraints);
     }
 }
