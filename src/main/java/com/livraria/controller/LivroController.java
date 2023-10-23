@@ -48,7 +48,8 @@ public class LivroController {
             return false;
         }
 
-        return livroDAO.excluirLivro(id);
+        //return livroDAO.excluirLivro(id);
+        return false;
     }
 
     // Certifique-se de tratar exceções apropriadas, se necessário
