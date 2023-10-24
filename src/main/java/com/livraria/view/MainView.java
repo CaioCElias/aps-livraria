@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LivroView extends JFrame {
+public class MainView extends JFrame {
 
     public void initializeView() {
         SwingUtilities.invokeLater(new Runnable() {
@@ -15,7 +15,7 @@ public class LivroView extends JFrame {
         });
     }
 
-    public LivroView() {
+    public MainView() {
         JFrame mainFrame = new JFrame("Livraria UNIP");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(400, 300);
@@ -35,18 +35,47 @@ public class LivroView extends JFrame {
         // verticalmente e com o padding correto
 
         //Painel geral de pesquisa
-        createPanel(actionPanel, "Pesquisar", "Livro", "Autor", "Editora");
-        JPanel pesquisarPanel = new JPanel(new GridBagLayout());
-
+        JButton[] searchBtns;
+        searchBtns = createPanel(actionPanel, "Pesquisar", "Livro", "Autor", "Editora");
 
         //Painel geral de inclusão
-        createPanel(actionPanel, "Incluir", "Livro", "Autor", "Editora");
+        JButton[] includeBtns;
+        includeBtns = createPanel(actionPanel, "Incluir", "Livro", "Autor", "Editora");
 
         //Painel geral de modificação
-        createPanel(actionPanel, "Modificar", "Livro", "Autor", "Editora");
+        JButton[] modifyBtns;
+        modifyBtns = createPanel(actionPanel, "Modificar", "Livro", "Autor", "Editora");
 
         //Painel geral de exclusão
-        createPanel(actionPanel, "Excluir", "Livro", "Autor", "Editora");
+        JButton[] deleteBtns;
+        deleteBtns = createPanel(actionPanel, "Excluir", "Livro", "Autor", "Editora");
+        //Popup de exclusão de livro
+        JDialog deleteBookDialog = new JDialog();
+        deleteBookDialog.setTitle("Deletar Livro");
+        deleteBookDialog.setSize(400, 300);
+
+        JPanel deleteBookPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints deleteConstraints = new GridBagConstraints();
+        JButton deleteBookBtn = new JButton("Excluir");
+        JTextField esbnTextField = new JTextField(20);
+        int padding = 10;
+        deleteConstraints.insets = new Insets(padding, padding, padding, padding);
+
+        deleteBookDialog.add(deleteBookPanel);
+
+        deleteConstraints.gridy = 0;
+        deleteBookPanel.add(new JLabel("Excluir Livro"));
+        deleteConstraints.gridy = 1;
+        deleteBookPanel.add(deleteBookBtn);
+        deleteBookPanel.add(esbnTextField);
+
+        deleteBtns[0].addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Apertado");
+                deleteBookDialog.setVisible(true);
+            }
+        });
+
 
         //Botões do painel principal
         btnSearch.addActionListener(new ActionListener() {
@@ -82,7 +111,7 @@ public class LivroView extends JFrame {
     }
 
     //Função responsável pela criação dos paineis ao clicar nos botões superiores
-    public static void createPanel(Container container, String panelName, String... buttonLabels) {
+    public static JButton[] createPanel(Container container, String panelName, String... buttonLabels) {
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         int padding = 10;
@@ -93,10 +122,15 @@ public class LivroView extends JFrame {
         constraints.gridy = 0;
         panel.add(new JLabel(panelName));
 
-        for (String label : buttonLabels) {
+        JButton[] buttons = new JButton[buttonLabels.length];
+
+        for (int i = 0; i < buttonLabels.length; i++) {
             constraints.gridy++;
-            JButton button = new JButton(label);
+            JButton button = new JButton(buttonLabels[i]);
             panel.add(button, constraints);
+            buttons[i] = button; // Store a reference to the button
         }
+
+        return buttons;
     }
 }
