@@ -7,7 +7,7 @@ public class Livro {
     private String autor;
     private String categoria;
     private double preco;
-    private String editora;
+    private int editoraId;
     private String isbn;
 
     // Construtor padrão (para criar objetos sem valor)
@@ -15,13 +15,13 @@ public class Livro {
     }
 
     // Construtor com atributos (para criar objetos com valor)
-    public Livro(int id, String titulo, String autor, String categoria, double preco, String editora, String isbn) {
+    public Livro(int id, String titulo, String autor, String categoria, double preco, int editoraId, String isbn) {
         this.id = id;
         this.titulo = titulo;
         this.autor = autor;
         this.categoria = categoria;
         this.preco = preco;
-        this.editora = editora;
+        this.editoraId = editoraId;
         this.isbn = isbn;
     }
 
@@ -66,12 +66,12 @@ public class Livro {
         this.preco = preco;
     }
 
-    public String getEditora() {
-        return editora;
+    public int getEditoraId() {
+        return editoraId;
     }
 
-    public void setEditora(String editora) {
-        this.editora = editora;
+    public void setEditoraId(int editoraId) {
+        this.editoraId = editoraId;
     }
 
     public String getIsbn() {
@@ -85,6 +85,6 @@ public class Livro {
     // toString para verificar os valores do objeto mais tarde
     @Override
     public String toString() {
-        return "Livro [id=" + id + ", titulo=" + titulo + ", autor=" + autor + ", categoria=" + categoria + ", preco=" + preco + ", editora=" + editora + ", isbn=" + isbn + "]";
+        return "Livro [id=" + id + ", titulo=" + titulo + ", autor=" + autor + ", categoria=" + categoria + ", preco=" + preco + ", editora=" + editoraId + ", isbn=" + isbn + "]";
     }
 }
