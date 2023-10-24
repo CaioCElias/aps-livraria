@@ -5,16 +5,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class BookView extends JFrame {
+public class AuthorView extends JFrame {
 
-    public BookView() {
+    public AuthorView() {
 
     }
 
-    //Popup de exclusão de livro
-    public void deleteBookSection() {
+    //Popup de exclusão de autor
+    public void deleteAuthorSection() {
         JDialog deleteBookDialog = new JDialog();
-        deleteBookDialog.setTitle("Deletar Livro");
+        deleteBookDialog.setTitle("Deletar Autor");
         deleteBookDialog.setSize(450, 150);
 
         JPanel deleteBookPanel = new JPanel(new GridBagLayout());
@@ -27,7 +27,7 @@ public class BookView extends JFrame {
         deleteBookDialog.add(deleteBookPanel);
 
         deleteConstraints.gridy = 0;
-        deleteBookPanel.add(new JLabel("Excluir Livro"), deleteConstraints);
+        deleteBookPanel.add(new JLabel("Excluir Autor"), deleteConstraints);
         deleteConstraints.gridy = 1;
         deleteBookPanel.add(esbnTextField, deleteConstraints);
         deleteBookPanel.add(deleteBookBtn, deleteConstraints);

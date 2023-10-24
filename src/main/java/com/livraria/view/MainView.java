@@ -30,7 +30,8 @@ public class MainView extends JFrame {
         mainPanel.add(btnEditor);
 
         //Instância da classe de view de livros
-        BookView bookView = new BookView();
+        BookView book = new BookView();
+        AuthorView author = new AuthorView();
 
         //Painel secundário
         JPanel actionPanel = new JPanel();
@@ -40,23 +41,25 @@ public class MainView extends JFrame {
         // verticalmente e com o padding correto
 
         //Painel geral de livros
-        JButton[] bookBtns;
-        bookBtns = createPanel(actionPanel, "Livros", "Pesquisar", "Incluir",
+        JButton[] bookBtns = createPanel(actionPanel, "Livros", "Pesquisar", "Incluir",
                 "Modificar", "Excluir");
         bookBtns[3].addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                bookView.deleteBookSection();
+                book.deleteBookSection();
             }
         });
 
         //Painel geral de autores
-        JButton[] authorBtns;
-        authorBtns = createPanel(actionPanel, "Autores", "Pesquisar", "Incluir",
+        JButton[] authorBtns = createPanel(actionPanel, "Autores", "Pesquisar", "Incluir",
                 "Modificar", "Excluir");
+        authorBtns[3].addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                author.deleteAuthorSection();
+            }
+        });
 
         //Painel geral de editoras
-        JButton[] editorBtns;
-        editorBtns = createPanel(actionPanel, "Editoras", "Pesquisar", "Incluir",
+        JButton[] editorBtns = createPanel(actionPanel, "Editoras", "Pesquisar", "Incluir",
                 "Modificar", "Excluir");
 
         //Botões do painel principal
@@ -75,11 +78,6 @@ public class MainView extends JFrame {
                 cardLayout.show(actionPanel, "Editoras");
             }
         });
-
-
-        mainPanel.add(btnBook);
-        mainPanel.add(btnAuthor);
-        mainPanel.add(btnEditor);
 
         mainFrame.add(mainPanel, BorderLayout.NORTH);
         mainFrame.add(actionPanel, BorderLayout.CENTER);
