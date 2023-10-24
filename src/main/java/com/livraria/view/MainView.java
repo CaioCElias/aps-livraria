@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class MainView extends JFrame {
 
-    public void initializeView() {
+    public void startMainView() {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
 
@@ -22,10 +22,15 @@ public class MainView extends JFrame {
 
         //Painel principal
         JPanel mainPanel = new JPanel();
-        JButton btnSearch = new JButton("Pesquisar");
-        JButton btnInclude = new JButton("Incluir");
-        JButton btnModify = new JButton("Modificar");
-        JButton btnDelete = new JButton("Excluir");
+        JButton btnBook = new JButton("Livros");
+        JButton btnAuthor = new JButton("Autores");
+        JButton btnEditor = new JButton("Editoras");
+        mainPanel.add(btnBook);
+        mainPanel.add(btnAuthor);
+        mainPanel.add(btnEditor);
+
+        //Instância da classe de view de livros
+        BookView bookView = new BookView();
 
         //Painel secundário
         JPanel actionPanel = new JPanel();
@@ -34,75 +39,47 @@ public class MainView extends JFrame {
         //constraints deve ser adicionado a cada elemento do painel para que sejam dispostos
         // verticalmente e com o padding correto
 
-        //Painel geral de pesquisa
-        JButton[] searchBtns;
-        searchBtns = createPanel(actionPanel, "Pesquisar", "Livro", "Autor", "Editora");
-
-        //Painel geral de inclusão
-        JButton[] includeBtns;
-        includeBtns = createPanel(actionPanel, "Incluir", "Livro", "Autor", "Editora");
-
-        //Painel geral de modificação
-        JButton[] modifyBtns;
-        modifyBtns = createPanel(actionPanel, "Modificar", "Livro", "Autor", "Editora");
-
-        //Painel geral de exclusão
-        JButton[] deleteBtns;
-        deleteBtns = createPanel(actionPanel, "Excluir", "Livro", "Autor", "Editora");
-        //Popup de exclusão de livro
-        JDialog deleteBookDialog = new JDialog();
-        deleteBookDialog.setTitle("Deletar Livro");
-        deleteBookDialog.setSize(400, 300);
-
-        JPanel deleteBookPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints deleteConstraints = new GridBagConstraints();
-        JButton deleteBookBtn = new JButton("Excluir");
-        JTextField esbnTextField = new JTextField(20);
-        int padding = 10;
-        deleteConstraints.insets = new Insets(padding, padding, padding, padding);
-
-        deleteBookDialog.add(deleteBookPanel);
-
-        deleteConstraints.gridy = 0;
-        deleteBookPanel.add(new JLabel("Excluir Livro"));
-        deleteConstraints.gridy = 1;
-        deleteBookPanel.add(deleteBookBtn);
-        deleteBookPanel.add(esbnTextField);
-
-        deleteBtns[0].addActionListener(new ActionListener() {
+        //Painel geral de livros
+        JButton[] bookBtns;
+        bookBtns = createPanel(actionPanel, "Livros", "Pesquisar", "Incluir",
+                "Modificar", "Excluir");
+        bookBtns[3].addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Apertado");
-                deleteBookDialog.setVisible(true);
+                bookView.deleteBookSection();
             }
         });
 
+        //Painel geral de autores
+        JButton[] authorBtns;
+        authorBtns = createPanel(actionPanel, "Autores", "Pesquisar", "Incluir",
+                "Modificar", "Excluir");
+
+        //Painel geral de editoras
+        JButton[] editorBtns;
+        editorBtns = createPanel(actionPanel, "Editoras", "Pesquisar", "Incluir",
+                "Modificar", "Excluir");
 
         //Botões do painel principal
-        btnSearch.addActionListener(new ActionListener() {
+        btnBook.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(actionPanel, "Pesquisar");
+                cardLayout.show(actionPanel, "Livros");
             }
         });
-        btnInclude.addActionListener(new ActionListener() {
+        btnAuthor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(actionPanel, "Incluir");
+                cardLayout.show(actionPanel, "Autores");
             }
         });
-        btnModify.addActionListener(new ActionListener() {
+        btnEditor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(actionPanel, "Modificar");
-            }
-        });
-        btnDelete.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(actionPanel, "Excluir");
+                cardLayout.show(actionPanel, "Editoras");
             }
         });
 
-        mainPanel.add(btnSearch);
-        mainPanel.add(btnInclude);
-        mainPanel.add(btnModify);
-        mainPanel.add(btnDelete);
+
+        mainPanel.add(btnBook);
+        mainPanel.add(btnAuthor);
+        mainPanel.add(btnEditor);
 
         mainFrame.add(mainPanel, BorderLayout.NORTH);
         mainFrame.add(actionPanel, BorderLayout.CENTER);

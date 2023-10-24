@@ -8,7 +8,7 @@ public class Main {
     static MainView view = new MainView();
 
     public static void main(String[] args) {
-        view.initializeView();
+        view.startMainView();
         dao.openDatabase();
         dao.closeDatabase();
     }
