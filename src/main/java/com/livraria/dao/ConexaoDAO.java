@@ -1,7 +1,5 @@
 package com.livraria.dao;
 
-// Escolher entre ConexaoDAO ou LivroDAO
-
 import java.sql.*;
 
 import javax.swing.plaf.nimbus.State;
@@ -49,22 +47,4 @@ public class ConexaoDAO {
         }
         return -1;
     }
-
-/*
-    public static Connection getConnection() {
-        try {
-            return DriverManager.getConnection(URL, USER, PASS);
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao conectar ao banco de dados: " + e.getMessage(), e);
-        }
-    }
-
-    public static void testaConnection() {
-        try (Connection c = getConnection()) {
-            System.out.println("Conexão estabelecida");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-*/
 }
