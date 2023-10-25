@@ -1,15 +1,16 @@
 package com.livraria;
 
-import com.livraria.dao.ConnectionDAO;
-import com.livraria.view.MainView;
+import com.livraria.dao.*;
+import com.livraria.view.*;
 
 public class Main {
-    static ConnectionDAO connection = new ConnectionDAO();
+    static ConexaoDAO dao = new ConexaoDAO();
     static MainView view = new MainView();
 
     public static void main(String[] args) {
         view.startMainView();
-
-        connection.getConnection();
+        dao.openDatabase();
+        dao.closeDatabase();
     }
+
 }
