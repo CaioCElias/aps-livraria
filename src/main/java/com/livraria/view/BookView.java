@@ -14,7 +14,7 @@ public class BookView extends JFrame {
     //Popup de exclusão de livro
     public void deleteBookSection() {
         JDialog deleteBookDialog = new JDialog();
-        deleteBookDialog.setTitle("Deletar Livro");
+        deleteBookDialog.setTitle("Livraria UNIP");
         deleteBookDialog.setSize(450, 150);
 
         JPanel deleteBookPanel = new JPanel(new GridBagLayout());
