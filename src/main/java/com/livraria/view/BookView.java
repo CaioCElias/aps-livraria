@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 public class BookView implements ViewInterface {
 
+    //recebe os autores com seus respectivos nomes
     String[] authors = {"Caio", "Gustavo"};
 
     public BookView() {
@@ -61,20 +62,20 @@ public class BookView implements ViewInterface {
         deleteBookDialog.setTitle("Livraria UNIP");
         deleteBookDialog.setSize(450, 150);
 
-        JPanel deleteBookPanel = new JPanel(new GridBagLayout());
+        JPanel delBookPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
         JButton delBookBtn = new JButton("Excluir");
         JTextField esbnTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
 
-        deleteBookDialog.add(deleteBookPanel);
+        deleteBookDialog.add(delBookPanel);
 
         deleteConstraints.gridy = 0;
-        deleteBookPanel.add(new JLabel("Excluir Livro"), deleteConstraints);
+        delBookPanel.add(new JLabel("Excluir Livro"), deleteConstraints);
         deleteConstraints.gridy = 1;
-        deleteBookPanel.add(esbnTextField, deleteConstraints);
-        deleteBookPanel.add(delBookBtn, deleteConstraints);
+        delBookPanel.add(esbnTextField, deleteConstraints);
+        delBookPanel.add(delBookBtn, deleteConstraints);
 
         delBookBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

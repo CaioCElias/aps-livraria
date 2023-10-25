@@ -29,7 +29,7 @@ public class MainView extends JFrame {
         mainPanel.add(btnAuthor);
         mainPanel.add(btnPublisher);
 
-        //Instância da classe view de livros
+        //Instância das classes View
         BookView book = new BookView();
         AuthorView author = new AuthorView();
         PublisherView publisher = new PublisherView();
@@ -38,8 +38,23 @@ public class MainView extends JFrame {
         JPanel actionPanel = new JPanel();
         CardLayout cardLayout = new CardLayout();
         actionPanel.setLayout(cardLayout);
-        //constraints deve ser adicionado a cada elemento do painel para que sejam dispostos
-        // verticalmente e com o padding correto
+
+        //Botões do painel principal
+        btnBook.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(actionPanel, "Livros");
+            }
+        });
+        btnAuthor.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(actionPanel, "Autores");
+            }
+        });
+        btnPublisher.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(actionPanel, "Editoras");
+            }
+        });
 
         //Painel geral de livros
         JButton[] bookBtns = createPanel(actionPanel, "Livros", "Pesquisar", "Incluir",
@@ -58,6 +73,11 @@ public class MainView extends JFrame {
         //Painel geral de autores
         JButton[] authorBtns = createPanel(actionPanel, "Autores", "Pesquisar", "Incluir",
                 "Modificar", "Excluir");
+        authorBtns[1].addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                author.addPopup();
+            }
+        });
         authorBtns[3].addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 author.deletePopup();
@@ -67,26 +87,14 @@ public class MainView extends JFrame {
         //Painel geral de editoras
         JButton[] publisherBtns = createPanel(actionPanel, "Editoras", "Pesquisar", "Incluir",
                 "Modificar", "Excluir");
+        publisherBtns[1].addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                publisher.addPopup();
+            }
+        });
         publisherBtns[3].addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 publisher.deletePopup();
-            }
-        });
-
-        //Botões do painel principal
-        btnBook.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(actionPanel, "Livros");
-            }
-        });
-        btnAuthor.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(actionPanel, "Autores");
-            }
-        });
-        btnPublisher.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(actionPanel, "Editoras");
             }
         });
 
