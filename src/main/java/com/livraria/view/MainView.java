@@ -29,7 +29,7 @@ public class MainView extends JFrame {
         mainPanel.add(btnAuthor);
         mainPanel.add(btnPublisher);
 
-        //Instância da classe de view de livros
+        //Instância da classe view de livros
         BookView book = new BookView();
         AuthorView author = new AuthorView();
         PublisherView publisher = new PublisherView();
@@ -44,9 +44,14 @@ public class MainView extends JFrame {
         //Painel geral de livros
         JButton[] bookBtns = createPanel(actionPanel, "Livros", "Pesquisar", "Incluir",
                 "Modificar", "Excluir");
+        bookBtns[1].addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                book.addPopup();
+            }
+        });
         bookBtns[3].addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                book.deleteBookSection();
+                book.deletePopup();
             }
         });
 
@@ -55,7 +60,7 @@ public class MainView extends JFrame {
                 "Modificar", "Excluir");
         authorBtns[3].addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                author.deleteAuthorSection();
+                author.deletePopup();
             }
         });
 
@@ -64,7 +69,7 @@ public class MainView extends JFrame {
                 "Modificar", "Excluir");
         publisherBtns[3].addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                publisher.deletePublisherSection();
+                publisher.deletePopup();
             }
         });
 
