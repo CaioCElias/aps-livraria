@@ -59,6 +59,11 @@ public class MainView extends JFrame {
         //Painel geral de livros
         JButton[] bookBtns = createPanel(actionPanel, "Livros", "Pesquisar", "Incluir",
                 "Modificar", "Excluir");
+        bookBtns[0].addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                book.searchPopup();
+            }
+        });
         bookBtns[1].addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 book.addPopup();

@@ -90,6 +90,31 @@ public class BookView implements ViewInterface {
 
     }
     public void searchPopup() {
+        JDialog searchBookDialog = new JDialog();
+        searchBookDialog.setTitle("Livraria UNIP");
+        searchBookDialog.setSize(450, 150);
 
+        JPanel searchBookPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints deleteConstraints = new GridBagConstraints();
+        JButton searchBookBtn = new JButton("Pesquisar");
+        JTextField bookTitleTextField = new JTextField(20);
+        int padding = 10;
+        deleteConstraints.insets = new Insets(padding, padding, padding, padding);
+
+        searchBookDialog.add(searchBookPanel);
+
+        deleteConstraints.gridy = 0;
+        searchBookPanel.add(new JLabel("Pesquisar Livro"), deleteConstraints);
+        deleteConstraints.gridy = 1;
+        searchBookPanel.add(bookTitleTextField, deleteConstraints);
+        searchBookPanel.add(searchBookBtn, deleteConstraints);
+
+        searchBookBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        searchBookDialog.setVisible(true);
     }
 }
