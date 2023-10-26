@@ -7,12 +7,18 @@ import java.awt.event.ActionListener;
 
 public class BookView implements ViewInterface {
 
+    JButton addBookBtn;
+    JButton delBookBtn;
+    JButton modifyBookBtn;
     JButton searchBookBtn;
 
     //recebe os autores com seus respectivos nomes
     String[] authors = {"Caio", "Gustavo"};
 
     public BookView() {
+        addBookBtn = new JButton("Adicionar");
+        delBookBtn = new JButton("Excluir");
+        modifyBookBtn = new JButton("Modificar");
         searchBookBtn = new JButton("Pesquisar");
     }
 
@@ -24,7 +30,6 @@ public class BookView implements ViewInterface {
 
         JPanel addBookPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
-        JButton addBookBtn = new JButton("Adicionar");
         JTextField bookNameTextField = new JTextField(20);
         JTextField bookEsbnTextField = new JTextField(20);
         JTextField bookPriceTextField = new JTextField(20);
@@ -66,7 +71,6 @@ public class BookView implements ViewInterface {
 
         JPanel delBookPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
-        JButton delBookBtn = new JButton("Excluir");
         JTextField esbnTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
@@ -94,7 +98,7 @@ public class BookView implements ViewInterface {
     public void searchPopup() {
         JDialog searchBookDialog = new JDialog();
         searchBookDialog.setTitle("Livraria UNIP");
-        searchBookDialog.setSize(450, 150);
+        searchBookDialog.setSize(550, 250);
 
         JPanel searchBookPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
@@ -107,13 +111,25 @@ public class BookView implements ViewInterface {
         deleteConstraints.gridy = 0;
         searchBookPanel.add(new JLabel("Pesquisar Livro"), deleteConstraints);
         deleteConstraints.gridy = 1;
+        searchBookPanel.add(new JLabel("Título"), deleteConstraints);
         searchBookPanel.add(bookTitleTextField, deleteConstraints);
+        deleteConstraints.gridy = 2;
         searchBookPanel.add(searchBookBtn, deleteConstraints);
 
         searchBookDialog.setVisible(true);
     }
 
-    public void searchBookActionListener(ActionListener listener) {
-        searchBookBtn.addActionListener(listener);
+    //listeners dos botões
+    public void addActionListener(ActionListener l) {
+        addBookBtn.addActionListener(l);
+    }
+    public void delActionListener(ActionListener l) {
+        delBookBtn.addActionListener(l);
+    }
+    public void modifyActionListener(ActionListener l) {
+        modifyBookBtn.addActionListener(l);
+    }
+    public void searchActionListener(ActionListener l) {
+        searchBookBtn.addActionListener(l);
     }
 }

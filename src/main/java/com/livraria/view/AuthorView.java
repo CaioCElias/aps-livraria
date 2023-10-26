@@ -7,8 +7,10 @@ import java.awt.event.ActionListener;
 
 public class AuthorView implements ViewInterface {
 
-    public AuthorView() {
+    JButton searchAuthorBtn;
 
+    public AuthorView() {
+        searchAuthorBtn = new JButton("Pesquisar");
     }
 
     public void addPopup() {
@@ -80,6 +82,35 @@ public class AuthorView implements ViewInterface {
 
     }
     public void searchPopup() {
+        JDialog searchAuthorDialog = new JDialog();
+        searchAuthorDialog.setTitle("Livraria UNIP");
+        searchAuthorDialog.setSize(550, 250);
 
+        JPanel searchAuthorPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints deleteConstraints = new GridBagConstraints();
+        JTextField firstNameTextField = new JTextField(20);
+        JTextField secondNameTextField = new JTextField(20);
+        int padding = 10;
+        deleteConstraints.insets = new Insets(padding, padding, padding, padding);
+
+        searchAuthorDialog.add(searchAuthorPanel);
+
+        deleteConstraints.gridy = 0;
+        searchAuthorPanel.add(new JLabel("Pesquisar Autor"), deleteConstraints);
+        deleteConstraints.gridy = 1;
+        searchAuthorPanel.add(new JLabel("Primeiro nome"), deleteConstraints);
+        searchAuthorPanel.add(firstNameTextField, deleteConstraints);
+        deleteConstraints.gridy = 2;
+        searchAuthorPanel.add(new JLabel("Segundo nome"), deleteConstraints);
+        searchAuthorPanel.add(secondNameTextField, deleteConstraints);
+        deleteConstraints.gridy = 3;
+        searchAuthorPanel.add(searchAuthorBtn, deleteConstraints);
+
+        searchAuthorDialog.setVisible(true);
+    }
+
+    //listeners dos botões
+    public void searchAuthorActionListener(ActionListener listener) {
+        searchAuthorBtn.addActionListener(listener);
     }
 }

@@ -8,16 +8,34 @@ import java.awt.event.ActionListener;
 
 public class BookController {
     BookDAO dao;
-	BookView view;
+	BookView bookView;
 
-	public BookController(BookDAO dao, BookView view) {
+	public BookController(BookDAO dao, BookView bookView) {
 		this.dao = dao;
-		this.view = view;
+		this.bookView = bookView;
 
-		view.searchBookActionListener(new ActionListener() {
+		bookView.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//dao.searchBooksByName("the");
+
+			}
+		});
+		bookView.delActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		bookView.modifyActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		bookView.searchActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dao.searchBooksByName("the");
 			}
 		});
 	}

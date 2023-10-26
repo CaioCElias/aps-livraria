@@ -7,6 +7,12 @@ import java.awt.event.ActionListener;
 
 public class PublisherView implements ViewInterface {
 
+    JButton searchPublisherBtn;
+
+    public PublisherView() {
+        searchPublisherBtn = new JButton("Pesquisar");
+    }
+
     public void addPopup() {
         JDialog addPublisherDialog = new JDialog();
         addPublisherDialog.setTitle("Livraria UNIP");
@@ -74,6 +80,26 @@ public class PublisherView implements ViewInterface {
 
     }
     public void searchPopup() {
+        JDialog searchPublisherDialog = new JDialog();
+        searchPublisherDialog.setTitle("Livraria UNIP");
+        searchPublisherDialog.setSize(550, 200);
 
+        JPanel searchPublisherPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints deleteConstraints = new GridBagConstraints();
+        JTextField nameTextField = new JTextField(20);
+        int padding = 10;
+        deleteConstraints.insets = new Insets(padding, padding, padding, padding);
+
+        searchPublisherDialog.add(searchPublisherPanel);
+
+        deleteConstraints.gridy = 0;
+        searchPublisherPanel.add(new JLabel("Pesquisar Editora"), deleteConstraints);
+        deleteConstraints.gridy = 1;
+        searchPublisherPanel.add(new JLabel("Nome"), deleteConstraints);
+        searchPublisherPanel.add(nameTextField, deleteConstraints);
+        deleteConstraints.gridy = 2;
+        searchPublisherPanel.add(searchPublisherBtn, deleteConstraints);
+
+        searchPublisherDialog.setVisible(true);
     }
 }
