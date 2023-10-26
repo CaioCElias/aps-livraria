@@ -13,6 +13,7 @@ public class MainController {
     public MainController(MainView view) {
         this.view = view;
 
+        //Listeners para os botões superiores da MainView
         view.addBookSectionBtnListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -8,6 +8,8 @@ import com.livraria.dao.BookDAO;
 
 public class BookView implements ViewInterface {
 
+    JButton searchBookBtn;
+
     //recebe os autores com seus respectivos nomes
     String[] authors = {"Caio", "Gustavo"};
     BookDAO bookDAO = new BookDAO();
@@ -98,7 +100,7 @@ public class BookView implements ViewInterface {
 
         JPanel searchBookPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
-        JButton searchBookBtn = new JButton("Pesquisar");
+        searchBookBtn = new JButton("Pesquisar");
         JTextField bookTitleTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
@@ -118,5 +120,9 @@ public class BookView implements ViewInterface {
         });
 
         searchBookDialog.setVisible(true);
+    }
+
+    public void addBookSearchActionListener(ActionListener listener) {
+        searchBookBtn.addActionListener(listener);
     }
 }
