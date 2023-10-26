@@ -6,10 +6,10 @@ import javax.swing.plaf.nimbus.State;
 
 // Classe para conectar com o banco de dados
 public class ConnectionDAO {
-    private static String DATABASE = "libraryw";
-    private static String URL = "jdbc:mysql://localhost:3306/" + DATABASE;
-    private static String USER = "root";
-    private static String PASS = "root";
+    public static String DATABASE = "library"; // MUDAR O PUBLIC
+    public static String URL = "jdbc:mysql://localhost:3306/" + DATABASE;
+    public static String USER = "root";
+    public static String PASS = "root";
 
     private Connection dbconn = null;
     private Statement sqlmgr = null;

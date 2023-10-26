@@ -1,11 +1,17 @@
 package com.livraria.view;
 
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class MainView extends JFrame {
+
+    private JButton btnBook;
+    private JButton btnAuthor;
+    private JButton btnPublisher;
+    private CardLayout cardLayout;
+    private JPanel actionPanel;
 
     public void startMainView() {
         SwingUtilities.invokeLater(new Runnable() {
@@ -22,9 +28,9 @@ public class MainView extends JFrame {
 
         //Painel principal
         JPanel mainPanel = new JPanel();
-        JButton btnBook = new JButton("Livros");
-        JButton btnAuthor = new JButton("Autores");
-        JButton btnPublisher = new JButton("Editoras");
+        btnBook = new JButton("Livros");
+        btnAuthor = new JButton("Autores");
+        btnPublisher = new JButton("Editoras");
         mainPanel.add(btnBook);
         mainPanel.add(btnAuthor);
         mainPanel.add(btnPublisher);
@@ -35,26 +41,9 @@ public class MainView extends JFrame {
         PublisherView publisher = new PublisherView();
 
         //Painel secundário
-        JPanel actionPanel = new JPanel();
-        CardLayout cardLayout = new CardLayout();
+        actionPanel = new JPanel();
+        cardLayout = new CardLayout();
         actionPanel.setLayout(cardLayout);
-
-        //Botões do painel principal
-        btnBook.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(actionPanel, "Livros");
-            }
-        });
-        btnAuthor.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(actionPanel, "Autores");
-            }
-        });
-        btnPublisher.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(actionPanel, "Editoras");
-            }
-        });
 
         //Painel geral de livros
         JButton[] bookBtns = createPanel(actionPanel, "Livros", "Pesquisar", "Incluir",
@@ -129,7 +118,25 @@ public class MainView extends JFrame {
             panel.add(button, constraints);
             buttons[i] = button; // Store a reference to the button
         }
-
         return buttons;
+    }
+
+    //Funções que direcionam para os paineis principais - livros | autores | editoras
+    public void addBookSectionBtnListener(ActionListener listener) {
+        btnBook.addActionListener(listener);
+    }
+    public void addAuthorSectionBtnListener(ActionListener listener) {
+        btnAuthor.addActionListener(listener);
+    }
+    public void addPublisherSectionBtnListener(ActionListener listener) {
+        btnPublisher.addActionListener(listener);
+    }
+
+    public CardLayout getCardLayout() {
+        return cardLayout;
+    }
+
+    public JPanel getActionPanel() {
+        return actionPanel;
     }
 }

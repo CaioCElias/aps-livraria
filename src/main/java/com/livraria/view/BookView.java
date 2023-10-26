@@ -4,11 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import com.livraria.dao.BookDAO;
 
 public class BookView implements ViewInterface {
 
     //recebe os autores com seus respectivos nomes
     String[] authors = {"Caio", "Gustavo"};
+    BookDAO bookDAO = new BookDAO();
 
     public BookView() {
 
@@ -111,7 +113,7 @@ public class BookView implements ViewInterface {
 
         searchBookBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                bookDAO.searchBooksByName("the");
             }
         });
 
