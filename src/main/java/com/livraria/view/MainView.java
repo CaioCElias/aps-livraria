@@ -1,11 +1,8 @@
 package com.livraria.view;
 
-import com.livraria.controller.BookController;
-
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 public class MainView extends JFrame {
 
@@ -39,11 +36,6 @@ public class MainView extends JFrame {
         mainPanel.add(btnBook);
         mainPanel.add(btnAuthor);
         mainPanel.add(btnPublisher);
-
-        //Instância das classes View
-        BookView book = new BookView();
-        AuthorView author = new AuthorView();
-        PublisherView publisher = new PublisherView();
 
         //Painel secundário
         actionPanel = new JPanel();
@@ -86,7 +78,7 @@ public class MainView extends JFrame {
             constraints.gridy++;
             JButton button = new JButton(buttonLabels[i]);
             panel.add(button, constraints);
-            buttons[i] = button; // Store a reference to the button
+            buttons[i] = button; // guarda uma referência do botão
         }
         return buttons;
     }
@@ -95,6 +87,7 @@ public class MainView extends JFrame {
     public void addBookSectionBtnListener(ActionListener l) {
         btnBook.addActionListener(l);
     }
+
     public void addAuthorSectionBtnListener(ActionListener l) {
         btnAuthor.addActionListener(l);
     }

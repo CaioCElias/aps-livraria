@@ -27,7 +27,6 @@ public class BookView implements ViewInterface {
         JDialog addBookDialog = new JDialog();
         addBookDialog.setTitle("Livraria UNIP");
         addBookDialog.setSize(600, 400);
-
         JPanel addBookPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
         JTextField bookNameTextField = new JTextField(20);
@@ -38,9 +37,7 @@ public class BookView implements ViewInterface {
         JComboBox bookAuthorsBox = new JComboBox(authors);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
-
         addBookDialog.add(addBookPanel);
-
         deleteConstraints.gridy = 0;
         addBookPanel.add(new JLabel("Adicionar Livro"), deleteConstraints);
         deleteConstraints.gridy = 1;
@@ -59,7 +56,6 @@ public class BookView implements ViewInterface {
         addBookPanel.add(bookAuthorsBox, deleteConstraints);
         deleteConstraints.gridy = 6;
         addBookPanel.add(addBookBtn, deleteConstraints);
-
         addBookDialog.setVisible(true);
     }
 
@@ -68,27 +64,17 @@ public class BookView implements ViewInterface {
         JDialog deleteBookDialog = new JDialog();
         deleteBookDialog.setTitle("Livraria UNIP");
         deleteBookDialog.setSize(450, 150);
-
         JPanel delBookPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
         JTextField esbnTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
-
         deleteBookDialog.add(delBookPanel);
-
         deleteConstraints.gridy = 0;
         delBookPanel.add(new JLabel("Excluir Livro"), deleteConstraints);
         deleteConstraints.gridy = 1;
         delBookPanel.add(esbnTextField, deleteConstraints);
         delBookPanel.add(delBookBtn, deleteConstraints);
-
-        delBookBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
         deleteBookDialog.setVisible(true);
     }
 
@@ -99,15 +85,12 @@ public class BookView implements ViewInterface {
         JDialog searchBookDialog = new JDialog();
         searchBookDialog.setTitle("Livraria UNIP");
         searchBookDialog.setSize(550, 250);
-
         JPanel searchBookPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
         JTextField bookTitleTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
-
         searchBookDialog.add(searchBookPanel);
-
         deleteConstraints.gridy = 0;
         searchBookPanel.add(new JLabel("Pesquisar Livro"), deleteConstraints);
         deleteConstraints.gridy = 1;
@@ -115,7 +98,6 @@ public class BookView implements ViewInterface {
         searchBookPanel.add(bookTitleTextField, deleteConstraints);
         deleteConstraints.gridy = 2;
         searchBookPanel.add(searchBookBtn, deleteConstraints);
-
         searchBookDialog.setVisible(true);
     }
 

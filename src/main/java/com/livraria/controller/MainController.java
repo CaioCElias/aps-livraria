@@ -9,7 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.Flow;
 
 public class MainController {
     MainView view;
@@ -22,7 +21,9 @@ public class MainController {
         this.bookView = bookView;
         this.authorView = authorView;
         this.publisherView = publisherView;
+    }
 
+    public void startMainController() {
         //Listeners para os botões superiores da MainView
         view.addBookSectionBtnListener(new ActionListener() {
             @Override

@@ -7,35 +7,37 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BookController {
-    BookDAO dao;
+    BookDAO bookDao;
 	BookView bookView;
 
-	public BookController(BookDAO dao, BookView bookView) {
-		this.dao = dao;
+	public BookController(BookDAO bookDao, BookView bookView) {
+		this.bookDao = bookDao;
 		this.bookView = bookView;
+	}
 
+	public void startBookController() {
 		bookView.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				System.out.println("Botão funcionando");
 			}
 		});
 		bookView.delActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				System.out.println("Botão funcionando");
 			}
 		});
 		bookView.modifyActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				System.out.println("Botão funcionando");
 			}
 		});
 		bookView.searchActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dao.searchBooksByName("the");
+				bookDao.searchBooksByName("the");
 			}
 		});
 	}

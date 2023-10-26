@@ -7,9 +7,15 @@ import java.awt.event.ActionListener;
 
 public class PublisherView implements ViewInterface {
 
+    JButton addPublisherBtn;
+    JButton delPublisherBtn;
+    JButton modifyPublisherBtn;
     JButton searchPublisherBtn;
 
     public PublisherView() {
+        addPublisherBtn = new JButton("Adicionar");
+        delPublisherBtn = new JButton("Excluir");
+        modifyPublisherBtn = new JButton("Modificar");
         searchPublisherBtn = new JButton("Pesquisar");
     }
 
@@ -17,17 +23,13 @@ public class PublisherView implements ViewInterface {
         JDialog addPublisherDialog = new JDialog();
         addPublisherDialog.setTitle("Livraria UNIP");
         addPublisherDialog.setSize(450, 300);
-
         JPanel addPublisherPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
-        JButton addPublisherBtn = new JButton("Adicionar");
         JTextField nameTextField = new JTextField(20);
         JTextField siteTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
-
         addPublisherDialog.add(addPublisherPanel);
-
         deleteConstraints.gridy = 0;
         addPublisherPanel.add(new JLabel("Adicionar Editora"), deleteConstraints);
         deleteConstraints.gridy = 1;
@@ -38,41 +40,23 @@ public class PublisherView implements ViewInterface {
         addPublisherPanel.add(siteTextField, deleteConstraints);
         deleteConstraints.gridy = 3;
         addPublisherPanel.add(addPublisherBtn, deleteConstraints);
-
-        addPublisherBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
         addPublisherDialog.setVisible(true);
     }
     public void deletePopup() {
         JDialog deleteBookDialog = new JDialog();
         deleteBookDialog.setTitle("Livraria UNIP");
         deleteBookDialog.setSize(450, 150);
-
         JPanel deleteBookPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
-        JButton delPublisherBtn = new JButton("Excluir");
         JTextField publisherIdField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
-
         deleteBookDialog.add(deleteBookPanel);
-
         deleteConstraints.gridy = 0;
         deleteBookPanel.add(new JLabel("Excluir Editora"), deleteConstraints);
         deleteConstraints.gridy = 1;
         deleteBookPanel.add(publisherIdField, deleteConstraints);
         deleteBookPanel.add(delPublisherBtn, deleteConstraints);
-
-        delPublisherBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
         deleteBookDialog.setVisible(true);
     }
 
@@ -83,15 +67,12 @@ public class PublisherView implements ViewInterface {
         JDialog searchPublisherDialog = new JDialog();
         searchPublisherDialog.setTitle("Livraria UNIP");
         searchPublisherDialog.setSize(550, 200);
-
         JPanel searchPublisherPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
         JTextField nameTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
-
         searchPublisherDialog.add(searchPublisherPanel);
-
         deleteConstraints.gridy = 0;
         searchPublisherPanel.add(new JLabel("Pesquisar Editora"), deleteConstraints);
         deleteConstraints.gridy = 1;
@@ -99,7 +80,20 @@ public class PublisherView implements ViewInterface {
         searchPublisherPanel.add(nameTextField, deleteConstraints);
         deleteConstraints.gridy = 2;
         searchPublisherPanel.add(searchPublisherBtn, deleteConstraints);
-
         searchPublisherDialog.setVisible(true);
+    }
+
+    //listeners dos botões
+    public void addActionListener(ActionListener l) {
+        addPublisherBtn.addActionListener(l);
+    }
+    public void delActionListener(ActionListener l) {
+        delPublisherBtn.addActionListener(l);
+    }
+    public void modifyActionListener(ActionListener l) {
+        modifyPublisherBtn.addActionListener(l);
+    }
+    public void searchActionListener(ActionListener l) {
+        searchPublisherBtn.addActionListener(l);
     }
 }
