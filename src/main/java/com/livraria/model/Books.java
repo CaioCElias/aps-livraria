@@ -6,6 +6,14 @@ public class Books {
     private int publisherId;
     private double price;
 
+    public Books(String title, String isbn, int publisherId, double price) {
+        super();
+        this.title = title;
+        this.isbn = isbn;
+        this.publisherId = publisherId;
+        this.price = price;
+    }
+
     // Getters
     public String getTitle() {
         return title;
