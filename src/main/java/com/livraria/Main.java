@@ -4,7 +4,7 @@ import com.livraria.dao.*;
 import com.livraria.view.*;
 
 public class Main {
-    static ConexaoDAO dao = new ConexaoDAO();
+    static ConnectionDAO dao = new ConnectionDAO();
     static MainView view = new MainView();
 
     public static void main(String[] args) {
