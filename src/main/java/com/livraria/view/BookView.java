@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import com.livraria.dao.BookDAO;
 
 public class BookView implements ViewInterface {
 
@@ -12,10 +11,9 @@ public class BookView implements ViewInterface {
 
     //recebe os autores com seus respectivos nomes
     String[] authors = {"Caio", "Gustavo"};
-    BookDAO bookDAO = new BookDAO();
 
     public BookView() {
-
+        searchBookBtn = new JButton("Pesquisar");
     }
 
     //Popup de Inclusão de livro
@@ -100,7 +98,6 @@ public class BookView implements ViewInterface {
 
         JPanel searchBookPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
-        searchBookBtn = new JButton("Pesquisar");
         JTextField bookTitleTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
@@ -113,16 +110,10 @@ public class BookView implements ViewInterface {
         searchBookPanel.add(bookTitleTextField, deleteConstraints);
         searchBookPanel.add(searchBookBtn, deleteConstraints);
 
-        searchBookBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                bookDAO.searchBooksByName("the");
-            }
-        });
-
         searchBookDialog.setVisible(true);
     }
 
-    public void addBookSearchActionListener(ActionListener listener) {
+    public void searchBookActionListener(ActionListener listener) {
         searchBookBtn.addActionListener(listener);
     }
 }

@@ -3,8 +3,6 @@ package com.livraria.controller;
 import com.livraria.dao.BookDAO;
 import com.livraria.view.BookView;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,10 +14,10 @@ public class BookController {
 		this.dao = dao;
 		this.view = view;
 
-		view.addBookSearchActionListener(new ActionListener() {
+		view.searchBookActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				//dao.searchBooksByName("the");
 			}
 		});
 	}
