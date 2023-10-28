@@ -6,6 +6,7 @@ import com.livraria.view.BookView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public class BookController {
@@ -21,6 +22,18 @@ public class BookController {
 		bookView.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				String title = bookView.getTitleInput();
+				String isbn = bookView.getEsbnInput();
+				int publisher_id = Integer.parseInt(bookView.getPublisherInput());
+				double price = Double.parseDouble(bookView.getPriceInput());
+				
+				Books book = new Books(title, isbn, publisher_id, price);
+
+				try {
+					bookDao.addBooks(book);
+				} catch (SQLIntegrityConstraintViolationException e1) {
+					e1.printStackTrace();
+				}
 				System.out.println("Botão funcionando");
 			}
 		});

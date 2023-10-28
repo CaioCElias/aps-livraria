@@ -33,10 +33,10 @@ public class BookView implements ViewInterface {
         addBookDialog.setSize(600, 400);
         JPanel addBookPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
-        JTextField bookNameTextField = new JTextField(20);
-        JTextField bookEsbnTextField = new JTextField(20);
-        JTextField bookPriceTextField = new JTextField(20);
-        JTextField bookPublisherTextField = new JTextField(20);
+        titleTextField = new JTextField(20);
+        esbnTextField = new JTextField(20);
+        priceTextField = new JTextField(20);
+        publisherTextField = new JTextField(20);
         //a lista de autores deve ser usada como input para a função JList
         JComboBox bookAuthorsBox = new JComboBox(authors);
         int padding = 10;
@@ -46,16 +46,16 @@ public class BookView implements ViewInterface {
         addBookPanel.add(new JLabel("Adicionar Livro"), deleteConstraints);
         deleteConstraints.gridy = 1;
         addBookPanel.add(new JLabel("Título"), deleteConstraints);
-        addBookPanel.add(bookNameTextField, deleteConstraints);
+        addBookPanel.add(titleTextField, deleteConstraints);
         deleteConstraints.gridy = 2;
         addBookPanel.add(new JLabel("ESBN"), deleteConstraints);
-        addBookPanel.add(bookEsbnTextField, deleteConstraints);
+        addBookPanel.add(esbnTextField, deleteConstraints);
         deleteConstraints.gridy = 3;
         addBookPanel.add(new JLabel("Preço"), deleteConstraints);
-        addBookPanel.add(bookPriceTextField, deleteConstraints);
+        addBookPanel.add(priceTextField, deleteConstraints);
         deleteConstraints.gridy = 4;
         addBookPanel.add(new JLabel("Editora"), deleteConstraints);
-        addBookPanel.add(bookPublisherTextField, deleteConstraints);
+        addBookPanel.add(publisherTextField, deleteConstraints);
         deleteConstraints.gridy = 5;
         addBookPanel.add(bookAuthorsBox, deleteConstraints);
         deleteConstraints.gridy = 6;
