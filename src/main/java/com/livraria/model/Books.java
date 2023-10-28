@@ -5,15 +5,15 @@ import java.util.List;
 
 public class Books {
     private String title;
-    private String esbn;
+    private String isbn;
     private int publisherId;
     private double price;
     private List<Books> bookList = new ArrayList<>();
 
-    public Books(String title, String esbn, int publisherId, double price) {
+    public Books(String title, String isbn, int publisherId, double price) {
         super();
         this.title = title;
-        this.esbn = esbn;
+        this.isbn = isbn;
         this.publisherId = publisherId;
         this.price = price;
     }
@@ -22,8 +22,8 @@ public class Books {
     public String getTitle() {
         return title;
     }
-    public String getEsbn() {
-        return esbn;
+    public String getIsbn() {
+        return isbn;
     }
     public int getPublisherId() {
         return publisherId;
@@ -39,8 +39,8 @@ public class Books {
     public void setTitle(String title) {
         this.title = title;
     }
-    public void setEsbn(String esbn) {
-        this.esbn = esbn;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
     public void setPublisherId(int publisherId) {
         this.publisherId = publisherId;

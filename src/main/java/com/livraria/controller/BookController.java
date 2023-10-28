@@ -23,7 +23,7 @@ public class BookController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String title = bookView.getTitleInput();
-				String isbn = bookView.getEsbnInput();
+				String isbn = bookView.getIsbnInput();
 				int publisher_id = Integer.parseInt(bookView.getPublisherInput());
 				double price = Double.parseDouble(bookView.getPriceInput());
 				

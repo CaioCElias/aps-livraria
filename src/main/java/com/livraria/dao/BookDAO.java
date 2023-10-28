@@ -51,7 +51,7 @@ public List<Books> searchBooksTitle(String name) {
 			PreparedStatement statement = dbconn.prepareStatement(query);
 			
 			statement.setString(1, book.getTitle());
-			statement.setString(2, book.getEsbn());
+			statement.setString(2, book.getIsbn());
 			statement.setInt(3, book.getPublisherId());
 			statement.setDouble(4, book.getPrice());
 			
