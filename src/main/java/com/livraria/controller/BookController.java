@@ -1,10 +1,12 @@
 package com.livraria.controller;
 
 import com.livraria.dao.BookDAO;
+import com.livraria.model.Books;
 import com.livraria.view.BookView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class BookController {
     BookDAO bookDao;
@@ -37,7 +39,9 @@ public class BookController {
 		bookView.searchActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				bookDao.searchBooksByName("the");
+				String title = bookView.getTitleInput();
+				List<Books> searchBookList = bookDao.searchBooksByName(title);
+				//exibir searchBookList
 			}
 		});
 	}

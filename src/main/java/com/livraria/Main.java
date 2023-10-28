@@ -5,6 +5,7 @@ import com.livraria.controller.BookController;
 import com.livraria.controller.MainController;
 import com.livraria.controller.PublisherController;
 import com.livraria.dao.*;
+import com.livraria.model.Books;
 import com.livraria.view.*;
 
 public class Main {
