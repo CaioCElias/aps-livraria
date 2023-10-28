@@ -2,10 +2,13 @@ package com.livraria.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PublisherView implements ViewInterface {
+
+    JTextField idTextField;
+    JTextField nameTextField;
+    JTextField urlTextField;
 
     JButton addPublisherBtn;
     JButton delPublisherBtn;
@@ -25,8 +28,8 @@ public class PublisherView implements ViewInterface {
         addPublisherDialog.setSize(450, 300);
         JPanel addPublisherPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
-        JTextField nameTextField = new JTextField(20);
-        JTextField siteTextField = new JTextField(20);
+        nameTextField = new JTextField(20);
+        urlTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
         addPublisherDialog.add(addPublisherPanel);
@@ -37,7 +40,7 @@ public class PublisherView implements ViewInterface {
         addPublisherPanel.add(nameTextField, deleteConstraints);
         deleteConstraints.gridy = 2;
         addPublisherPanel.add(new JLabel("Site"), deleteConstraints);
-        addPublisherPanel.add(siteTextField, deleteConstraints);
+        addPublisherPanel.add(urlTextField, deleteConstraints);
         deleteConstraints.gridy = 3;
         addPublisherPanel.add(addPublisherBtn, deleteConstraints);
         addPublisherDialog.setVisible(true);
@@ -48,14 +51,14 @@ public class PublisherView implements ViewInterface {
         deleteBookDialog.setSize(450, 150);
         JPanel deleteBookPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
-        JTextField publisherIdField = new JTextField(20);
+        idTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
         deleteBookDialog.add(deleteBookPanel);
         deleteConstraints.gridy = 0;
         deleteBookPanel.add(new JLabel("Excluir Editora"), deleteConstraints);
         deleteConstraints.gridy = 1;
-        deleteBookPanel.add(publisherIdField, deleteConstraints);
+        deleteBookPanel.add(idTextField, deleteConstraints);
         deleteBookPanel.add(delPublisherBtn, deleteConstraints);
         deleteBookDialog.setVisible(true);
     }
@@ -89,7 +92,7 @@ public class PublisherView implements ViewInterface {
         searchPublisherDialog.setSize(550, 200);
         JPanel searchPublisherPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
-        JTextField nameTextField = new JTextField(20);
+        nameTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
         searchPublisherDialog.add(searchPublisherPanel);
@@ -101,6 +104,16 @@ public class PublisherView implements ViewInterface {
         deleteConstraints.gridy = 2;
         searchPublisherPanel.add(searchPublisherBtn, deleteConstraints);
         searchPublisherDialog.setVisible(true);
+    }
+
+    public int getIdInput() {
+        return Integer.parseInt(this.idTextField.getText());
+    }
+    public String getNameInput() {
+        return this.nameTextField.getText();
+    }
+    public String getUrlInput() {
+        return this.urlTextField.getText();
     }
 
     //listeners dos botões

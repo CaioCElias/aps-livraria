@@ -5,6 +5,12 @@ public class Publishers {
     private String name;
     private String url;
 
+    public Publishers(int publisherId, String name, String url) {
+        this.publisherId = publisherId;
+        this.name = name;
+        this.url = url;
+    }
+
     // Getters
     public int getPublisherId() {
         return publisherId;
