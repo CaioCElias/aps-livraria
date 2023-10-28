@@ -12,7 +12,7 @@ import com.livraria.model.Books;
 
 public class BookDAO extends ConnectionDAO {
 
-public List<Books> searchBooksByName(String name) {
+public List<Books> searchBooksTitle(String name) {
 		
 		List<Books> searchBookList = new ArrayList<>();
 		
@@ -43,5 +43,4 @@ public List<Books> searchBooksByName(String name) {
 		return searchBookList;
 		
 	}
-
 }

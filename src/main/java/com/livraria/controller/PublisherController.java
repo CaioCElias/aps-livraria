@@ -1,9 +1,11 @@
 package com.livraria.controller;
 
 import com.livraria.dao.PublisherDAO;
+import com.livraria.model.Publishers;
 import com.livraria.view.PublisherView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class PublisherController {
     PublisherDAO publisherDao;
@@ -36,7 +38,9 @@ public class PublisherController {
         publisherView.searchActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Botão funcionando");
+                String name = publisherView.getNameInput();
+                List<Publishers> publishersList = publisherDao.searchPublishersTitle(name);
+                //atualizar na view
             }
         });
     }

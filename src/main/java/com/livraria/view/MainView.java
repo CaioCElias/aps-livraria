@@ -122,7 +122,7 @@ public class MainView extends JFrame {
         authorBtns[3].addActionListener(l);
     }
 
-    //Listeners dos botões do painel de livros
+    //Listeners dos botões do painel de editoras
     public void addSearchPublisherSectionBtnListener(ActionListener l) {
         publisherBtns[0].addActionListener(l);
     }
