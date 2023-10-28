@@ -4,6 +4,9 @@ import com.livraria.dao.AuthorDAO;
 import com.livraria.view.AuthorView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
+import com.livraria.model.Authors;
 
 public class AuthorController {
     AuthorDAO authorDao;
@@ -36,6 +39,11 @@ public class AuthorController {
         authorView.searchActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String name = authorView.getNameInput();
+                List<Authors> authorsList = authorDao.searchAuthorsTitle(name);
+                for(int i = 0; i < authorsList.size(); i++) {
+                    System.out.println(authorsList.get(i).getName());
+                }
                 System.out.println("Botão funcionando");
             }
         });

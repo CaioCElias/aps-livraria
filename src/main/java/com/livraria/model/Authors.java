@@ -5,16 +5,22 @@ public class Authors {
     private String name;
     private String fName;
 
+    public Authors(int authorId, String name, String fName) {
+        this.authorId = authorId;
+        this.name = name;
+        this.fName = fName;
+    }
+
     // Getters
-    public int authorId() {
+    public int getAuthorId() {
         return authorId;
     }
 
-    public String name() {
+    public String getName() {
         return name;
     }
 
-    public String fName() {
+    public String getFName() {
         return fName;
     }
 
