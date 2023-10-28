@@ -40,7 +40,7 @@ public class BookController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String title = bookView.getTitleInput();
-				List<Books> searchBookList = bookDao.searchBooksByName(title);
+				List<Books> searchBookList = bookDao.searchBooksTitle(title);
 				//exibir searchBookList
 			}
 		});
