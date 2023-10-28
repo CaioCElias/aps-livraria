@@ -79,7 +79,39 @@ public class BookView implements ViewInterface {
     }
 
     public void modifyPopup() {
-
+        JDialog modifyBookDialog = new JDialog();
+        modifyBookDialog.setTitle("Livraria UNIP");
+        modifyBookDialog.setSize(600, 400);
+        JPanel modifyBookPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints deleteConstraints = new GridBagConstraints();
+        JTextField bookNameTextField = new JTextField(20);
+        JTextField bookEsbnTextField = new JTextField(20);
+        JTextField bookPriceTextField = new JTextField(20);
+        JTextField bookPublisherTextField = new JTextField(20);
+        //a lista de autores deve ser usada como input para a função JList
+        JComboBox bookAuthorsBox = new JComboBox(authors);
+        int padding = 10;
+        deleteConstraints.insets = new Insets(padding, padding, padding, padding);
+        modifyBookDialog.add(modifyBookPanel);
+        deleteConstraints.gridy = 0;
+        modifyBookPanel.add(new JLabel("Modificar Livro"), deleteConstraints);
+        deleteConstraints.gridy = 1;
+        modifyBookPanel.add(new JLabel("Título"), deleteConstraints);
+        modifyBookPanel.add(bookNameTextField, deleteConstraints);
+        deleteConstraints.gridy = 2;
+        modifyBookPanel.add(new JLabel("ESBN"), deleteConstraints);
+        modifyBookPanel.add(bookEsbnTextField, deleteConstraints);
+        deleteConstraints.gridy = 3;
+        modifyBookPanel.add(new JLabel("Preço"), deleteConstraints);
+        modifyBookPanel.add(bookPriceTextField, deleteConstraints);
+        deleteConstraints.gridy = 4;
+        modifyBookPanel.add(new JLabel("Editora"), deleteConstraints);
+        modifyBookPanel.add(bookPublisherTextField, deleteConstraints);
+        deleteConstraints.gridy = 5;
+        modifyBookPanel.add(bookAuthorsBox, deleteConstraints);
+        deleteConstraints.gridy = 6;
+        modifyBookPanel.add(addBookBtn, deleteConstraints);
+        modifyBookDialog.setVisible(true);
     }
     public void searchPopup() {
         JDialog searchBookDialog = new JDialog();

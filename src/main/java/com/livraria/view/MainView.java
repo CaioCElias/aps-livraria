@@ -87,7 +87,6 @@ public class MainView extends JFrame {
     public void addBookSectionBtnListener(ActionListener l) {
         btnBook.addActionListener(l);
     }
-
     public void addAuthorSectionBtnListener(ActionListener l) {
         btnAuthor.addActionListener(l);
     }

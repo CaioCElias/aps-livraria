@@ -63,7 +63,27 @@ public class AuthorView implements ViewInterface {
     }
 
     public void modifyPopup() {
-
+        JDialog modifyAuthorDialog = new JDialog();
+        modifyAuthorDialog.setTitle("Livraria UNIP");
+        modifyAuthorDialog.setSize(450, 300);
+        JPanel modifyAuthorPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints deleteConstraints = new GridBagConstraints();
+        JTextField firstNameTextField = new JTextField(20);
+        JTextField secondNameTextField = new JTextField(20);
+        int padding = 10;
+        deleteConstraints.insets = new Insets(padding, padding, padding, padding);
+        modifyAuthorDialog.add(modifyAuthorPanel);
+        deleteConstraints.gridy = 0;
+        modifyAuthorPanel.add(new JLabel("Modificar Autor"), deleteConstraints);
+        deleteConstraints.gridy = 1;
+        modifyAuthorPanel.add(new JLabel("Primeiro nome"), deleteConstraints);
+        modifyAuthorPanel.add(firstNameTextField, deleteConstraints);
+        deleteConstraints.gridy = 2;
+        modifyAuthorPanel.add(new JLabel("Segundo nome"), deleteConstraints);
+        modifyAuthorPanel.add(secondNameTextField, deleteConstraints);
+        deleteConstraints.gridy = 3;
+        modifyAuthorPanel.add(addAuthorBtn, deleteConstraints);
+        modifyAuthorDialog.setVisible(true);
     }
     public void searchPopup() {
         JDialog searchAuthorDialog = new JDialog();
