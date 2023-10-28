@@ -1,11 +1,19 @@
 package com.livraria.view;
 
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class MainView extends JFrame {
+
+    private final JButton btnBook;
+    private final JButton btnAuthor;
+    private final JButton btnPublisher;
+    private final CardLayout cardLayout;
+    private final JPanel actionPanel;
+    private final JButton[] bookBtns;
+    private final JButton[] authorBtns;
+    private final JButton[] publisherBtns;
 
     public void startMainView() {
         SwingUtilities.invokeLater(new Runnable() {
@@ -22,81 +30,29 @@ public class MainView extends JFrame {
 
         //Painel principal
         JPanel mainPanel = new JPanel();
-        JButton btnBook = new JButton("Livros");
-        JButton btnAuthor = new JButton("Autores");
-        JButton btnPublisher = new JButton("Editoras");
+        btnBook = new JButton("Livros");
+        btnAuthor = new JButton("Autores");
+        btnPublisher = new JButton("Editoras");
         mainPanel.add(btnBook);
         mainPanel.add(btnAuthor);
         mainPanel.add(btnPublisher);
 
-        //Instância das classes View
-        BookView book = new BookView();
-        AuthorView author = new AuthorView();
-        PublisherView publisher = new PublisherView();
-
         //Painel secundário
-        JPanel actionPanel = new JPanel();
-        CardLayout cardLayout = new CardLayout();
+        actionPanel = new JPanel();
+        cardLayout = new CardLayout();
         actionPanel.setLayout(cardLayout);
 
-        //Botões do painel principal
-        btnBook.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(actionPanel, "Livros");
-            }
-        });
-        btnAuthor.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(actionPanel, "Autores");
-            }
-        });
-        btnPublisher.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(actionPanel, "Editoras");
-            }
-        });
-
         //Painel geral de livros
-        JButton[] bookBtns = createPanel(actionPanel, "Livros", "Pesquisar", "Incluir",
+        bookBtns = createPanel(actionPanel, "Livros", "Pesquisar", "Incluir",
                 "Modificar", "Excluir");
-        bookBtns[1].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                book.addPopup();
-            }
-        });
-        bookBtns[3].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                book.deletePopup();
-            }
-        });
 
         //Painel geral de autores
-        JButton[] authorBtns = createPanel(actionPanel, "Autores", "Pesquisar", "Incluir",
+        authorBtns = createPanel(actionPanel, "Autores", "Pesquisar", "Incluir",
                 "Modificar", "Excluir");
-        authorBtns[1].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                author.addPopup();
-            }
-        });
-        authorBtns[3].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                author.deletePopup();
-            }
-        });
 
         //Painel geral de editoras
-        JButton[] publisherBtns = createPanel(actionPanel, "Editoras", "Pesquisar", "Incluir",
+        publisherBtns = createPanel(actionPanel, "Editoras", "Pesquisar", "Incluir",
                 "Modificar", "Excluir");
-        publisherBtns[1].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                publisher.addPopup();
-            }
-        });
-        publisherBtns[3].addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                publisher.deletePopup();
-            }
-        });
 
         mainFrame.add(mainPanel, BorderLayout.NORTH);
         mainFrame.add(actionPanel, BorderLayout.CENTER);
@@ -122,9 +78,69 @@ public class MainView extends JFrame {
             constraints.gridy++;
             JButton button = new JButton(buttonLabels[i]);
             panel.add(button, constraints);
-            buttons[i] = button; // Store a reference to the button
+            buttons[i] = button; // guarda uma referência do botão
         }
-
         return buttons;
+    }
+
+    //Listeners que direcionam para os paineis principais - livros | autores | editoras
+    public void addBookSectionBtnListener(ActionListener l) {
+        btnBook.addActionListener(l);
+    }
+    public void addAuthorSectionBtnListener(ActionListener l) {
+        btnAuthor.addActionListener(l);
+    }
+    public void addPublisherSectionBtnListener(ActionListener l) {
+        btnPublisher.addActionListener(l);
+    }
+
+    //Listeners dos botões do painel de livros
+    public void addSearchBookSectionBtnListener(ActionListener l) {
+        bookBtns[0].addActionListener(l);
+    }
+    public void addAddBookSectionBtnListener(ActionListener l) {
+        bookBtns[1].addActionListener(l);
+    }
+    public void addModifyBookSectionBtnListener(ActionListener l) {
+        bookBtns[2].addActionListener(l);
+    }
+    public void addDelBookSectionBtnListener(ActionListener l) {
+        bookBtns[3].addActionListener(l);
+    }
+
+    //Listeners dos botões do painel de autores
+    public void addSearchAuthorSectionBtnListener(ActionListener l) {
+        authorBtns[0].addActionListener(l);
+    }
+    public void addAddAuthorSectionBtnListener(ActionListener l) {
+        authorBtns[1].addActionListener(l);
+    }
+    public void addModifyAuthorSectionBtnListener(ActionListener l) {
+        authorBtns[2].addActionListener(l);
+    }
+    public void addDelAuthorSectionBtnListener(ActionListener l) {
+        authorBtns[3].addActionListener(l);
+    }
+
+    //Listeners dos botões do painel de livros
+    public void addSearchPublisherSectionBtnListener(ActionListener l) {
+        publisherBtns[0].addActionListener(l);
+    }
+    public void addAddPublisherSectionBtnListener(ActionListener l) {
+        publisherBtns[1].addActionListener(l);
+    }
+    public void addModifyPublisherSectionBtnListener(ActionListener l) {
+        publisherBtns[2].addActionListener(l);
+    }
+    public void addDelPublisherSectionBtnListener(ActionListener l) {
+        publisherBtns[3].addActionListener(l);
+    }
+
+    public CardLayout getCardLayout() {
+        return cardLayout;
+    }
+
+    public JPanel getActionPanel() {
+        return actionPanel;
     }
 }
