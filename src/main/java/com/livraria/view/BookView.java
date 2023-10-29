@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 public class BookView implements ViewInterface {
 
     private JTextField titleTextField;
-    private JTextField esbnTextField;
+    private JTextField isbnTextField;
     private JTextField priceTextField;
     private JTextField publisherTextField;
 
@@ -33,10 +33,10 @@ public class BookView implements ViewInterface {
         addBookDialog.setSize(600, 400);
         JPanel addBookPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
-        JTextField bookNameTextField = new JTextField(20);
-        JTextField bookEsbnTextField = new JTextField(20);
-        JTextField bookPriceTextField = new JTextField(20);
-        JTextField bookPublisherTextField = new JTextField(20);
+        titleTextField = new JTextField(20);
+        isbnTextField = new JTextField(20);
+        priceTextField = new JTextField(20);
+        publisherTextField = new JTextField(20);
         //a lista de autores deve ser usada como input para a função JList
         JComboBox bookAuthorsBox = new JComboBox(authors);
         int padding = 10;
@@ -46,16 +46,16 @@ public class BookView implements ViewInterface {
         addBookPanel.add(new JLabel("Adicionar Livro"), deleteConstraints);
         deleteConstraints.gridy = 1;
         addBookPanel.add(new JLabel("Título"), deleteConstraints);
-        addBookPanel.add(bookNameTextField, deleteConstraints);
+        addBookPanel.add(titleTextField, deleteConstraints);
         deleteConstraints.gridy = 2;
-        addBookPanel.add(new JLabel("ESBN"), deleteConstraints);
-        addBookPanel.add(bookEsbnTextField, deleteConstraints);
+        addBookPanel.add(new JLabel("ISBN"), deleteConstraints);
+        addBookPanel.add(isbnTextField, deleteConstraints);
         deleteConstraints.gridy = 3;
         addBookPanel.add(new JLabel("Preço"), deleteConstraints);
-        addBookPanel.add(bookPriceTextField, deleteConstraints);
+        addBookPanel.add(priceTextField, deleteConstraints);
         deleteConstraints.gridy = 4;
         addBookPanel.add(new JLabel("Editora"), deleteConstraints);
-        addBookPanel.add(bookPublisherTextField, deleteConstraints);
+        addBookPanel.add(publisherTextField, deleteConstraints);
         deleteConstraints.gridy = 5;
         addBookPanel.add(bookAuthorsBox, deleteConstraints);
         deleteConstraints.gridy = 6;
@@ -70,14 +70,14 @@ public class BookView implements ViewInterface {
         deleteBookDialog.setSize(450, 150);
         JPanel delBookPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
-        JTextField esbnTextField = new JTextField(20);
+        JTextField isbnTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
         deleteBookDialog.add(delBookPanel);
         deleteConstraints.gridy = 0;
         delBookPanel.add(new JLabel("Excluir Livro"), deleteConstraints);
         deleteConstraints.gridy = 1;
-        delBookPanel.add(esbnTextField, deleteConstraints);
+        delBookPanel.add(isbnTextField, deleteConstraints);
         delBookPanel.add(delBookBtn, deleteConstraints);
         deleteBookDialog.setVisible(true);
     }
@@ -89,7 +89,7 @@ public class BookView implements ViewInterface {
         JPanel modifyBookPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
         titleTextField = new JTextField(20);
-        esbnTextField = new JTextField(20);
+        isbnTextField = new JTextField(20);
         priceTextField = new JTextField(20);
         publisherTextField = new JTextField(20);
         //a lista de autores deve ser usada como input para a função JList
@@ -103,8 +103,8 @@ public class BookView implements ViewInterface {
         modifyBookPanel.add(new JLabel("Título"), deleteConstraints);
         modifyBookPanel.add(titleTextField, deleteConstraints);
         deleteConstraints.gridy = 2;
-        modifyBookPanel.add(new JLabel("ESBN"), deleteConstraints);
-        modifyBookPanel.add(esbnTextField, deleteConstraints);
+        modifyBookPanel.add(new JLabel("ISBN"), deleteConstraints);
+        modifyBookPanel.add(isbnTextField, deleteConstraints);
         deleteConstraints.gridy = 3;
         modifyBookPanel.add(new JLabel("Preço"), deleteConstraints);
         modifyBookPanel.add(priceTextField, deleteConstraints);
@@ -140,11 +140,11 @@ public class BookView implements ViewInterface {
     public String getTitleInput() {
         return this.titleTextField.getText();
     }
-    public String getEsbnInput() {
-        return this.esbnTextField.getText();
+    public String getIsbnInput() {
+        return this.isbnTextField.getText();
     }
     public String getPriceInput() {
-        return this.esbnTextField.getText();
+        return this.isbnTextField.getText();
     }
     public String getPublisherInput() {
         return this.publisherTextField.getText();

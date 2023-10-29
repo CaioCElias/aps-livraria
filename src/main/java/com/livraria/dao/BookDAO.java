@@ -43,4 +43,28 @@ public List<Books> searchBooksTitle(String name) {
 		return searchBookList;
 		
 	}
+
+	public boolean addBooks(Books book) throws SQLIntegrityConstraintViolationException {
+		
+		try(Connection dbconn = DriverManager.getConnection(URL, USER, PASS)){
+			String query = "INSERT INTO Books(title, isbn, publisher_id, price) VALUES (?, ?, ?, ?)";
+			PreparedStatement statement = dbconn.prepareStatement(query);
+			
+			statement.setString(1, book.getTitle());
+			statement.setString(2, book.getIsbn());
+			statement.setInt(3, book.getPublisherId());
+			statement.setDouble(4, book.getPrice());
+			
+			int res = statement.executeUpdate();
+			System.out.println("resultado: " + res);
+		}catch(SQLIntegrityConstraintViolationException e) {
+			System.out.println("Nao foi possivel adicionar: " + e.getMessage());
+			throw e;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 }

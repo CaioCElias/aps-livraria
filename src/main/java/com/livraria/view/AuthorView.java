@@ -7,6 +7,10 @@ import java.awt.event.ActionListener;
 
 public class AuthorView implements ViewInterface {
 
+    JTextField authorIdField;
+    JTextField firstNameTextField;
+    JTextField secondNameTextField;
+
     JButton addAuthorBtn;
     JButton delAuthorBtn;
     JButton modifyAuthorBtn;
@@ -25,8 +29,8 @@ public class AuthorView implements ViewInterface {
         addAuthorDialog.setSize(450, 300);
         JPanel addAuthorPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
-        JTextField firstNameTextField = new JTextField(20);
-        JTextField secondNameTextField = new JTextField(20);
+        firstNameTextField = new JTextField(20);
+        secondNameTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
         addAuthorDialog.add(addAuthorPanel);
@@ -50,7 +54,7 @@ public class AuthorView implements ViewInterface {
         deleteBookDialog.setSize(450, 150);
         JPanel delAuthorPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
-        JTextField authorIdField = new JTextField(20);
+        authorIdField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
         deleteBookDialog.add(delAuthorPanel);
@@ -68,8 +72,8 @@ public class AuthorView implements ViewInterface {
         modifyAuthorDialog.setSize(450, 300);
         JPanel modifyAuthorPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
-        JTextField firstNameTextField = new JTextField(20);
-        JTextField secondNameTextField = new JTextField(20);
+        firstNameTextField = new JTextField(20);
+        secondNameTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
         modifyAuthorDialog.add(modifyAuthorPanel);
@@ -91,8 +95,8 @@ public class AuthorView implements ViewInterface {
         searchAuthorDialog.setSize(550, 250);
         JPanel searchAuthorPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
-        JTextField firstNameTextField = new JTextField(20);
-        JTextField secondNameTextField = new JTextField(20);
+        firstNameTextField = new JTextField(20);
+        secondNameTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
         searchAuthorDialog.add(searchAuthorPanel);
@@ -107,6 +111,16 @@ public class AuthorView implements ViewInterface {
         deleteConstraints.gridy = 3;
         searchAuthorPanel.add(searchAuthorBtn, deleteConstraints);
         searchAuthorDialog.setVisible(true);
+    }
+
+    public int getIdInput() {
+        return Integer.parseInt(this.authorIdField.getText());
+    }
+    public String getNameInput() {
+        return this.firstNameTextField.getText();
+    }
+    public String getFNameInput() {
+        return this.secondNameTextField.getText();
     }
 
 
