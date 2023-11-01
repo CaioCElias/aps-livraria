@@ -40,13 +40,14 @@ public class AuthorController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String name = authorView.getNameInput();
-                List<Authors> authorsList = authorDao.searchAuthorsTitle(name);
+                String fName = authorView.getFNameInput();
+                List<Authors> authorsList = authorDao.searchAuthorsTitle(name, fName);
                 for (Authors author : authorsList) {
-                    String nome = author.getName();
-                    String sobrenome = author.getFName();
+                    String authorsName = author.getName();
+                    String authorsLastName = author.getFName();
 
-                    System.out.println("Nome: " + nome);
-                    System.out.println("Sobrenome: " + sobrenome);
+                    System.out.println("Nome: " + authorsName);
+                    System.out.println("Sobrenome: " + authorsLastName);
                 }
                 System.out.println("Botão funcionando");
             }
