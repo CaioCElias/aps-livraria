@@ -5,8 +5,8 @@ public class Authors {
     private String name;
     private String fName;
 
-    public Authors(int authorId, String name, String fName) {
-        this.authorId = authorId;
+    public Authors(String name, String fName) {
+        // this.authorId = authorId;
         this.name = name;
         this.fName = fName;
     }
@@ -33,7 +33,7 @@ public class Authors {
         this.name = name;
     }
 
-    public void setFName(String fName) {
+    public void getFName(String fName) {
         this.fName = fName;
     }
 }
