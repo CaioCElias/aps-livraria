@@ -12,7 +12,7 @@ import com.livraria.model.Authors;
 
 public class AuthorDAO extends ConnectionDAO {
     
-        public List<Authors> searchAuthorsTitle(String name) {
+        public List<Authors> searchAuthorsTitle(String name, String fName) {
 
         List<Authors> searchAuthorList = new ArrayList<>();
 
@@ -21,10 +21,13 @@ public class AuthorDAO extends ConnectionDAO {
             String query = ""
                     + "SELECT * FROM authors "
                     + "WHERE LOWER(name) "
+                    + "LIKE LOWER(?) "
+                    + "AND LOWER(fName) "
                     + "LIKE LOWER(?)";
 
             PreparedStatement statement = dbconn.prepareStatement(query);
             statement.setString(1, '%'+name+'%');
+            statement.setString(2, '%'+fName+'%');  
 
             ResultSet rs = statement.executeQuery();
             while(rs.next()) {
