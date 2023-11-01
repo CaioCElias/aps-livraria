@@ -4,6 +4,8 @@ import com.livraria.dao.BookDAO;
 import com.livraria.model.Books;
 import com.livraria.view.BookView;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -54,8 +56,16 @@ public class BookController {
 			public void actionPerformed(ActionEvent e) {
 				String title = bookView.getTitleInput();
 				List<Books> searchBookList = bookDao.searchBooksTitle(title);
+				JList list = new JList((ListModel) searchBookList);
 				//exibir searchBookList
-
+				bookView.showBookList(list);
+				//bookView.getDialog().setSize(750, 250);
+				//bookView.getPanel().add(new JList((ListModel) searchBookList));
+				//list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+				//list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+				//list.setVisibleRowCount(-1);
+				//JScrollPane listScroller = new JScrollPane(list);
+				//listScroller.setPreferredSize(new Dimension(250, 80));
 			}
 		});
 	}
