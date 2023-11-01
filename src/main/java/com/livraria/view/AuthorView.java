@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 
 public class AuthorView implements ViewInterface {
 
+    JDialog dialog = new JDialog();
+    JPanel panel;
+
     JTextField authorIdField;
     JTextField firstNameTextField;
     JTextField secondNameTextField;
@@ -23,94 +26,98 @@ public class AuthorView implements ViewInterface {
         searchAuthorBtn = new JButton("Pesquisar");
     }
 
+    public void clearDialog(JDialog dialog) {
+        dialog.getContentPane().removeAll();
+    }
+
     public void addPopup() {
-        JDialog addAuthorDialog = new JDialog();
-        addAuthorDialog.setTitle("Livraria UNIP");
-        addAuthorDialog.setSize(450, 300);
-        JPanel addAuthorPanel = new JPanel(new GridBagLayout());
+        clearDialog(dialog);
+        dialog.setTitle("Livraria UNIP");
+        dialog.setSize(450, 300);
+        panel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
         firstNameTextField = new JTextField(20);
         secondNameTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
-        addAuthorDialog.add(addAuthorPanel);
+        dialog.add(panel);
         deleteConstraints.gridy = 0;
-        addAuthorPanel.add(new JLabel("Adicionar Autor"), deleteConstraints);
+        panel.add(new JLabel("Adicionar Autor"), deleteConstraints);
         deleteConstraints.gridy = 1;
-        addAuthorPanel.add(new JLabel("Primeiro nome"), deleteConstraints);
-        addAuthorPanel.add(firstNameTextField, deleteConstraints);
+        panel.add(new JLabel("Primeiro nome"), deleteConstraints);
+        panel.add(firstNameTextField, deleteConstraints);
         deleteConstraints.gridy = 2;
-        addAuthorPanel.add(new JLabel("Segundo nome"), deleteConstraints);
-        addAuthorPanel.add(secondNameTextField, deleteConstraints);
+        panel.add(new JLabel("Segundo nome"), deleteConstraints);
+        panel.add(secondNameTextField, deleteConstraints);
         deleteConstraints.gridy = 3;
-        addAuthorPanel.add(addAuthorBtn, deleteConstraints);
-        addAuthorDialog.setVisible(true);
+        panel.add(addAuthorBtn, deleteConstraints);
+        dialog.setVisible(true);
     }
 
     //Popup de exclusão de autor
     public void deletePopup() {
-        JDialog deleteBookDialog = new JDialog();
-        deleteBookDialog.setTitle("Livraria UNIP");
-        deleteBookDialog.setSize(450, 150);
-        JPanel delAuthorPanel = new JPanel(new GridBagLayout());
+        clearDialog(dialog);
+        dialog.setTitle("Livraria UNIP");
+        dialog.setSize(450, 150);
+        panel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
         authorIdField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
-        deleteBookDialog.add(delAuthorPanel);
+        dialog.add(panel);
         deleteConstraints.gridy = 0;
-        delAuthorPanel.add(new JLabel("Excluir Autor"), deleteConstraints);
+        panel.add(new JLabel("Excluir Autor"), deleteConstraints);
         deleteConstraints.gridy = 1;
-        delAuthorPanel.add(authorIdField, deleteConstraints);
-        delAuthorPanel.add(delAuthorBtn, deleteConstraints);
-        deleteBookDialog.setVisible(true);
+        panel.add(authorIdField, deleteConstraints);
+        panel.add(delAuthorBtn, deleteConstraints);
+        dialog.setVisible(true);
     }
 
     public void modifyPopup() {
-        JDialog modifyAuthorDialog = new JDialog();
-        modifyAuthorDialog.setTitle("Livraria UNIP");
-        modifyAuthorDialog.setSize(450, 300);
-        JPanel modifyAuthorPanel = new JPanel(new GridBagLayout());
+        clearDialog(dialog);
+        dialog.setTitle("Livraria UNIP");
+        dialog.setSize(450, 300);
+        panel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
         firstNameTextField = new JTextField(20);
         secondNameTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
-        modifyAuthorDialog.add(modifyAuthorPanel);
+        dialog.add(panel);
         deleteConstraints.gridy = 0;
-        modifyAuthorPanel.add(new JLabel("Modificar Autor"), deleteConstraints);
+        panel.add(new JLabel("Modificar Autor"), deleteConstraints);
         deleteConstraints.gridy = 1;
-        modifyAuthorPanel.add(new JLabel("Primeiro nome"), deleteConstraints);
-        modifyAuthorPanel.add(firstNameTextField, deleteConstraints);
+        panel.add(new JLabel("Primeiro nome"), deleteConstraints);
+        panel.add(firstNameTextField, deleteConstraints);
         deleteConstraints.gridy = 2;
-        modifyAuthorPanel.add(new JLabel("Segundo nome"), deleteConstraints);
-        modifyAuthorPanel.add(secondNameTextField, deleteConstraints);
+        panel.add(new JLabel("Segundo nome"), deleteConstraints);
+        panel.add(secondNameTextField, deleteConstraints);
         deleteConstraints.gridy = 3;
-        modifyAuthorPanel.add(addAuthorBtn, deleteConstraints);
-        modifyAuthorDialog.setVisible(true);
+        panel.add(addAuthorBtn, deleteConstraints);
+        dialog.setVisible(true);
     }
     public void searchPopup() {
-        JDialog searchAuthorDialog = new JDialog();
-        searchAuthorDialog.setTitle("Livraria UNIP");
-        searchAuthorDialog.setSize(550, 250);
-        JPanel searchAuthorPanel = new JPanel(new GridBagLayout());
+        clearDialog(dialog);
+        dialog.setTitle("Livraria UNIP");
+        dialog.setSize(550, 250);
+        panel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
         firstNameTextField = new JTextField(20);
         secondNameTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
-        searchAuthorDialog.add(searchAuthorPanel);
+        dialog.add(panel);
         deleteConstraints.gridy = 0;
-        searchAuthorPanel.add(new JLabel("Pesquisar Autor"), deleteConstraints);
+        panel.add(new JLabel("Pesquisar Autor"), deleteConstraints);
         deleteConstraints.gridy = 1;
-        searchAuthorPanel.add(new JLabel("Primeiro nome"), deleteConstraints);
-        searchAuthorPanel.add(firstNameTextField, deleteConstraints);
+        panel.add(new JLabel("Primeiro nome"), deleteConstraints);
+        panel.add(firstNameTextField, deleteConstraints);
         deleteConstraints.gridy = 2;
-        searchAuthorPanel.add(new JLabel("Segundo nome"), deleteConstraints);
-        searchAuthorPanel.add(secondNameTextField, deleteConstraints);
+        panel.add(new JLabel("Segundo nome"), deleteConstraints);
+        panel.add(secondNameTextField, deleteConstraints);
         deleteConstraints.gridy = 3;
-        searchAuthorPanel.add(searchAuthorBtn, deleteConstraints);
-        searchAuthorDialog.setVisible(true);
+        panel.add(searchAuthorBtn, deleteConstraints);
+        dialog.setVisible(true);
     }
 
     public int getIdInput() {
