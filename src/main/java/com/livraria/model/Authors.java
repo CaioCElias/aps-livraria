@@ -33,7 +33,7 @@ public class Authors {
         this.name = name;
     }
 
-    public void getFName(String fName) {
+    public void setFName(String fName) {
         this.fName = fName;
     }
 }
