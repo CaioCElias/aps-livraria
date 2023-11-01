@@ -5,8 +5,7 @@ public class Publishers {
     private String name;
     private String url;
 
-    public Publishers(int publisherId, String name, String url) {
-        this.publisherId = publisherId;
+    public Publishers(String name, String url) {
         this.name = name;
         this.url = url;
     }

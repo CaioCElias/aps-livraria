@@ -1,10 +1,12 @@
 package com.livraria.controller;
 
 import com.livraria.dao.PublisherDAO;
+import com.livraria.model.Authors;
 import com.livraria.model.Publishers;
 import com.livraria.view.PublisherView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public class PublisherController {
@@ -20,6 +22,16 @@ public class PublisherController {
         publisherView.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String name = publisherView.getNameInput();
+				String url = publisherView.getUrlInput();
+				
+				Publishers publisher = new Publishers(name, url);
+
+				try {
+					publisherDao.addPublishers(publisher);
+				} catch (SQLIntegrityConstraintViolationException e1) {
+					e1.printStackTrace();
+				}
                 System.out.println("Botão funcionando");
             }
         });

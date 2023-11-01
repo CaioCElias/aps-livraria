@@ -6,7 +6,6 @@ public class Authors {
     private String fName;
 
     public Authors(String name, String fName) {
-        // this.authorId = authorId;
         this.name = name;
         this.fName = fName;
     }
