@@ -41,8 +41,12 @@ public class AuthorController {
             public void actionPerformed(ActionEvent e) {
                 String name = authorView.getNameInput();
                 List<Authors> authorsList = authorDao.searchAuthorsTitle(name);
-                for(int i = 0; i < authorsList.size(); i++) {
-                    System.out.println(authorsList.get(i).getName());
+                for (Authors author : authorsList) {
+                    String nome = author.getName();
+                    String sobrenome = author.getFName();
+
+                    System.out.println("Nome: " + nome);
+                    System.out.println("Sobrenome: " + sobrenome);
                 }
                 System.out.println("Botão funcionando");
             }
