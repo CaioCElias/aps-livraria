@@ -38,6 +38,13 @@ public class PublisherController {
         publisherView.delActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int publisherId = publisherView.getIdInput();
+
+				try {
+					publisherDao.deletePublisherAndBooks(publisherId);
+				} catch (SQLIntegrityConstraintViolationException e1) {
+					e1.printStackTrace();
+				}
                 System.out.println("Botão funcionando");
             }
         });
