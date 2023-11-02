@@ -67,4 +67,54 @@ public List<Books> searchBooksTitle(String name) {
 		
 		return false;
 	}
+
+	public boolean deleteBooksAuthors(String isbn) throws SQLIntegrityConstraintViolationException {
+		
+		Books bookauhtor = null;
+		
+		try(Connection dbconn = DriverManager.getConnection(URL, USER, PASS)){
+			
+			String query = "DELETE FROM BooksAuthors WHERE isbn = ?";
+			
+			PreparedStatement statement = dbconn.prepareStatement(query);
+			statement.setString(1, isbn);
+			
+			int res = statement.executeUpdate();
+			System.out.println("resultado: " + res);
+			return res > 0;
+		}catch(SQLIntegrityConstraintViolationException e) {
+			System.out.println("Nao foi possivel apagar: " + e.getMessage());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return true;
+		
+	}
+
+	public boolean deleteBooks(String isbn) throws SQLIntegrityConstraintViolationException {
+		
+		Books book = null;
+		
+		try(Connection dbconn = DriverManager.getConnection(URL, USER, PASS)){
+			
+			String query = "DELETE FROM Books WHERE isbn = ?";
+			
+			PreparedStatement statement = dbconn.prepareStatement(query);
+			statement.setString(1, isbn);
+			
+			int res = statement.executeUpdate();
+			System.out.println("resultado: " + res);
+			return res > 0;
+		}catch(SQLIntegrityConstraintViolationException e) {
+			System.out.println("Nao foi possivel apagar: " + e.getMessage());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return true;
+		
+	}
 }
