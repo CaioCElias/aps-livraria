@@ -5,12 +5,15 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 public class BookView implements ViewInterface {
 
     private final JDialog dialog = new JDialog();
     private JPanel panel;
     private GridBagConstraints constraints = new GridBagConstraints();
+    private DefaultTableModel tableModel;
+    private JTable table;
 
     private JTextField titleTextField;
     private JTextField isbnTextField;
@@ -30,10 +33,26 @@ public class BookView implements ViewInterface {
         delBookBtn = new JButton("Excluir");
         modifyBookBtn = new JButton("Modificar");
         searchBookBtn = new JButton("Pesquisar");
+
+        //Inicializa a tabela de busca de livros
+        String[] columnNames = {"Título", "Editora", "Preço"};
+        tableModel = new DefaultTableModel(columnNames, 0);
+    }
+
+    private Vector<String> getColumnIdentifiers(DefaultTableModel model) {
+        Vector<String> columnIdentifiers = new Vector<>();
+        int columnCount = model.getColumnCount();
+        for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
+            columnIdentifiers.add(model.getColumnName(columnIndex));
+        }
+        return columnIdentifiers;
     }
 
     public void clearDialog(JDialog dialog) {
         dialog.getContentPane().removeAll();
+    }
+    private void clearTable() {
+        tableModel.setRowCount(0);
     }
 
     // Popup de Inclusão de livro
@@ -159,33 +178,36 @@ public class BookView implements ViewInterface {
     public String getPublisherInput() {
         return this.publisherTextField.getText();
     }
-    public JDialog getDialog() {
-        return this.dialog;
-    }
-    public JPanel getPanel() {
-        return this.panel;
-    }
-    public GridBagConstraints getConstraints() {
-        return this.constraints;
-    }
 
-    public void showBookList(JList list, DefaultTableModel model) {
+    public void showBookList(DefaultTableModel model) {
+        // remove a tabela para que outro seja inserido no lugar
+        Component[] components = panel.getComponents();
+        for (Component component : components) {
+            if ("bookScrollPane".equals(component.getName())) {
+                panel.remove(component);
+                break; // Assuming there's only one table with this name
+            }
+        }
         dialog.setSize(1100, 250);
         constraints.gridy = 1;
-        // Create the table
+        // cria uma nova tabela
         JTable table = new JTable(model);
         table.setPreferredScrollableViewportSize(new Dimension(500, 200));
         table.setFillsViewportHeight(true);
-        // Set the preferred width of each column
+        // define a largura de cada coluna
         TableColumnModel columnModel = table.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(400);
         columnModel.getColumn(1).setPreferredWidth(50);
         columnModel.getColumn(2).setPreferredWidth(50);
-        // Create the scroll pane
+        // cria um novo ScrollPane
         JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setName("bookScrollPane");
         scrollPane.setPreferredSize(new Dimension(500, 100));
-        // Add the scroll pane to the panel
+        // adiciona o scrollPane ao painel
         panel.add(scrollPane, constraints);
+        // Atualiza o painel
+        panel.revalidate();
+        panel.repaint();
     }
 
     // listeners dos botões

@@ -81,15 +81,12 @@ public class BookController {
 				for(Books book : searchBookList) {
 					listModel.addElement(book);
 				}
-				JList list = new JList(listModel);
-
 				String[] columnNames = {"Título", "Editora", "Preço"};
 				DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 				for (Books book : searchBookList) {
 					model.addRow(new Object[]{book.getTitle(), book.getPublisherId(), book.getPrice()});
 				}
-				JTable table = new JTable(model);
-				bookView.showBookList(list, model);
+				bookView.showBookList(model);
 			}
 		});
 	}
