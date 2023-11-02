@@ -7,12 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Statement;
 
 import com.livraria.model.Authors;
+import com.livraria.model.Books;
 
 public class AuthorDAO extends ConnectionDAO {
     
-        public List<Authors> searchAuthorsTitle(String name) {
+        public List<Authors> searchAuthorsTitle(String name, String fName) {
 
         List<Authors> searchAuthorList = new ArrayList<>();
 
@@ -21,15 +23,18 @@ public class AuthorDAO extends ConnectionDAO {
             String query = ""
                     + "SELECT * FROM authors "
                     + "WHERE LOWER(name) "
+                    + "LIKE LOWER(?) "
+                    + "AND LOWER(fName) "
                     + "LIKE LOWER(?)";
 
             PreparedStatement statement = dbconn.prepareStatement(query);
             statement.setString(1, '%'+name+'%');
+            statement.setString(2, '%'+fName+'%');  
 
             ResultSet rs = statement.executeQuery();
             while(rs.next()) {
                 System.out.println("WHILE TA FUNCIONANDO"); // DE TESTE
-                Authors author = new Authors(Integer.parseInt(rs.getString("author_id")),
+                Authors author = new Authors(
                         rs.getString("name"), rs.getString("fName"));
                 searchAuthorList.add(author);
             }
@@ -43,5 +48,32 @@ public class AuthorDAO extends ConnectionDAO {
         System.out.println(searchAuthorList.get(0));
         return searchAuthorList;
 
+    }
+
+    public boolean addAuthors(Authors author) throws SQLIntegrityConstraintViolationException {
+
+        try (Connection dbconn = DriverManager.getConnection(URL, USER, PASS)) {
+            String query = "INSERT INTO Authors(name, fName) VALUES (?, ?)";
+            PreparedStatement statement = dbconn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+    
+            statement.setString(1, author.getName());
+            statement.setString(2, author.getFName());
+    
+            int rowsInserted = statement.executeUpdate();
+    
+            if (rowsInserted > 0) {
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    int generatedAuthorId = generatedKeys.getInt(1);
+                    author.setAuthorId(generatedAuthorId);
+                }
+                return true;
+            }
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Não foi possível adicionar o autor: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

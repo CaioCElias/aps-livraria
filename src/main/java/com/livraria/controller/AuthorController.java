@@ -4,9 +4,11 @@ import com.livraria.dao.AuthorDAO;
 import com.livraria.view.AuthorView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import com.livraria.model.Authors;
+import com.livraria.model.Books;
 
 public class AuthorController {
     AuthorDAO authorDao;
@@ -21,6 +23,16 @@ public class AuthorController {
         authorView.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String name = authorView.getNameInput();
+				String fName = authorView.getFNameInput();
+				
+				Authors author = new Authors(name, fName);
+
+				try {
+					authorDao.addAuthors(author);
+				} catch (SQLIntegrityConstraintViolationException e1) {
+					e1.printStackTrace();
+				}
                 System.out.println("Botão funcionando");
             }
         });
@@ -40,13 +52,14 @@ public class AuthorController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String name = authorView.getNameInput();
-                List<Authors> authorsList = authorDao.searchAuthorsTitle(name);
+                String fName = authorView.getFNameInput();
+                List<Authors> authorsList = authorDao.searchAuthorsTitle(name, fName);
                 for (Authors author : authorsList) {
-                    String nome = author.getName();
-                    String sobrenome = author.getFName();
+                    String authorsName = author.getName();
+                    String authorsLastName = author.getFName();
 
-                    System.out.println("Nome: " + nome);
-                    System.out.println("Sobrenome: " + sobrenome);
+                    System.out.println("Nome: " + authorsName);
+                    System.out.println("Sobrenome: " + authorsLastName);
                 }
                 System.out.println("Botão funcionando");
             }

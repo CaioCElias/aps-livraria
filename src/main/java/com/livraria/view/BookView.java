@@ -173,7 +173,7 @@ public class BookView implements ViewInterface {
         return this.isbnTextField.getText();
     }
     public String getPriceInput() {
-        return this.isbnTextField.getText();
+        return this.priceTextField.getText();
     }
     public String getPublisherInput() {
         return this.publisherTextField.getText();
