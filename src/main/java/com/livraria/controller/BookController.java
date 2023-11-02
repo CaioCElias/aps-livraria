@@ -3,34 +3,12 @@ package com.livraria.controller;
 import com.livraria.dao.BookDAO;
 import com.livraria.model.Books;
 import com.livraria.view.BookView;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.print.Book;
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.ArrayList;
 import java.util.List;
-
-class ArrayListModel<T> extends AbstractListModel<T> {
-	private ArrayList<T> list;
-
-	public ArrayListModel(ArrayList<T> list) {
-		this.list = list;
-	}
-
-	@Override
-	public int getSize() {
-		return list.size();
-	}
-
-	@Override
-	public T getElementAt(int index) {
-		return list.get(index);
-	}
-}
 
 public class BookController {
     BookDAO bookDao;
@@ -78,15 +56,17 @@ public class BookController {
 				String title = bookView.getTitleInput();
 				List<Books> searchBookList = bookDao.searchBooksTitle(title);
 				DefaultListModel listModel = new DefaultListModel();
+				// guarda as instâncias de livros em listModel
 				for(Books book : searchBookList) {
 					listModel.addElement(book);
 				}
+				//adiciona as colunas da tabela
 				String[] columnNames = {"Título", "Editora", "Preço"};
 				DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 				for (Books book : searchBookList) {
 					model.addRow(new Object[]{book.getTitle(), book.getPublisherId(), book.getPrice()});
 				}
-				bookView.showBookList(model);
+				bookView.showSearchResult(model);
 			}
 		});
 	}

@@ -9,6 +9,10 @@ public interface ViewInterface {
     void modifyPopup();
     void  searchPopup();
 
+    //void clearDialog();
+    //void clearSearchPane();
+    //void showSearchResult();
+
     void addActionListener(ActionListener l);
     void delActionListener(ActionListener l);
     void modifyActionListener(ActionListener l);

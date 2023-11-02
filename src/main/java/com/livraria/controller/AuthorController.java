@@ -10,6 +10,9 @@ import java.util.List;
 import com.livraria.model.Authors;
 import com.livraria.model.Books;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 public class AuthorController {
     AuthorDAO authorDao;
     AuthorView authorView;
@@ -53,15 +56,19 @@ public class AuthorController {
             public void actionPerformed(ActionEvent e) {
                 String name = authorView.getNameInput();
                 String fName = authorView.getFNameInput();
-                List<Authors> authorsList = authorDao.searchAuthorsTitle(name, fName);
-                for (Authors author : authorsList) {
-                    String authorsName = author.getName();
-                    String authorsLastName = author.getFName();
-
-                    System.out.println("Nome: " + authorsName);
-                    System.out.println("Sobrenome: " + authorsLastName);
+                List<Authors> searchAuthorsList = authorDao.searchAuthorsTitle(name, fName);
+                DefaultListModel listModel = new DefaultListModel();
+                // guarda as instâncias de autores em listModel
+                for (Authors author : searchAuthorsList) {
+                    listModel.addElement(author);
                 }
-                System.out.println("Botão funcionando");
+                //adiciona as colunas da tabela
+                String[] columnNames = {"Nome", "Sobrenome"};
+                DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+                for (Authors author : searchAuthorsList) {
+                    model.addRow(new Object[]{author.getName(), author.getFName()});
+                }
+                authorView.showSearchResult(model);
             }
         });
     }

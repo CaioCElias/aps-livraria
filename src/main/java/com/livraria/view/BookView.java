@@ -5,15 +5,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.Vector;
 
 public class BookView implements ViewInterface {
 
     private final JDialog dialog = new JDialog();
     private JPanel panel;
     private GridBagConstraints constraints = new GridBagConstraints();
-    private DefaultTableModel tableModel;
-    private JTable table;
 
     private JTextField titleTextField;
     private JTextField isbnTextField;
@@ -33,26 +30,20 @@ public class BookView implements ViewInterface {
         delBookBtn = new JButton("Excluir");
         modifyBookBtn = new JButton("Modificar");
         searchBookBtn = new JButton("Pesquisar");
-
-        //Inicializa a tabela de busca de livros
-        String[] columnNames = {"Título", "Editora", "Preço"};
-        tableModel = new DefaultTableModel(columnNames, 0);
-    }
-
-    private Vector<String> getColumnIdentifiers(DefaultTableModel model) {
-        Vector<String> columnIdentifiers = new Vector<>();
-        int columnCount = model.getColumnCount();
-        for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
-            columnIdentifiers.add(model.getColumnName(columnIndex));
-        }
-        return columnIdentifiers;
     }
 
     public void clearDialog(JDialog dialog) {
         dialog.getContentPane().removeAll();
     }
-    private void clearTable() {
-        tableModel.setRowCount(0);
+
+    public void clearSearchPane() {
+        Component[] components = panel.getComponents();
+        for (Component component : components) {
+            if ("bookScrollPane".equals(component.getName())) {
+                panel.remove(component);
+                break;
+            }
+        }
     }
 
     // Popup de Inclusão de livro
@@ -179,15 +170,9 @@ public class BookView implements ViewInterface {
         return this.publisherTextField.getText();
     }
 
-    public void showBookList(DefaultTableModel model) {
-        // remove a tabela para que outro seja inserido no lugar
-        Component[] components = panel.getComponents();
-        for (Component component : components) {
-            if ("bookScrollPane".equals(component.getName())) {
-                panel.remove(component);
-                break; // Assuming there's only one table with this name
-            }
-        }
+    public void showSearchResult(DefaultTableModel model) {
+        // remove a tabela para que outra seja inserida no lugar
+        clearSearchPane();
         dialog.setSize(1100, 250);
         constraints.gridy = 1;
         // cria uma nova tabela
