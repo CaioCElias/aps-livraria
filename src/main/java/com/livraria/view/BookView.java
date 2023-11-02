@@ -70,7 +70,7 @@ public class BookView implements ViewInterface {
         deleteBookDialog.setSize(450, 150);
         JPanel delBookPanel = new JPanel(new GridBagLayout());
         GridBagConstraints deleteConstraints = new GridBagConstraints();
-        JTextField isbnTextField = new JTextField(20);
+        isbnTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
         deleteBookDialog.add(delBookPanel);
