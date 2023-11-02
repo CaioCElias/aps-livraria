@@ -51,4 +51,10 @@ public class Books {
     public void setBookList(List<Books> bookList) {
         this.bookList = bookList;
     }
+
+    @Override
+    public String toString() {
+        String bookData = this.getTitle() + "    R$ " + this.getPrice() + "    " + this.getPublisherId();
+        return bookData;
+    }
 }

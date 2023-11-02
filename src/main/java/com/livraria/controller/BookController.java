@@ -5,11 +5,32 @@ import com.livraria.model.Books;
 import com.livraria.view.BookView;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.Book;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
 import java.util.List;
+
+class ArrayListModel<T> extends AbstractListModel<T> {
+	private ArrayList<T> list;
+
+	public ArrayListModel(ArrayList<T> list) {
+		this.list = list;
+	}
+
+	@Override
+	public int getSize() {
+		return list.size();
+	}
+
+	@Override
+	public T getElementAt(int index) {
+		return list.get(index);
+	}
+}
 
 public class BookController {
     BookDAO bookDao;
@@ -56,16 +77,19 @@ public class BookController {
 			public void actionPerformed(ActionEvent e) {
 				String title = bookView.getTitleInput();
 				List<Books> searchBookList = bookDao.searchBooksTitle(title);
-				JList list = new JList((ListModel) searchBookList);
-				//exibir searchBookList
-				bookView.showBookList(list);
-				//bookView.getDialog().setSize(750, 250);
-				//bookView.getPanel().add(new JList((ListModel) searchBookList));
-				//list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-				//list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-				//list.setVisibleRowCount(-1);
-				//JScrollPane listScroller = new JScrollPane(list);
-				//listScroller.setPreferredSize(new Dimension(250, 80));
+				DefaultListModel listModel = new DefaultListModel();
+				for(Books book : searchBookList) {
+					listModel.addElement(book);
+				}
+				JList list = new JList(listModel);
+
+				String[] columnNames = {"Título", "Editora", "Preço"};
+				DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+				for (Books book : searchBookList) {
+					model.addRow(new Object[]{book.getTitle(), book.getPublisherId(), book.getPrice()});
+				}
+				JTable table = new JTable(model);
+				bookView.showBookList(list, model);
 			}
 		});
 	}

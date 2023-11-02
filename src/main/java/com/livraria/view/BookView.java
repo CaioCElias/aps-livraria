@@ -1,6 +1,8 @@
 package com.livraria.view;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -20,7 +22,7 @@ public class BookView implements ViewInterface {
     JButton modifyBookBtn;
     JButton searchBookBtn;
 
-    //recebe os autores com seus respectivos nomes
+    // recebe os autores com seus respectivos nomes
     String[] authors = {"Caio", "Gustavo"};
 
     public BookView() {
@@ -34,7 +36,7 @@ public class BookView implements ViewInterface {
         dialog.getContentPane().removeAll();
     }
 
-    //Popup de Inclusão de livro
+    // Popup de Inclusão de livro
     public void addPopup() {
         clearDialog(dialog);
         dialog.setTitle("Livraria UNIP");
@@ -71,7 +73,7 @@ public class BookView implements ViewInterface {
         dialog.setVisible(true);
     }
 
-    //Popup de exclusão de livro
+    // Popup de exclusão de livro
     public void deletePopup() {
         clearDialog(dialog);
         dialog.setTitle("Livraria UNIP");
@@ -167,18 +169,26 @@ public class BookView implements ViewInterface {
         return this.constraints;
     }
 
-    public void showBookList(JList list) {
-        dialog.setSize(750, 250);
+    public void showBookList(JList list, DefaultTableModel model) {
+        dialog.setSize(1100, 250);
         constraints.gridy = 1;
-        panel.add(new JList((ListModel) list));
-        list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-        list.setVisibleRowCount(-1);
-        JScrollPane listScroller = new JScrollPane(list);
-        listScroller.setPreferredSize(new Dimension(250, 200));
+        // Create the table
+        JTable table = new JTable(model);
+        table.setPreferredScrollableViewportSize(new Dimension(500, 200));
+        table.setFillsViewportHeight(true);
+        // Set the preferred width of each column
+        TableColumnModel columnModel = table.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(400);
+        columnModel.getColumn(1).setPreferredWidth(50);
+        columnModel.getColumn(2).setPreferredWidth(50);
+        // Create the scroll pane
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setPreferredSize(new Dimension(500, 100));
+        // Add the scroll pane to the panel
+        panel.add(scrollPane, constraints);
     }
 
-    //listeners dos botões
+    // listeners dos botões
     public void addActionListener(ActionListener l) {
         addBookBtn.addActionListener(l);
     }
