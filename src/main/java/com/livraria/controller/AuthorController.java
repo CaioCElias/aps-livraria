@@ -42,6 +42,13 @@ public class AuthorController {
         authorView.delActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int authorId = authorView.getIdInput();
+
+				try {
+					authorDao.deleteAuthorsAndBooks(authorId);
+				} catch (SQLIntegrityConstraintViolationException e1) {
+					e1.printStackTrace();
+				}
                 System.out.println("Botão funcionando");
             }
         });

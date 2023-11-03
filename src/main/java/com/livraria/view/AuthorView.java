@@ -10,7 +10,7 @@ public class AuthorView implements ViewInterface {
 
     JDialog dialog = new JDialog();
     JPanel panel;
-    private GridBagConstraints constraints = new GridBagConstraints();
+    private final GridBagConstraints constraints = new GridBagConstraints();
 
     JTextField authorIdField;
     JTextField firstNameTextField;

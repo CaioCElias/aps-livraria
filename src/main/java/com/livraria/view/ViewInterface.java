@@ -1,17 +1,18 @@
 package com.livraria.view;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 
 public interface ViewInterface {
     void addPopup();
     void deletePopup();
     void modifyPopup();
-    void  searchPopup();
+    void searchPopup();
 
-    //void clearDialog();
-    //void clearSearchPane();
-    //void showSearchResult();
+    void clearDialog(JDialog dialog);
+    void clearSearchPane();
+    void showSearchResult(DefaultTableModel model);
 
     void addActionListener(ActionListener l);
     void delActionListener(ActionListener l);

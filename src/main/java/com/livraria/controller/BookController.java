@@ -41,6 +41,14 @@ public class BookController {
 		bookView.delActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				String isbn = bookView.getIsbnInput();
+
+				try {
+					bookDao.deleteBooksAuthors(isbn);
+					bookDao.deleteBooks(isbn);
+				} catch (SQLIntegrityConstraintViolationException e1) {
+					e1.printStackTrace();
+				}
 				System.out.println("Botão funcionando");
 			}
 		});

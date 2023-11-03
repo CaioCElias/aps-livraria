@@ -68,4 +68,38 @@ public class PublisherDAO extends ConnectionDAO {
         }
         return false;
     }
+
+
+    public boolean deletePublisherAndBooks(int publisherId) throws SQLIntegrityConstraintViolationException {
+        try (Connection dbconn = DriverManager.getConnection(URL, USER, PASS)) {
+            dbconn.setAutoCommit(false);
+    
+            String deleteBooksAuthorsQuery = "DELETE FROM BooksAuthors WHERE isbn IN (SELECT isbn FROM Books WHERE publisher_id = ?)";
+            PreparedStatement booksAuthorsStatement = dbconn.prepareStatement(deleteBooksAuthorsQuery);
+            booksAuthorsStatement.setInt(1, publisherId);
+            int booksAuthorsDeleted = booksAuthorsStatement.executeUpdate();
+            booksAuthorsStatement.close();
+    
+            String deleteBooksQuery = "DELETE FROM Books WHERE publisher_id = ?";
+            PreparedStatement booksStatement = dbconn.prepareStatement(deleteBooksQuery);
+            booksStatement.setInt(1, publisherId);
+            int booksDeleted = booksStatement.executeUpdate();
+            booksStatement.close();
+    
+            String deletePublisherQuery = "DELETE FROM Publishers WHERE publisher_id = ?";
+            PreparedStatement publisherStatement = dbconn.prepareStatement(deletePublisherQuery);
+            publisherStatement.setInt(1, publisherId);
+            int publisherDeleted = publisherStatement.executeUpdate();
+            publisherStatement.close();
+    
+            // Passo 4: Confirmar a transação
+            dbconn.commit();
+    
+            // Se todos os passos forem bem-sucedidos, retorne true
+            return (booksAuthorsDeleted > 0) && (booksDeleted > 0) && (publisherDeleted > 0);
+        } catch (SQLException e) {
+            System.out.println("Não foi possível apagar: " + e.getMessage());
+        }
+        return false;
+    }
 }

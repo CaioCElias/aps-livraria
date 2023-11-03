@@ -76,4 +76,43 @@ public class AuthorDAO extends ConnectionDAO {
         }
         return false;
     }
+
+    public boolean deleteAuthorsAndBooks(int authorId) throws SQLIntegrityConstraintViolationException {
+		
+		Authors author = null;
+		
+		try(Connection dbconn = DriverManager.getConnection(URL, USER, PASS)){
+            dbconn.setAutoCommit(false);
+			
+			String firstQuery = "DELETE FROM BooksAuthors WHERE author_id = ?";
+			PreparedStatement firstStatement = dbconn.prepareStatement(firstQuery);
+			firstStatement.setInt(1, authorId);
+			int firstRes = firstStatement.executeUpdate();
+            firstStatement.close();
+
+            String secondQuery = "DELETE FROM Books WHERE isbn NOT IN (SELECT isbn FROM BooksAuthors)";
+			PreparedStatement secondStatement = dbconn.prepareStatement(secondQuery);
+			// secondStatement.setInt(1, authorId);
+			int secondRes = secondStatement.executeUpdate();
+            secondStatement.close();
+
+            String thirdQuery = "DELETE FROM Authors WHERE author_id = ?";
+			PreparedStatement thirdStatement = dbconn.prepareStatement(thirdQuery);
+			thirdStatement.setInt(1, authorId);
+			int thirdRes = thirdStatement.executeUpdate();
+            thirdStatement.close();
+
+            dbconn.commit();
+
+			return (firstRes > 0) && (secondRes > 0) && (thirdRes > 0);
+		}catch(SQLIntegrityConstraintViolationException e) {
+			System.out.println("Nao foi possivel apagar: " + e.getMessage());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+		
+	}
 }
