@@ -12,6 +12,7 @@ public class PublisherView implements ViewInterface {
     JPanel panel;
     private GridBagConstraints constraints = new GridBagConstraints();
 
+    JLabel outputMsg;
     JTextField idTextField;
     JTextField nameTextField;
     JTextField urlTextField;
@@ -42,7 +43,12 @@ public class PublisherView implements ViewInterface {
         }
     }
 
+    public void showMessage(String message) {
+        outputMsg.setText(message);
+    }
+
     public void addPopup() {
+        showMessage("");
         clearDialog(dialog);
         dialog.setTitle("Livraria UNIP");
         dialog.setSize(450, 300);
@@ -61,11 +67,16 @@ public class PublisherView implements ViewInterface {
         constraints.gridy = 2;
         panel.add(new JLabel("Site"), constraints);
         panel.add(urlTextField, constraints);
+        //mensagem de output após ação do usuário
         constraints.gridy = 3;
+        panel.add(outputMsg, constraints);
+
+        constraints.gridy = 4;
         panel.add(addPublisherBtn, constraints);
         dialog.setVisible(true);
     }
     public void deletePopup() {
+        showMessage("");
         clearDialog(dialog);
         dialog.setTitle("Livraria UNIP");
         dialog.setSize(450, 150);
@@ -77,7 +88,11 @@ public class PublisherView implements ViewInterface {
         dialog.add(panel);
         constraints.gridy = 0;
         panel.add(new JLabel("Excluir Editora"), constraints);
+        //mensagem de output após ação do usuário
         constraints.gridy = 1;
+        panel.add(outputMsg, constraints);
+
+        constraints.gridy = 2;
         panel.add(idTextField, constraints);
         panel.add(delPublisherBtn, constraints);
         dialog.setVisible(true);
@@ -89,8 +104,8 @@ public class PublisherView implements ViewInterface {
         dialog.setSize(450, 300);
         panel = new JPanel(new GridBagLayout());
         constraints = new GridBagConstraints();
-        JTextField nameTextField = new JTextField(20);
-        JTextField siteTextField = new JTextField(20);
+        nameTextField = new JTextField(20);
+        urlTextField = new JTextField(20);
         int padding = 10;
         constraints.insets = new Insets(padding, padding, padding, padding);
         dialog.add(panel);
@@ -101,12 +116,13 @@ public class PublisherView implements ViewInterface {
         panel.add(nameTextField, constraints);
         constraints.gridy = 2;
         panel.add(new JLabel("Site"), constraints);
-        panel.add(siteTextField, constraints);
+        panel.add(urlTextField, constraints);
         constraints.gridy = 3;
         panel.add(addPublisherBtn, constraints);
         dialog.setVisible(true);
     }
     public void searchPopup() {
+        showMessage("");
         clearDialog(dialog);
         dialog.setTitle("Livraria UNIP");
         dialog.setSize(550, 200);

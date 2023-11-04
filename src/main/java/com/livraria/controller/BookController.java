@@ -20,6 +20,7 @@ public class BookController {
 	}
 
 	public void startBookController() {
+		// listener para o botão de adicionar livros
 		bookView.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -31,47 +32,56 @@ public class BookController {
 				Books book = new Books(title, isbn, publisher_id, price);
 
 				try {
-					bookDao.addBooks(book);
+					boolean res = bookDao.addBooks(book);
+					if(res) {
+						bookView.showMessage("Livro adicionado com sucesso");
+					} else {
+						bookView.showMessage("Não foi possível adicionar o livro");
+					}
 				} catch (SQLIntegrityConstraintViolationException e1) {
+					bookView.showMessage("Não foi possível adicionar o livro");
 					e1.printStackTrace();
 				}
-				System.out.println("Botão funcionando");
 			}
 		});
+		// listener para o botão de excluir livros
 		bookView.delActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String isbn = bookView.getIsbnInput();
-
+				System.out.println(isbn);
 				try {
-					bookDao.deleteBooksAuthors(isbn);
-					bookDao.deleteBooks(isbn);
+					boolean res1 = bookDao.deleteBooksAuthors(isbn);
+					boolean res2 = bookDao.deleteBooks(isbn);
+					if(res2) {
+						bookView.showMessage("Livro excluído com sucesso");
+					} else {
+						bookView.showMessage("Não foi possível excluir o livro");
+					}
 				} catch (SQLIntegrityConstraintViolationException e1) {
 					e1.printStackTrace();
 				}
-				System.out.println("Botão funcionando");
 			}
 		});
+		// listener para o botão de modificar livros
 		bookView.modifyActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Botão funcionando");
 			}
 		});
+		// listener para o botão de pesquisar livros
 		bookView.searchActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String title = bookView.getTitleInput();
 				List<Books> searchBookList = bookDao.searchBooksTitle(title);
 				DefaultListModel listModel = new DefaultListModel();
-				// guarda as instâncias de livros em listModel
-				for(Books book : searchBookList) {
-					listModel.addElement(book);
-				}
-				//adiciona as colunas da tabela
 				String[] columnNames = {"Título", "Editora", "Preço"};
 				DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-				for (Books book : searchBookList) {
+				// guarda as instâncias de livros em listModel e adiciona as instâncias na tabela
+				for(Books book : searchBookList) {
+					listModel.addElement(book);
 					model.addRow(new Object[]{book.getTitle(), book.getPublisherId(), book.getPrice()});
 				}
 				bookView.showSearchResult(model);

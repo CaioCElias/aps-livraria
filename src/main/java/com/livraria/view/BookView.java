@@ -12,6 +12,7 @@ public class BookView implements ViewInterface {
     private JPanel panel;
     private GridBagConstraints constraints = new GridBagConstraints();
 
+    private JLabel outputMsg = new JLabel("");
     private JTextField titleTextField;
     private JTextField isbnTextField;
     private JTextField priceTextField;
@@ -46,11 +47,16 @@ public class BookView implements ViewInterface {
         }
     }
 
+    public void showMessage(String message) {
+        outputMsg.setText(message);
+    }
+
     // Popup de Inclusão de livro
     public void addPopup() {
+        showMessage("");
         clearDialog(dialog);
         dialog.setTitle("Livraria UNIP");
-        dialog.setSize(600, 400);
+        dialog.setSize(600, 450);
         panel = new JPanel(new GridBagLayout());
         constraints = new GridBagConstraints();
         titleTextField = new JTextField(20);
@@ -78,19 +84,24 @@ public class BookView implements ViewInterface {
         panel.add(publisherTextField, constraints);
         constraints.gridy = 5;
         panel.add(bookAuthorsBox, constraints);
+        //mensagem de output após ação do usuário
         constraints.gridy = 6;
+        panel.add(outputMsg, constraints);
+
+        constraints.gridy = 7;
         panel.add(addBookBtn, constraints);
         dialog.setVisible(true);
     }
 
     // Popup de exclusão de livro
     public void deletePopup() {
+        showMessage("");
         clearDialog(dialog);
         dialog.setTitle("Livraria UNIP");
-        dialog.setSize(450, 150);
+        dialog.setSize(450, 200);
         panel = new JPanel(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints();
-        JTextField isbnTextField = new JTextField(20);
+        constraints = new GridBagConstraints();
+        isbnTextField = new JTextField(20);
         int padding = 10;
         constraints.insets = new Insets(padding, padding, padding, padding);
         dialog.add(panel);
@@ -99,10 +110,15 @@ public class BookView implements ViewInterface {
         constraints.gridy = 1;
         panel.add(isbnTextField, constraints);
         panel.add(delBookBtn, constraints);
+        //mensagem de output após ação do usuário
+        constraints.gridy = 2;
+        panel.add(outputMsg, constraints);
+
         dialog.setVisible(true);
     }
 
     public void modifyPopup() {
+        showMessage("");
         clearDialog(dialog);
         dialog.setTitle("Livraria UNIP");
         dialog.setSize(600, 400);

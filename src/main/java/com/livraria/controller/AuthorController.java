@@ -23,6 +23,7 @@ public class AuthorController {
     }
 
     public void startAuthorController() {
+        // listener para o botão de adicionar autores
         authorView.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -39,6 +40,7 @@ public class AuthorController {
                 System.out.println("Botão funcionando");
             }
         });
+        // listener para o botão de excluir autores
         authorView.delActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -52,12 +54,14 @@ public class AuthorController {
                 System.out.println("Botão funcionando");
             }
         });
+        // listener para o botão de modificar autores
         authorView.modifyActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Botão funcionando");
             }
         });
+        // listener para o botão de pesquisar autores
         authorView.searchActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -65,14 +69,11 @@ public class AuthorController {
                 String fName = authorView.getFNameInput();
                 List<Authors> searchAuthorsList = authorDao.searchAuthorsTitle(name, fName);
                 DefaultListModel listModel = new DefaultListModel();
-                // guarda as instâncias de autores em listModel
-                for (Authors author : searchAuthorsList) {
-                    listModel.addElement(author);
-                }
-                //adiciona as colunas da tabela
                 String[] columnNames = {"Nome", "Sobrenome"};
                 DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+                // guarda as instâncias de livros em listModel e adiciona as instâncias na tabela
                 for (Authors author : searchAuthorsList) {
+                    listModel.addElement(author);
                     model.addRow(new Object[]{author.getName(), author.getFName()});
                 }
                 authorView.showSearchResult(model);
