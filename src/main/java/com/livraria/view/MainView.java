@@ -43,15 +43,15 @@ public class MainView extends JFrame {
         actionPanel.setLayout(cardLayout);
 
         //Painel geral de livros
-        bookBtns = createPanel(actionPanel, "Livros", "Pesquisar", "Incluir",
+        bookBtns = createPanel(actionPanel, "Livros", "Pesquisar", "Adicionar",
                 "Modificar", "Excluir");
 
         //Painel geral de autores
-        authorBtns = createPanel(actionPanel, "Autores", "Pesquisar", "Incluir",
+        authorBtns = createPanel(actionPanel, "Autores", "Pesquisar", "Adicionar",
                 "Modificar", "Excluir");
 
         //Painel geral de editoras
-        publisherBtns = createPanel(actionPanel, "Editoras", "Pesquisar", "Incluir",
+        publisherBtns = createPanel(actionPanel, "Editoras", "Pesquisar", "Adicionar",
                 "Modificar", "Excluir");
 
         mainFrame.add(mainPanel, BorderLayout.NORTH);

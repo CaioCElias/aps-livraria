@@ -8,7 +8,9 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import com.livraria.model.Authors;
-import com.livraria.model.Books;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class AuthorController {
     AuthorDAO authorDao;
@@ -19,57 +21,108 @@ public class AuthorController {
         this.authorView = authorView;
     }
 
-    public void startAuthorController() {
+    public void startController() {
+        // listener para o botão de adicionar autores
         authorView.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String name = authorView.getNameInput();
-				String fName = authorView.getFNameInput();
-				
-				Authors author = new Authors(name, fName);
-
-				try {
-					authorDao.addAuthors(author);
-				} catch (SQLIntegrityConstraintViolationException e1) {
-					e1.printStackTrace();
-				}
-                System.out.println("Botão funcionando");
+                try {
+                    validateInputNotEmpty(authorView.getNameInput(), authorView.getFNameInput());
+                    String name = authorView.getNameInput();
+                    String fName = authorView.getFNameInput();
+                    Authors author = new Authors(name, fName);
+                    authorDao.addAuthors(author);
+                    System.out.println("Botão funcionando");
+                } catch (SQLIntegrityConstraintViolationException ex) {
+                    ex.printStackTrace();
+                } catch (ValidationException ve) {
+                    System.out.println("Erro de validação: " + ve.getMessage());
+                }
             }
         });
+
+        // Listener para o botão de excluir autores
         authorView.delActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int authorId = authorView.getIdInput();
+                try {
+                    validateInputNotEmpty(authorView.getIdInput());
+                    validateParseInt(authorView.getIdInput());
+                    int authorId = Integer.parseInt(authorView.getIdInput());
 
-				try {
-					authorDao.deleteAuthorsAndBooks(authorId);
-				} catch (SQLIntegrityConstraintViolationException e1) {
-					e1.printStackTrace();
-				}
-                System.out.println("Botão funcionando");
+                    try {
+                        authorDao.deleteAuthorsAndBooks(authorId);
+                    } catch (SQLIntegrityConstraintViolationException e1) {
+                        e1.printStackTrace();
+                    }
+                } catch (ValidationException ve) {
+                    System.out.println("Erro de validação: " + ve.getMessage());
+                }
             }
         });
+        // listener para o botão de modificar autores
         authorView.modifyActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Botão funcionando");
             }
         });
+        // listener para o botão de pesquisar autores
         authorView.searchActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String name = authorView.getNameInput();
-                String fName = authorView.getFNameInput();
-                List<Authors> authorsList = authorDao.searchAuthorsTitle(name, fName);
-                for (Authors author : authorsList) {
-                    String authorsName = author.getName();
-                    String authorsLastName = author.getFName();
-
-                    System.out.println("Nome: " + authorsName);
-                    System.out.println("Sobrenome: " + authorsLastName);
+                try {
+                    validateInputNotEmpty(authorView.getNameInput(), authorView.getFNameInput());
+                    String name = authorView.getNameInput();
+                    String fName = authorView.getFNameInput();
+                    validateSearchOutputNotEmpty(authorDao, name, fName);
+                    List<Authors> searchAuthorsList = authorDao.searchAuthorsTitle(name, fName);
+                    DefaultListModel listModel = new DefaultListModel();
+                    String[] columnNames = {"Nome", "Sobrenome"};
+                    DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+                    // guarda as instâncias de livros em listModel e adiciona as instâncias na tabela
+                    for (Authors author : searchAuthorsList) {
+                        listModel.addElement(author);
+                        model.addRow(new Object[]{author.getName(), author.getFName()});
+                    }
+                    authorView.showSearchResult(model);
+                } catch (ValidationException ve) {
+                    System.out.println("Erro de validação: " + ve.getMessage());
                 }
-                System.out.println("Botão funcionando");
             }
         });
+    }
+
+    // Validações
+    // Verifica se algum elemento foi encontrado na busca
+    private void validateSearchOutputNotEmpty(AuthorDAO authorDao, String name, String fName) throws ValidationException {
+        try {
+            authorDao.searchAuthorsTitle(name, fName);
+        } catch (IndexOutOfBoundsException ve) {
+            throw new ValidationException("Nenhum autor encontrado");
+        }
+    }
+    // Verifica se o input não possui campos vazios
+    private void validateInputNotEmpty(String... inputs) throws ValidationException {
+        for(int i = 0; i < inputs.length; i++) {
+            if(inputs[i].equals("")) {
+                authorView.showMessage("Preencha todos os campos");
+                throw new ValidationException("Preencha todos os campos");
+            }
+        }
+    }
+    // Verifica a possibilidade de um parseInt
+    private void validateParseInt(String num) throws ValidationException {
+        try {
+            Integer.parseInt(num);
+        } catch (NumberFormatException ve) {
+            throw new ValidationException("Número inválido");
+        }
+    }
+
+    static class ValidationException extends Exception {
+        public ValidationException(String message) {
+            super(message);
+        }
     }
 }

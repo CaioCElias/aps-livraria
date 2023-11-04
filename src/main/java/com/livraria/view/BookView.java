@@ -1,11 +1,18 @@
 package com.livraria.view;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class BookView implements ViewInterface {
 
+    private final JDialog dialog = new JDialog();
+    private JPanel panel;
+    private GridBagConstraints constraints = new GridBagConstraints();
+
+    private JLabel outputMsg = new JLabel("");
     private JTextField titleTextField;
     private JTextField isbnTextField;
     private JTextField priceTextField;
@@ -16,7 +23,7 @@ public class BookView implements ViewInterface {
     JButton modifyBookBtn;
     JButton searchBookBtn;
 
-    //recebe os autores com seus respectivos nomes
+    // recebe os autores com seus respectivos nomes
     String[] authors = {"Caio", "Gustavo"};
 
     public BookView() {
@@ -26,115 +33,196 @@ public class BookView implements ViewInterface {
         searchBookBtn = new JButton("Pesquisar");
     }
 
-    //Popup de Inclusão de livro
+    public void clearDialog(JDialog dialog) {
+        dialog.getContentPane().removeAll();
+    }
+
+    public void clearSearchPane() {
+        Component[] components = panel.getComponents();
+        for (Component component : components) {
+            if ("bookScrollPane".equals(component.getName())) {
+                panel.remove(component);
+                break;
+            }
+        }
+    }
+
+    public void showMessage(String message) {
+        outputMsg.setText(message);
+    }
+
+    // Popup de Inclusão de livro
     public void addPopup() {
-        JDialog addBookDialog = new JDialog();
-        addBookDialog.setTitle("Livraria UNIP");
-        addBookDialog.setSize(600, 400);
-        JPanel addBookPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints deleteConstraints = new GridBagConstraints();
+        // Limpa a view
+        showMessage("");
+        clearDialog(dialog);
+        // Define as variáveis, tamanho e título da view
+        dialog.setTitle("Livraria UNIP");
+        dialog.setSize(600, 450);
+        panel = new JPanel(new GridBagLayout());
+        constraints = new GridBagConstraints();
         titleTextField = new JTextField(20);
         isbnTextField = new JTextField(20);
         priceTextField = new JTextField(20);
         publisherTextField = new JTextField(20);
-        //a lista de autores deve ser usada como input para a função JList
+        // A lista de autores deve ser usada como input para a função JList
         JComboBox bookAuthorsBox = new JComboBox(authors);
         int padding = 10;
-        deleteConstraints.insets = new Insets(padding, padding, padding, padding);
-        addBookDialog.add(addBookPanel);
-        deleteConstraints.gridy = 0;
-        addBookPanel.add(new JLabel("Adicionar Livro"), deleteConstraints);
-        deleteConstraints.gridy = 1;
-        addBookPanel.add(new JLabel("Título"), deleteConstraints);
-        addBookPanel.add(titleTextField, deleteConstraints);
-        deleteConstraints.gridy = 2;
-        addBookPanel.add(new JLabel("ISBN"), deleteConstraints);
-        addBookPanel.add(isbnTextField, deleteConstraints);
-        deleteConstraints.gridy = 3;
-        addBookPanel.add(new JLabel("Preço"), deleteConstraints);
-        addBookPanel.add(priceTextField, deleteConstraints);
-        deleteConstraints.gridy = 4;
-        addBookPanel.add(new JLabel("Editora"), deleteConstraints);
-        addBookPanel.add(publisherTextField, deleteConstraints);
-        deleteConstraints.gridy = 5;
-        addBookPanel.add(bookAuthorsBox, deleteConstraints);
-        deleteConstraints.gridy = 6;
-        addBookPanel.add(addBookBtn, deleteConstraints);
-        addBookDialog.setVisible(true);
+        constraints.insets = new Insets(padding, padding, padding, padding);
+        // Adiciona os elementos ao painel da view
+        dialog.add(panel);
+        constraints.gridy = 0;
+        panel.add(new JLabel("Adicionar Livro"), constraints);
+        constraints.gridy = 1;
+        panel.add(new JLabel("Título"), constraints);
+        panel.add(titleTextField, constraints);
+        constraints.gridy = 2;
+        panel.add(new JLabel("ISBN"), constraints);
+        panel.add(isbnTextField, constraints);
+        constraints.gridy = 3;
+        panel.add(new JLabel("Preço"), constraints);
+        panel.add(priceTextField, constraints);
+        constraints.gridy = 4;
+        panel.add(new JLabel("Editora"), constraints);
+        panel.add(publisherTextField, constraints);
+        constraints.gridy = 5;
+        panel.add(bookAuthorsBox, constraints);
+
+        //mensagem de output após ação do usuário
+        constraints.gridy = 6;
+        panel.add(outputMsg, constraints);
+
+        constraints.gridy = 7;
+        panel.add(addBookBtn, constraints);
+        dialog.setVisible(true);
     }
 
-    //Popup de exclusão de livro
+    // Popup de exclusão de livro
     public void deletePopup() {
-        JDialog deleteBookDialog = new JDialog();
-        deleteBookDialog.setTitle("Livraria UNIP");
-        deleteBookDialog.setSize(450, 150);
-        JPanel delBookPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints deleteConstraints = new GridBagConstraints();
+        // Limpa a view
+        showMessage("");
+        clearDialog(dialog);
+        // Define as variáveis, tamanho e título da view
+        dialog.setTitle("Livraria UNIP");
+        dialog.setSize(450, 200);
+        panel = new JPanel(new GridBagLayout());
+        constraints = new GridBagConstraints();
         isbnTextField = new JTextField(20);
         int padding = 10;
-        deleteConstraints.insets = new Insets(padding, padding, padding, padding);
-        deleteBookDialog.add(delBookPanel);
-        deleteConstraints.gridy = 0;
-        delBookPanel.add(new JLabel("Excluir Livro"), deleteConstraints);
-        deleteConstraints.gridy = 1;
-        delBookPanel.add(isbnTextField, deleteConstraints);
-        delBookPanel.add(delBookBtn, deleteConstraints);
-        deleteBookDialog.setVisible(true);
+        constraints.insets = new Insets(padding, padding, padding, padding);
+        // Adiciona os elementos ao painel da view
+        dialog.add(panel);
+        constraints.gridy = 0;
+        panel.add(new JLabel("Excluir Livro"), constraints);
+        constraints.gridy = 1;
+        panel.add(isbnTextField, constraints);
+        panel.add(delBookBtn, constraints);
+
+        //mensagem de output após ação do usuário
+        constraints.gridy = 2;
+        panel.add(outputMsg, constraints);
+
+        dialog.setVisible(true);
     }
 
     public void modifyPopup() {
-        JDialog modifyBookDialog = new JDialog();
-        modifyBookDialog.setTitle("Livraria UNIP");
-        modifyBookDialog.setSize(600, 400);
-        JPanel modifyBookPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints deleteConstraints = new GridBagConstraints();
+        // Limpa a view
+        showMessage("");
+        clearDialog(dialog);
+        // Define as variáveis, tamanho e título da view
+        dialog.setTitle("Livraria UNIP");
+        dialog.setSize(600, 400);
+        panel = new JPanel(new GridBagLayout());
+        constraints = new GridBagConstraints();
         titleTextField = new JTextField(20);
         isbnTextField = new JTextField(20);
         priceTextField = new JTextField(20);
         publisherTextField = new JTextField(20);
-        //a lista de autores deve ser usada como input para a função JList
+        // A lista de autores deve ser usada como input para a função JList
         JComboBox bookAuthorsBox = new JComboBox(authors);
         int padding = 10;
-        deleteConstraints.insets = new Insets(padding, padding, padding, padding);
-        modifyBookDialog.add(modifyBookPanel);
-        deleteConstraints.gridy = 0;
-        modifyBookPanel.add(new JLabel("Modificar Livro"), deleteConstraints);
-        deleteConstraints.gridy = 1;
-        modifyBookPanel.add(new JLabel("Título"), deleteConstraints);
-        modifyBookPanel.add(titleTextField, deleteConstraints);
-        deleteConstraints.gridy = 2;
-        modifyBookPanel.add(new JLabel("ISBN"), deleteConstraints);
-        modifyBookPanel.add(isbnTextField, deleteConstraints);
-        deleteConstraints.gridy = 3;
-        modifyBookPanel.add(new JLabel("Preço"), deleteConstraints);
-        modifyBookPanel.add(priceTextField, deleteConstraints);
-        deleteConstraints.gridy = 4;
-        modifyBookPanel.add(new JLabel("Editora"), deleteConstraints);
-        modifyBookPanel.add(publisherTextField, deleteConstraints);
-        deleteConstraints.gridy = 5;
-        modifyBookPanel.add(bookAuthorsBox, deleteConstraints);
-        deleteConstraints.gridy = 6;
-        modifyBookPanel.add(addBookBtn, deleteConstraints);
-        modifyBookDialog.setVisible(true);
+        constraints.insets = new Insets(padding, padding, padding, padding);
+        // Adiciona os elementos ao painel da view
+        dialog.add(panel);
+        constraints.gridy = 0;
+        panel.add(new JLabel("Modificar Livro"), constraints);
+        constraints.gridy = 1;
+        panel.add(new JLabel("Título"), constraints);
+        panel.add(titleTextField, constraints);
+        constraints.gridy = 2;
+        panel.add(new JLabel("ISBN"), constraints);
+        panel.add(isbnTextField, constraints);
+        constraints.gridy = 3;
+        panel.add(new JLabel("Preço"), constraints);
+        panel.add(priceTextField, constraints);
+        constraints.gridy = 4;
+        panel.add(new JLabel("Editora"), constraints);
+        panel.add(publisherTextField, constraints);
+        constraints.gridy = 5;
+        panel.add(bookAuthorsBox, constraints);
+
+        //mensagem de output após ação do usuário
+        constraints.gridy = 6;
+        panel.add(outputMsg, constraints);
+
+        constraints.gridy = 7;
+        panel.add(addBookBtn, constraints);
+        dialog.setVisible(true);
     }
     public void searchPopup() {
-        JDialog searchBookDialog = new JDialog();
-        searchBookDialog.setTitle("Livraria UNIP");
-        searchBookDialog.setSize(550, 250);
-        JPanel searchBookPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints deleteConstraints = new GridBagConstraints();
+        // Limpa a view
+        showMessage("");
+        clearDialog(dialog);
+        // Define as variáveis, tamanho e título da view
+        dialog.setTitle("Livraria UNIP");
+        dialog.setSize(550, 250);
+        panel = new JPanel(new GridBagLayout());
+        constraints = new GridBagConstraints();
         titleTextField = new JTextField(20);
         int padding = 10;
-        deleteConstraints.insets = new Insets(padding, padding, padding, padding);
-        searchBookDialog.add(searchBookPanel);
-        deleteConstraints.gridy = 0;
-        searchBookPanel.add(new JLabel("Pesquisar Livro"), deleteConstraints);
-        deleteConstraints.gridy = 1;
-        searchBookPanel.add(new JLabel("Título"), deleteConstraints);
-        searchBookPanel.add(titleTextField, deleteConstraints);
-        deleteConstraints.gridy = 2;
-        searchBookPanel.add(searchBookBtn, deleteConstraints);
-        searchBookDialog.setVisible(true);
+        constraints.insets = new Insets(padding, padding, padding, padding);
+        // Adiciona os elementos ao painel da view
+        dialog.add(panel);
+        constraints.gridy = 0;
+        panel.add(new JLabel("Pesquisar Livro"), constraints);
+        constraints.gridy = 1;
+        panel.add(new JLabel("Título"), constraints);
+        panel.add(titleTextField, constraints);
+
+        //mensagem de output após ação do usuário
+        constraints.gridy = 2;
+        panel.add(outputMsg, constraints);
+
+        constraints.gridy = 3;
+        panel.add(searchBookBtn, constraints);
+        dialog.setVisible(true);
+    }
+
+    public void showSearchResult(DefaultTableModel model) {
+        // Limpa a view
+        showMessage("");
+        clearSearchPane();
+        // Redimensiona a janela
+        dialog.setSize(1100, 300);
+        constraints.gridy = 1;
+        // Cria uma nova tabela
+        JTable table = new JTable(model);
+        table.setPreferredScrollableViewportSize(new Dimension(500, 200));
+        table.setFillsViewportHeight(true);
+        // Define a largura de cada coluna
+        TableColumnModel columnModel = table.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(400);
+        columnModel.getColumn(1).setPreferredWidth(50);
+        columnModel.getColumn(2).setPreferredWidth(50);
+        // Cria um novo ScrollPane
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setName("bookScrollPane");
+        scrollPane.setPreferredSize(new Dimension(500, 100));
+        // Adiciona o scrollPane ao painel
+        panel.add(scrollPane, constraints);
+        // Atualiza o painel
+        panel.revalidate();
+        panel.repaint();
     }
 
     public String getTitleInput() {
@@ -150,7 +238,7 @@ public class BookView implements ViewInterface {
         return this.publisherTextField.getText();
     }
 
-    //listeners dos botões
+    // Listeners dos botões
     public void addActionListener(ActionListener l) {
         addBookBtn.addActionListener(l);
     }
