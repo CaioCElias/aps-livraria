@@ -33,10 +33,12 @@ public class BookView implements ViewInterface {
         searchBookBtn = new JButton("Pesquisar");
     }
 
+    @Override
     public void clearDialog(JDialog dialog) {
         dialog.getContentPane().removeAll();
     }
 
+    @Override
     public void clearSearchPane() {
         Component[] components = panel.getComponents();
         for (Component component : components) {
@@ -52,6 +54,7 @@ public class BookView implements ViewInterface {
     }
 
     // Popup de Inclusão de livro
+    @Override
     public void addPopup() {
         // Limpa a view
         showMessage("");
@@ -96,8 +99,8 @@ public class BookView implements ViewInterface {
         panel.add(addBookBtn, constraints);
         dialog.setVisible(true);
     }
-
     // Popup de exclusão de livro
+    @Override
     public void deletePopup() {
         // Limpa a view
         showMessage("");
@@ -124,7 +127,7 @@ public class BookView implements ViewInterface {
 
         dialog.setVisible(true);
     }
-
+    @Override
     public void modifyPopup() {
         // Limpa a view
         showMessage("");
@@ -169,6 +172,7 @@ public class BookView implements ViewInterface {
         panel.add(addBookBtn, constraints);
         dialog.setVisible(true);
     }
+    @Override
     public void searchPopup() {
         // Limpa a view
         showMessage("");
@@ -197,7 +201,7 @@ public class BookView implements ViewInterface {
         panel.add(searchBookBtn, constraints);
         dialog.setVisible(true);
     }
-
+    @Override
     public void showSearchResult(DefaultTableModel model) {
         // Limpa a view
         showMessage("");
@@ -239,15 +243,19 @@ public class BookView implements ViewInterface {
     }
 
     // Listeners dos botões
+    @Override
     public void addActionListener(ActionListener l) {
         addBookBtn.addActionListener(l);
     }
+    @Override
     public void delActionListener(ActionListener l) {
         delBookBtn.addActionListener(l);
     }
+    @Override
     public void modifyActionListener(ActionListener l) {
         modifyBookBtn.addActionListener(l);
     }
+    @Override
     public void searchActionListener(ActionListener l) {
         searchBookBtn.addActionListener(l);
     }

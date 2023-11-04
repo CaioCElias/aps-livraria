@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
-public class PublisherController {
+public class PublisherController implements ControllerInterface {
     PublisherDAO publisherDao;
     PublisherView publisherView;
 
@@ -20,7 +20,7 @@ public class PublisherController {
         this.publisherView = publisherView;
     }
 
-    public void startPublisherController() {
+    public void startController() {
         // Listener para o botão de adicionar editoras
         publisherView.addActionListener(new ActionListener() {
             @Override
@@ -99,11 +99,12 @@ public class PublisherController {
         try {
             publisherDao.searchPublishersTitle(name);
         } catch (IndexOutOfBoundsException ve) {
+            publisherView.showMessage("Nenhuma editora encontrada");
             throw new ValidationException("Nenhuma editora encontrada");
         }
     }
     // Verifica se o input não possui campos vazios
-    private void validateInputNotEmpty(String... inputs) throws ValidationException {
+    public void validateInputNotEmpty(String... inputs) throws ValidationException {
         for(int i = 0; i < inputs.length; i++) {
             if(inputs[i].equals("")) {
                 publisherView.showMessage("Preencha todos os campos");
@@ -116,6 +117,7 @@ public class PublisherController {
         try {
             Integer.parseInt(num);
         } catch (NumberFormatException ve) {
+            publisherView.showMessage("Id inválido");
             throw new ValidationException("Número inválido");
         }
     }

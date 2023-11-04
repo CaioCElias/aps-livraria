@@ -12,7 +12,7 @@ import com.livraria.model.Authors;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class AuthorController {
+public class AuthorController implements ControllerInterface {
     AuthorDAO authorDao;
     AuthorView authorView;
 
@@ -99,6 +99,7 @@ public class AuthorController {
         try {
             authorDao.searchAuthorsTitle(name, fName);
         } catch (IndexOutOfBoundsException ve) {
+            authorView.showMessage("Nenhum autor encontrado");
             throw new ValidationException("Nenhum autor encontrado");
         }
     }
@@ -116,6 +117,7 @@ public class AuthorController {
         try {
             Integer.parseInt(num);
         } catch (NumberFormatException ve) {
+            authorView.showMessage("Número inválido");
             throw new ValidationException("Número inválido");
         }
     }

@@ -28,11 +28,11 @@ public class PublisherView implements ViewInterface {
         modifyPublisherBtn = new JButton("Modificar");
         searchPublisherBtn = new JButton("Pesquisar");
     }
-
+    @Override
     public void clearDialog(JDialog dialog) {
         dialog.getContentPane().removeAll();
     }
-
+    @Override
     public void clearSearchPane() {
         Component[] components = panel.getComponents();
         for (Component component : components) {
@@ -42,11 +42,11 @@ public class PublisherView implements ViewInterface {
             }
         }
     }
-
+    @Override
     public void showMessage(String message) {
         outputMsg.setText(message);
     }
-
+    @Override
     public void addPopup() {
         // Limpa a view
         showMessage("");
@@ -79,6 +79,7 @@ public class PublisherView implements ViewInterface {
         panel.add(addPublisherBtn, constraints);
         dialog.setVisible(true);
     }
+    @Override
     public void deletePopup() {
         // Limpa a view
         showMessage("");
@@ -105,7 +106,7 @@ public class PublisherView implements ViewInterface {
 
         dialog.setVisible(true);
     }
-
+    @Override
     public void modifyPopup() {
         // limpa a view
         showMessage("");
@@ -138,6 +139,7 @@ public class PublisherView implements ViewInterface {
         panel.add(modifyPublisherBtn, constraints);
         dialog.setVisible(true);
     }
+    @Override
     public void searchPopup() {
         // Limpa a view
         showMessage("");
@@ -166,9 +168,10 @@ public class PublisherView implements ViewInterface {
         panel.add(searchPublisherBtn, constraints);
         dialog.setVisible(true);
     }
-
+    @Override
     public void showSearchResult(DefaultTableModel model) {
-        // Remove a tabela para que outra seja inserida no lugar
+        // Limpa a view
+        showMessage("");
         clearSearchPane();
         // Redimensiona a janela
         dialog.setSize(1100, 300);
@@ -203,15 +206,19 @@ public class PublisherView implements ViewInterface {
     }
 
     // Listeners dos botões
+    @Override
     public void addActionListener(ActionListener l) {
         addPublisherBtn.addActionListener(l);
     }
+    @Override
     public void delActionListener(ActionListener l) {
         delPublisherBtn.addActionListener(l);
     }
+    @Override
     public void modifyActionListener(ActionListener l) {
         modifyPublisherBtn.addActionListener(l);
     }
+    @Override
     public void searchActionListener(ActionListener l) {
         searchPublisherBtn.addActionListener(l);
     }

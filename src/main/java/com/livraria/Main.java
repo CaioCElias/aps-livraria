@@ -29,7 +29,7 @@ public class Main {
         controller.startMainController();
         bookController.startController();
         authorController.startController();
-        publisherController.startPublisherController();
+        publisherController.startController();
         dao.openDatabase();
         //dao.closeDatabase();
     }

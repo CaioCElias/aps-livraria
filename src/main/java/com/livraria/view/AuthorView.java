@@ -28,11 +28,11 @@ public class AuthorView implements ViewInterface {
         modifyAuthorBtn = new JButton("Modificar");
         searchAuthorBtn = new JButton("Pesquisar");
     }
-
+    @Override
     public void clearDialog(JDialog dialog) {
         dialog.getContentPane().removeAll();
     }
-
+    @Override
     public void clearSearchPane() {
         Component[] components = panel.getComponents();
         for (Component component : components) {
@@ -42,11 +42,11 @@ public class AuthorView implements ViewInterface {
             }
         }
     }
-
+    @Override
     public void showMessage(String message) {
         outputMsg.setText(message);
     }
-
+    @Override
     public void addPopup() {
         // Limpa a view
         showMessage("");
@@ -79,8 +79,8 @@ public class AuthorView implements ViewInterface {
         panel.add(addAuthorBtn, constraints);
         dialog.setVisible(true);
     }
-
     //Popup de exclusão de autor
+    @Override
     public void deletePopup() {
         // Limpa a view
         showMessage("");
@@ -107,7 +107,7 @@ public class AuthorView implements ViewInterface {
 
         dialog.setVisible(true);
     }
-
+    @Override
     public void modifyPopup() {
         // Limpa a view
         showMessage("");
@@ -140,6 +140,7 @@ public class AuthorView implements ViewInterface {
         panel.add(addAuthorBtn, constraints);
         dialog.setVisible(true);
     }
+    @Override
     public void searchPopup() {
         // Limpa a view
         showMessage("");
@@ -172,9 +173,10 @@ public class AuthorView implements ViewInterface {
         panel.add(searchAuthorBtn, constraints);
         dialog.setVisible(true);
     }
-
+    @Override
     public void showSearchResult(DefaultTableModel model) {
-        // Remove a tabela para que outra seja inserida no lugar
+        // Limpa a view
+        showMessage("");
         clearSearchPane();
         // Redimensiona a janela
         dialog.setSize(1100, 350);
@@ -209,15 +211,19 @@ public class AuthorView implements ViewInterface {
     }
 
     // Listeners dos botões
+    @Override
     public void addActionListener(ActionListener l) {
         addAuthorBtn.addActionListener(l);
     }
+    @Override
     public void delActionListener(ActionListener l) {
         delAuthorBtn.addActionListener(l);
     }
+    @Override
     public void modifyActionListener(ActionListener l) {
         modifyAuthorBtn.addActionListener(l);
     }
+    @Override
     public void searchActionListener(ActionListener l) {
         searchAuthorBtn.addActionListener(l);
     }

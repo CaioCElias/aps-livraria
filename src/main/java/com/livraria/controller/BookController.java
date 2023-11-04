@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
-public class BookController {
+public class BookController implements ControllerInterface {
     BookDAO bookDao;
 	BookView bookView;
 
@@ -27,6 +27,8 @@ public class BookController {
 				try {
 					validateInputNotEmpty(bookView.getTitleInput(), bookView.getIsbnInput(),
 							bookView.getPriceInput(), bookView.getPublisherInput());
+					validateParseInt(bookView.getPublisherInput());
+					validateParseDouble(bookView.getPriceInput());
 					String title = bookView.getTitleInput();
 					String isbn = bookView.getIsbnInput();
 					int publisherId = Integer.parseInt(bookView.getPublisherInput());
@@ -112,6 +114,7 @@ public class BookController {
 		try {
 			bookDao.searchBooksTitle(title);
 		} catch (IndexOutOfBoundsException ve) {
+			bookView.showMessage("Nenhum livro encontrado");
 			throw new ValidationException("Nenhum livro encontrado");
 		}
 	}
@@ -119,8 +122,27 @@ public class BookController {
 	private void validateInputNotEmpty(String... inputs) throws ValidationException {
 		for(int i = 0; i < inputs.length; i++) {
 			if(inputs[i].equals("")) {
+				bookView.showMessage("Preencha todos os campos");
 				throw new ValidationException("Preencha todos os campos");
 			}
+		}
+	}
+	// Verifica a possibilidade de um parseInt
+	private void validateParseInt(String num) throws ValidationException {
+		try {
+			Integer.parseInt(num);
+		} catch (NumberFormatException ve) {
+			bookView.showMessage("Número inválido");
+			throw new ValidationException("Número inválido");
+		}
+	}
+	// Verifica a possibilidade de um parseInt
+	private void validateParseDouble(String num) throws ValidationException {
+		try {
+			Double.parseDouble(num);
+		} catch (NumberFormatException ve) {
+			bookView.showMessage("Número inválido");
+			throw new ValidationException("Número inválido");
 		}
 	}
 
