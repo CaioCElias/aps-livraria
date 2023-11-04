@@ -163,7 +163,12 @@ public class AuthorView implements ViewInterface {
         constraints.gridy = 2;
         panel.add(new JLabel("Segundo nome"), constraints);
         panel.add(secondNameTextField, constraints);
+
+        //mensagem de output após ação do usuário
         constraints.gridy = 3;
+        panel.add(outputMsg, constraints);
+
+        constraints.gridy = 4;
         panel.add(searchAuthorBtn, constraints);
         dialog.setVisible(true);
     }
@@ -171,7 +176,8 @@ public class AuthorView implements ViewInterface {
     public void showSearchResult(DefaultTableModel model) {
         // Remove a tabela para que outra seja inserida no lugar
         clearSearchPane();
-        dialog.setSize(1100, 300);
+        // Redimensiona a janela
+        dialog.setSize(1100, 350);
         constraints.gridy = 1;
         // Cria uma nova tabela
         JTable table = new JTable(model);
@@ -202,8 +208,7 @@ public class AuthorView implements ViewInterface {
         return this.secondNameTextField.getText();
     }
 
-
-    //listeners dos botões
+    // Listeners dos botões
     public void addActionListener(ActionListener l) {
         addAuthorBtn.addActionListener(l);
     }

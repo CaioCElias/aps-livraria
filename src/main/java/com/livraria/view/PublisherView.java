@@ -157,7 +157,12 @@ public class PublisherView implements ViewInterface {
         constraints.gridy = 1;
         panel.add(new JLabel("Nome"), constraints);
         panel.add(nameTextField, constraints);
+
+        //mensagem de output após ação do usuário
         constraints.gridy = 2;
+        panel.add(outputMsg, constraints);
+
+        constraints.gridy = 3;
         panel.add(searchPublisherBtn, constraints);
         dialog.setVisible(true);
     }
@@ -165,7 +170,8 @@ public class PublisherView implements ViewInterface {
     public void showSearchResult(DefaultTableModel model) {
         // Remove a tabela para que outra seja inserida no lugar
         clearSearchPane();
-        dialog.setSize(1100, 250);
+        // Redimensiona a janela
+        dialog.setSize(1100, 300);
         constraints.gridy = 1;
         // Cria uma nova tabela
         JTable table = new JTable(model);
@@ -196,7 +202,7 @@ public class PublisherView implements ViewInterface {
         return this.urlTextField.getText();
     }
 
-    //listeners dos botões
+    // Listeners dos botões
     public void addActionListener(ActionListener l) {
         addPublisherBtn.addActionListener(l);
     }

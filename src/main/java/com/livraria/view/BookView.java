@@ -198,23 +198,12 @@ public class BookView implements ViewInterface {
         dialog.setVisible(true);
     }
 
-    public String getTitleInput() {
-        return this.titleTextField.getText();
-    }
-    public String getIsbnInput() {
-        return this.isbnTextField.getText();
-    }
-    public String getPriceInput() {
-        return this.priceTextField.getText();
-    }
-    public String getPublisherInput() {
-        return this.publisherTextField.getText();
-    }
-
     public void showSearchResult(DefaultTableModel model) {
-        // Remove a tabela para que outra seja inserida no lugar
+        // Limpa a view
+        showMessage("");
         clearSearchPane();
-        dialog.setSize(1100, 250);
+        // Redimensiona a janela
+        dialog.setSize(1100, 300);
         constraints.gridy = 1;
         // Cria uma nova tabela
         JTable table = new JTable(model);
@@ -234,6 +223,19 @@ public class BookView implements ViewInterface {
         // Atualiza o painel
         panel.revalidate();
         panel.repaint();
+    }
+
+    public String getTitleInput() {
+        return this.titleTextField.getText();
+    }
+    public String getIsbnInput() {
+        return this.isbnTextField.getText();
+    }
+    public String getPriceInput() {
+        return this.priceTextField.getText();
+    }
+    public String getPublisherInput() {
+        return this.publisherTextField.getText();
     }
 
     // Listeners dos botões

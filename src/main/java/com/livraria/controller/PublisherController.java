@@ -1,7 +1,6 @@
 package com.livraria.controller;
 
 import com.livraria.dao.PublisherDAO;
-import com.livraria.model.Authors;
 import com.livraria.model.Publishers;
 import com.livraria.view.PublisherView;
 
@@ -26,23 +25,22 @@ public class PublisherController {
         publisherView.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(verifyEmptyString(publisherView.getNameInput(), publisherView.getUrlInput())) {
+                try {
+                    validateInputNotEmpty(publisherView.getNameInput(), publisherView.getUrlInput());
                     String name = publisherView.getNameInput();
                     String url = publisherView.getUrlInput();
-
                     Publishers publisher = new Publishers(name, url);
-
-                    try {
-                        boolean res = publisherDao.addPublishers(publisher);
-                        if (res) {
-                            publisherView.showMessage("Editora adicionada com sucesso");
-                        } else {
-                            publisherView.showMessage("Não foi possivel adicionar a editora");
-                        }
-                    } catch (SQLIntegrityConstraintViolationException e1) {
-                        e1.printStackTrace();
+                    boolean res = publisherDao.addPublishers(publisher);
+                    if (res) {
+                        publisherView.showMessage("Editora adicionada com sucesso");
+                    } else {
+                        publisherView.showMessage("Não foi possivel adicionar a editora");
                     }
                     System.out.println("Botão funcionando");
+                } catch (SQLIntegrityConstraintViolationException e1) {
+                    e1.printStackTrace();
+                } catch (ValidationException ve) {
+                    System.out.println("Erro de validação: " + ve.getMessage());
                 }
             }
         });
@@ -50,14 +48,16 @@ public class PublisherController {
         publisherView.delActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (verifyEmptyString(publisherView.getIdInput())) {
+                try {
+                validateInputNotEmpty(publisherView.getIdInput());
+                validateParseInt(publisherView.getIdInput());
                     int publisherId = Integer.parseInt(publisherView.getIdInput());
-                    try {
-                        publisherDao.deletePublisherAndBooks(publisherId);
-                    } catch (SQLIntegrityConstraintViolationException e1) {
-                        e1.printStackTrace();
-                    }
+                    publisherDao.deletePublisherAndBooks(publisherId);
                     System.out.println("Botão funcionando");
+                } catch (SQLIntegrityConstraintViolationException e1) {
+                    e1.printStackTrace();
+                } catch (ValidationException ve) {
+                    System.out.println("Erro de validação: " + ve.getMessage());
                 }
             }
         });
@@ -66,17 +66,16 @@ public class PublisherController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Botão funcionando");
-                if(verifyEmptyString(publisherView.getNameInput(), publisherView.getUrlInput())) {
-
-                }
             }
         });
         // Listener para o botão de pesquisar editoras
         publisherView.searchActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (verifyEmptyString(publisherView.getNameInput())) {
+                try {
+                    validateInputNotEmpty(publisherView.getNameInput());
                     String name = publisherView.getNameInput();
+                    validateSearchOutputNotEmpty(publisherDao, name);
                     List<Publishers> searchPublishersList = publisherDao.searchPublishersTitle(name);
                     DefaultListModel listModel = new DefaultListModel();
                     //atualizar na view
@@ -88,19 +87,42 @@ public class PublisherController {
                         model.addRow(new Object[]{publisher.getName(), publisher.getUrl()});
                     }
                     publisherView.showSearchResult(model);
+                } catch (ValidationException ve) {
+                    System.out.println("Erro de validação: " + ve.getMessage());
                 }
             }
         });
     }
+    // Validações
+    // Verifica se algum elemento foi encontrado na busca
+    private void validateSearchOutputNotEmpty(PublisherDAO publisherDao, String name) throws ValidationException {
+        try {
+            publisherDao.searchPublishersTitle(name);
+        } catch (IndexOutOfBoundsException ve) {
+            throw new ValidationException("Nenhuma editora encontrada");
+        }
+    }
     // Verifica se o input não possui campos vazios
-    private boolean verifyEmptyString(String... inputs) {
+    private void validateInputNotEmpty(String... inputs) throws ValidationException {
         for(int i = 0; i < inputs.length; i++) {
             if(inputs[i].equals("")) {
                 publisherView.showMessage("Preencha todos os campos");
-                return false;
+                throw new ValidationException("Preencha todos os campos");
             }
         }
-        System.out.println("No empty strings");
-        return true;
+    }
+    // Verifica a possibilidade de um parseInt
+    private void validateParseInt(String num) throws ValidationException {
+        try {
+            Integer.parseInt(num);
+        } catch (NumberFormatException ve) {
+            throw new ValidationException("Número inválido");
+        }
+    }
+
+    static class ValidationException extends Exception {
+        public ValidationException(String message) {
+            super(message);
+        }
     }
 }

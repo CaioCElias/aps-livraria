@@ -24,26 +24,24 @@ public class BookController {
 		bookView.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(verifyEmptyString(bookView.getTitleInput(), bookView.getIsbnInput(),
-						bookView.getPriceInput(), bookView.getPublisherInput())) {
+				try {
+					validateInputNotEmpty(bookView.getTitleInput(), bookView.getIsbnInput(),
+							bookView.getPriceInput(), bookView.getPublisherInput());
 					String title = bookView.getTitleInput();
 					String isbn = bookView.getIsbnInput();
 					int publisherId = Integer.parseInt(bookView.getPublisherInput());
 					double price = Double.parseDouble(bookView.getPriceInput());
-
 					Books book = new Books(title, isbn, publisherId, price);
-
-					try {
-						boolean res = bookDao.addBooks(book);
-						if (res) {
-							bookView.showMessage("Livro adicionado com sucesso");
-						} else {
-							bookView.showMessage("Não foi possível adicionar o livro");
-						}
-					} catch (SQLIntegrityConstraintViolationException e1) {
+					boolean res = bookDao.addBooks(book);
+					if (res) {
+						bookView.showMessage("Livro adicionado com sucesso");
+					} else {
 						bookView.showMessage("Não foi possível adicionar o livro");
-						e1.printStackTrace();
 					}
+				} catch (SQLIntegrityConstraintViolationException e1) {
+					e1.printStackTrace();
+				} catch (ValidationException ve) {
+					System.out.println("Erro de validação: " + ve.getMessage());
 				}
 			}
 		});
@@ -51,20 +49,21 @@ public class BookController {
 		bookView.delActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(verifyEmptyString(bookView.getIsbnInput())) {
+				try {
+					validateInputNotEmpty(bookView.getIsbnInput());
 					String isbn = bookView.getIsbnInput();
 					System.out.println(isbn);
-					try {
-						boolean res1 = bookDao.deleteBooksAuthors(isbn);
-						boolean res2 = bookDao.deleteBooks(isbn);
-						if (res2) {
-							bookView.showMessage("Livro excluído com sucesso");
-						} else {
-							bookView.showMessage("Não foi possível excluir o livro");
-						}
-					} catch (SQLIntegrityConstraintViolationException e1) {
-						e1.printStackTrace();
+					boolean res1 = bookDao.deleteBooksAuthors(isbn);
+					boolean res2 = bookDao.deleteBooks(isbn);
+					if (res2) {
+						bookView.showMessage("Livro excluído com sucesso");
+					} else {
+						bookView.showMessage("Não foi possível excluir o livro");
 					}
+				} catch (SQLIntegrityConstraintViolationException e1) {
+					e1.printStackTrace();
+				} catch (ValidationException ve) {
+					System.out.println("Erro de validação: " + ve.getMessage());
 				}
 			}
 		});
@@ -73,9 +72,12 @@ public class BookController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Botão funcionando");
-				if(verifyEmptyString(bookView.getTitleInput(), bookView.getIsbnInput(),
-						bookView.getPriceInput(), bookView.getPublisherInput())) {
+				try {
+					validateInputNotEmpty(bookView.getTitleInput(), bookView.getIsbnInput(),
+							bookView.getPriceInput(), bookView.getPublisherInput());
 
+				} catch (ValidationException ve) {
+					System.out.println("Erro de validação: " + ve.getMessage());
 				}
 			}
 		});
@@ -83,8 +85,10 @@ public class BookController {
 		bookView.searchActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(verifyEmptyString(bookView.getTitleInput())) {
+				try {
+					validateInputNotEmpty(bookView.getTitleInput());
 					String title = bookView.getTitleInput();
+					validateSearchOutputNotEmpty(bookDao, title);
 					List<Books> searchBookList = bookDao.searchBooksTitle(title);
 					DefaultListModel listModel = new DefaultListModel();
 					// Define as colunas da tabela
@@ -96,19 +100,33 @@ public class BookController {
 						model.addRow(new Object[]{book.getTitle(), book.getPublisherId(), book.getPrice()});
 					}
 					bookView.showSearchResult(model);
+				} catch (ValidationException ve) {
+					System.out.println("Erro de validação: " + ve.getMessage());
 				}
 			}
 		});
 	}
+	// Validações
+	// Verifica se algum elemento foi encontrado na busca
+	private void validateSearchOutputNotEmpty(BookDAO bookDao, String title) throws ValidationException {
+		try {
+			bookDao.searchBooksTitle(title);
+		} catch (IndexOutOfBoundsException ve) {
+			throw new ValidationException("Nenhum livro encontrado");
+		}
+	}
 	// Verifica se o input não possui campos vazios
-	private boolean verifyEmptyString(String... inputs) {
+	private void validateInputNotEmpty(String... inputs) throws ValidationException {
 		for(int i = 0; i < inputs.length; i++) {
 			if(inputs[i].equals("")) {
-				bookView.showMessage("Preencha todos os campos");
-				return false;
+				throw new ValidationException("Preencha todos os campos");
 			}
 		}
-		System.out.println("No empty strings");
-		return true;
+	}
+
+	static class ValidationException extends Exception {
+		public ValidationException(String message) {
+			super(message);
+		}
 	}
 }
