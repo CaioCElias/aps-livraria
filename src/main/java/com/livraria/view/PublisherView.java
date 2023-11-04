@@ -12,7 +12,7 @@ public class PublisherView implements ViewInterface {
     JPanel panel;
     private GridBagConstraints constraints = new GridBagConstraints();
 
-    JLabel outputMsg;
+    JLabel outputMsg = new JLabel("");
     JTextField idTextField;
     JTextField nameTextField;
     JTextField urlTextField;
@@ -53,7 +53,7 @@ public class PublisherView implements ViewInterface {
         clearDialog(dialog);
         // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
-        dialog.setSize(450, 300);
+        dialog.setSize(500, 300);
         panel = new JPanel(new GridBagLayout());
         constraints = new GridBagConstraints();
         nameTextField = new JTextField(20);
@@ -70,6 +70,7 @@ public class PublisherView implements ViewInterface {
         constraints.gridy = 2;
         panel.add(new JLabel("Site"), constraints);
         panel.add(urlTextField, constraints);
+
         //mensagem de output após ação do usuário
         constraints.gridy = 3;
         panel.add(outputMsg, constraints);
@@ -84,7 +85,7 @@ public class PublisherView implements ViewInterface {
         clearDialog(dialog);
         // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
-        dialog.setSize(450, 150);
+        dialog.setSize(450, 200);
         panel = new JPanel(new GridBagLayout());
         constraints = new GridBagConstraints();
         idTextField = new JTextField(20);
@@ -94,13 +95,14 @@ public class PublisherView implements ViewInterface {
         dialog.add(panel);
         constraints.gridy = 0;
         panel.add(new JLabel("Excluir Editora"), constraints);
-        // Mensagem de output após ação do usuário
         constraints.gridy = 1;
-        panel.add(outputMsg, constraints);
-
-        constraints.gridy = 2;
         panel.add(idTextField, constraints);
         panel.add(delPublisherBtn, constraints);
+
+        // Mensagem de output após ação do usuário
+        constraints.gridy = 2;
+        panel.add(outputMsg, constraints);
+
         dialog.setVisible(true);
     }
 
@@ -127,8 +129,13 @@ public class PublisherView implements ViewInterface {
         constraints.gridy = 2;
         panel.add(new JLabel("Site"), constraints);
         panel.add(urlTextField, constraints);
+
+        //mensagem de output após ação do usuário
         constraints.gridy = 3;
-        panel.add(addPublisherBtn, constraints);
+        panel.add(outputMsg, constraints);
+
+        constraints.gridy = 4;
+        panel.add(modifyPublisherBtn, constraints);
         dialog.setVisible(true);
     }
     public void searchPopup() {
@@ -137,7 +144,7 @@ public class PublisherView implements ViewInterface {
         clearDialog(dialog);
         // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
-        dialog.setSize(550, 200);
+        dialog.setSize(550, 250);
         panel = new JPanel(new GridBagLayout());
         constraints = new GridBagConstraints();
         nameTextField = new JTextField(20);
@@ -179,8 +186,8 @@ public class PublisherView implements ViewInterface {
         panel.repaint();
     }
 
-    public int getIdInput() {
-        return Integer.parseInt(this.idTextField.getText());
+    public String getIdInput() {
+        return this.idTextField.getText();
     }
     public String getNameInput() {
         return this.nameTextField.getText();

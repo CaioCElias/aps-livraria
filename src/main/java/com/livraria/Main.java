@@ -27,8 +27,8 @@ public class Main {
     public static void main(String[] args) {
         view.startMainView();
         controller.startMainController();
-        bookController.startBookController();
-        authorController.startAuthorController();
+        bookController.startController();
+        authorController.startController();
         publisherController.startPublisherController();
         dao.openDatabase();
         //dao.closeDatabase();

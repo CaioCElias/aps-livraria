@@ -13,6 +13,7 @@ public interface ViewInterface {
     void clearDialog(JDialog dialog);
     void clearSearchPane();
     void showSearchResult(DefaultTableModel model);
+    void showMessage(String message);
 
     void addActionListener(ActionListener l);
     void delActionListener(ActionListener l);

@@ -160,17 +160,18 @@ public class BookView implements ViewInterface {
         panel.add(publisherTextField, constraints);
         constraints.gridy = 5;
         panel.add(bookAuthorsBox, constraints);
-        constraints.gridy = 6;
 
         //mensagem de output após ação do usuário
+        constraints.gridy = 6;
         panel.add(outputMsg, constraints);
-        constraints.gridy = 7;
 
+        constraints.gridy = 7;
         panel.add(addBookBtn, constraints);
         dialog.setVisible(true);
     }
     public void searchPopup() {
         // Limpa a view
+        showMessage("");
         clearDialog(dialog);
         // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
@@ -187,7 +188,12 @@ public class BookView implements ViewInterface {
         constraints.gridy = 1;
         panel.add(new JLabel("Título"), constraints);
         panel.add(titleTextField, constraints);
+
+        //mensagem de output após ação do usuário
         constraints.gridy = 2;
+        panel.add(outputMsg, constraints);
+
+        constraints.gridy = 3;
         panel.add(searchBookBtn, constraints);
         dialog.setVisible(true);
     }

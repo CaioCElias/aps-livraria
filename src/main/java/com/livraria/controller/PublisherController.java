@@ -22,66 +22,85 @@ public class PublisherController {
     }
 
     public void startPublisherController() {
-        // listener para o botão de adicionar editoras
+        // Listener para o botão de adicionar editoras
         publisherView.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String name = publisherView.getNameInput();
-				String url = publisherView.getUrlInput();
-				
-				Publishers publisher = new Publishers(name, url);
+                if(verifyEmptyString(publisherView.getNameInput(), publisherView.getUrlInput())) {
+                    String name = publisherView.getNameInput();
+                    String url = publisherView.getUrlInput();
 
-				try {
-					boolean res = publisherDao.addPublishers(publisher);
-                    if(res) {
-                        publisherView.showMessage("Editora adicionada com sucesso");
-                    } else {
-                        publisherView.showMessage("Não foi possivel adicionar a editora");
+                    Publishers publisher = new Publishers(name, url);
+
+                    try {
+                        boolean res = publisherDao.addPublishers(publisher);
+                        if (res) {
+                            publisherView.showMessage("Editora adicionada com sucesso");
+                        } else {
+                            publisherView.showMessage("Não foi possivel adicionar a editora");
+                        }
+                    } catch (SQLIntegrityConstraintViolationException e1) {
+                        e1.printStackTrace();
                     }
-				} catch (SQLIntegrityConstraintViolationException e1) {
-					e1.printStackTrace();
-				}
-                System.out.println("Botão funcionando");
+                    System.out.println("Botão funcionando");
+                }
             }
         });
-        // listener para o botão de excluir editoras
+        // Listener para o botão de excluir editoras
         publisherView.delActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int publisherId = publisherView.getIdInput();
-
-				try {
-					publisherDao.deletePublisherAndBooks(publisherId);
-				} catch (SQLIntegrityConstraintViolationException e1) {
-					e1.printStackTrace();
-				}
-                System.out.println("Botão funcionando");
+                if (verifyEmptyString(publisherView.getIdInput())) {
+                    int publisherId = Integer.parseInt(publisherView.getIdInput());
+                    try {
+                        publisherDao.deletePublisherAndBooks(publisherId);
+                    } catch (SQLIntegrityConstraintViolationException e1) {
+                        e1.printStackTrace();
+                    }
+                    System.out.println("Botão funcionando");
+                }
             }
         });
-        // listener para o botão de modificar editoras
+        // Listener para o botão de modificar editoras
         publisherView.modifyActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Botão funcionando");
+                if(verifyEmptyString(publisherView.getNameInput(), publisherView.getUrlInput())) {
+
+                }
             }
         });
-        // listener para o botão de pesquisar editoras
+        // Listener para o botão de pesquisar editoras
         publisherView.searchActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String name = publisherView.getNameInput();
-                List<Publishers> searchPublishersList = publisherDao.searchPublishersTitle(name);
-                DefaultListModel listModel = new DefaultListModel();
-                //atualizar na view
-                String[] columnNames = {"Nome", "Site"};
-                DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-                // guarda as instâncias de autores em listModel e adiciona as instâncias na tabela
-                for (Publishers publisher : searchPublishersList) {
-                    listModel.addElement(publisher);
-                    model.addRow(new Object[]{publisher.getName(), publisher.getUrl()});
+                if (verifyEmptyString(publisherView.getNameInput())) {
+                    String name = publisherView.getNameInput();
+                    List<Publishers> searchPublishersList = publisherDao.searchPublishersTitle(name);
+                    DefaultListModel listModel = new DefaultListModel();
+                    //atualizar na view
+                    String[] columnNames = {"Nome", "Site"};
+                    DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+                    // guarda as instâncias de autores em listModel e adiciona as instâncias na tabela
+                    for (Publishers publisher : searchPublishersList) {
+                        listModel.addElement(publisher);
+                        model.addRow(new Object[]{publisher.getName(), publisher.getUrl()});
+                    }
+                    publisherView.showSearchResult(model);
                 }
-                publisherView.showSearchResult(model);
             }
         });
+    }
+    // Verifica se o input não possui campos vazios
+    private boolean verifyEmptyString(String... inputs) {
+        for(int i = 0; i < inputs.length; i++) {
+            if(inputs[i].equals("")) {
+                publisherView.showMessage("Preencha todos os campos");
+                return false;
+            }
+        }
+        System.out.println("No empty strings");
+        return true;
     }
 }

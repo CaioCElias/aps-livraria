@@ -10,9 +10,9 @@ public class AuthorView implements ViewInterface {
 
     JDialog dialog = new JDialog();
     JPanel panel;
-    private final GridBagConstraints constraints = new GridBagConstraints();
+    private GridBagConstraints constraints = new GridBagConstraints();
 
-    JLabel outputMsg;
+    JLabel outputMsg = new JLabel("");
     JTextField authorIdField;
     JTextField firstNameTextField;
     JTextField secondNameTextField;
@@ -55,27 +55,28 @@ public class AuthorView implements ViewInterface {
         dialog.setTitle("Livraria UNIP");
         dialog.setSize(450, 300);
         panel = new JPanel(new GridBagLayout());
-        GridBagConstraints deleteConstraints = new GridBagConstraints();
+        constraints = new GridBagConstraints();
         firstNameTextField = new JTextField(20);
         secondNameTextField = new JTextField(20);
         int padding = 10;
-        deleteConstraints.insets = new Insets(padding, padding, padding, padding);
+        constraints.insets = new Insets(padding, padding, padding, padding);
         // Adiciona os elementos ao painel da view
         dialog.add(panel);
-        deleteConstraints.gridy = 0;
-        panel.add(new JLabel("Adicionar Autor"), deleteConstraints);
-        deleteConstraints.gridy = 1;
-        panel.add(new JLabel("Primeiro nome"), deleteConstraints);
-        panel.add(firstNameTextField, deleteConstraints);
-        deleteConstraints.gridy = 2;
-        panel.add(new JLabel("Segundo nome"), deleteConstraints);
-        panel.add(secondNameTextField, deleteConstraints);
-        //mensagem de output após ação do usuário
-        constraints.gridy = 3;
-        panel.add(outputMsg, constraints);
+        constraints.gridy = 0;
+        panel.add(new JLabel("Adicionar Autor"), constraints);
+        constraints.gridy = 1;
+        panel.add(new JLabel("Primeiro nome"), constraints);
+        panel.add(firstNameTextField, constraints);
+        constraints.gridy = 2;
+        panel.add(new JLabel("Segundo nome"), constraints);
+        panel.add(secondNameTextField, constraints);
 
-        deleteConstraints.gridy = 4;
-        panel.add(addAuthorBtn, deleteConstraints);
+        //mensagem de output após ação do usuário
+        this.constraints.gridy = 3;
+        panel.add(outputMsg, this.constraints);
+
+        constraints.gridy = 4;
+        panel.add(addAuthorBtn, constraints);
         dialog.setVisible(true);
     }
 
@@ -86,22 +87,23 @@ public class AuthorView implements ViewInterface {
         clearDialog(dialog);
         // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
-        dialog.setSize(450, 150);
+        dialog.setSize(450, 200);
         panel = new JPanel(new GridBagLayout());
-        GridBagConstraints deleteConstraints = new GridBagConstraints();
+        constraints = new GridBagConstraints();
         authorIdField = new JTextField(20);
         int padding = 10;
-        deleteConstraints.insets = new Insets(padding, padding, padding, padding);
+        constraints.insets = new Insets(padding, padding, padding, padding);
         // Adiciona os elementos ao painel da view
         dialog.add(panel);
-        deleteConstraints.gridy = 0;
-        panel.add(new JLabel("Excluir Autor"), deleteConstraints);
-        deleteConstraints.gridy = 1;
-        panel.add(authorIdField, deleteConstraints);
-        panel.add(delAuthorBtn, deleteConstraints);
+        constraints.gridy = 0;
+        panel.add(new JLabel("Excluir Autor"), constraints);
+        constraints.gridy = 1;
+        panel.add(authorIdField, constraints);
+        panel.add(delAuthorBtn, constraints);
+
         //mensagem de output após ação do usuário
-        constraints.gridy = 2;
-        panel.add(outputMsg, constraints);
+        this.constraints.gridy = 2;
+        panel.add(outputMsg, this.constraints);
 
         dialog.setVisible(true);
     }
@@ -112,55 +114,57 @@ public class AuthorView implements ViewInterface {
         clearDialog(dialog);
         // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
-        dialog.setSize(450, 300);
+        dialog.setSize(450, 350);
         panel = new JPanel(new GridBagLayout());
-        GridBagConstraints deleteConstraints = new GridBagConstraints();
+        constraints = new GridBagConstraints();
         firstNameTextField = new JTextField(20);
         secondNameTextField = new JTextField(20);
         int padding = 10;
-        deleteConstraints.insets = new Insets(padding, padding, padding, padding);
+        constraints.insets = new Insets(padding, padding, padding, padding);
         // Adiciona os elementos ao painel da view
         dialog.add(panel);
-        deleteConstraints.gridy = 0;
-        panel.add(new JLabel("Modificar Autor"), deleteConstraints);
-        deleteConstraints.gridy = 1;
-        panel.add(new JLabel("Primeiro nome"), deleteConstraints);
-        panel.add(firstNameTextField, deleteConstraints);
-        deleteConstraints.gridy = 2;
-        panel.add(new JLabel("Segundo nome"), deleteConstraints);
-        panel.add(secondNameTextField, deleteConstraints);
-        //mensagem de output após ação do usuário
-        constraints.gridy = 3;
-        panel.add(outputMsg, constraints);
+        constraints.gridy = 0;
+        panel.add(new JLabel("Modificar Autor"), constraints);
+        constraints.gridy = 1;
+        panel.add(new JLabel("Primeiro nome"), constraints);
+        panel.add(firstNameTextField, constraints);
+        constraints.gridy = 2;
+        panel.add(new JLabel("Segundo nome"), constraints);
+        panel.add(secondNameTextField, constraints);
 
-        deleteConstraints.gridy = 4;
-        panel.add(addAuthorBtn, deleteConstraints);
+        //mensagem de output após ação do usuário
+        this.constraints.gridy = 3;
+        panel.add(outputMsg, this.constraints);
+
+        constraints.gridy = 4;
+        panel.add(addAuthorBtn, constraints);
         dialog.setVisible(true);
     }
     public void searchPopup() {
         // Limpa a view
+        showMessage("");
         clearDialog(dialog);
         // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
         dialog.setSize(550, 250);
         panel = new JPanel(new GridBagLayout());
-        GridBagConstraints deleteConstraints = new GridBagConstraints();
+        constraints = new GridBagConstraints();
         firstNameTextField = new JTextField(20);
         secondNameTextField = new JTextField(20);
         int padding = 10;
-        deleteConstraints.insets = new Insets(padding, padding, padding, padding);
+        constraints.insets = new Insets(padding, padding, padding, padding);
         // Adiciona os elementos ao painel da view
         dialog.add(panel);
-        deleteConstraints.gridy = 0;
-        panel.add(new JLabel("Pesquisar Autor"), deleteConstraints);
-        deleteConstraints.gridy = 1;
-        panel.add(new JLabel("Primeiro nome"), deleteConstraints);
-        panel.add(firstNameTextField, deleteConstraints);
-        deleteConstraints.gridy = 2;
-        panel.add(new JLabel("Segundo nome"), deleteConstraints);
-        panel.add(secondNameTextField, deleteConstraints);
-        deleteConstraints.gridy = 3;
-        panel.add(searchAuthorBtn, deleteConstraints);
+        constraints.gridy = 0;
+        panel.add(new JLabel("Pesquisar Autor"), constraints);
+        constraints.gridy = 1;
+        panel.add(new JLabel("Primeiro nome"), constraints);
+        panel.add(firstNameTextField, constraints);
+        constraints.gridy = 2;
+        panel.add(new JLabel("Segundo nome"), constraints);
+        panel.add(secondNameTextField, constraints);
+        constraints.gridy = 3;
+        panel.add(searchAuthorBtn, constraints);
         dialog.setVisible(true);
     }
 
@@ -188,8 +192,8 @@ public class AuthorView implements ViewInterface {
         panel.repaint();
     }
 
-    public int getIdInput() {
-        return Integer.parseInt(this.authorIdField.getText());
+    public String getIdInput() {
+        return this.authorIdField.getText();
     }
     public String getNameInput() {
         return this.firstNameTextField.getText();
