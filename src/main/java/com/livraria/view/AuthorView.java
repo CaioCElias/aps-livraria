@@ -12,6 +12,7 @@ public class AuthorView implements ViewInterface {
     JPanel panel;
     private final GridBagConstraints constraints = new GridBagConstraints();
 
+    JLabel outputMsg;
     JTextField authorIdField;
     JTextField firstNameTextField;
     JTextField secondNameTextField;
@@ -42,8 +43,15 @@ public class AuthorView implements ViewInterface {
         }
     }
 
+    public void showMessage(String message) {
+        outputMsg.setText(message);
+    }
+
     public void addPopup() {
+        // Limpa a view
+        showMessage("");
         clearDialog(dialog);
+        // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
         dialog.setSize(450, 300);
         panel = new JPanel(new GridBagLayout());
@@ -52,6 +60,7 @@ public class AuthorView implements ViewInterface {
         secondNameTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
+        // Adiciona os elementos ao painel da view
         dialog.add(panel);
         deleteConstraints.gridy = 0;
         panel.add(new JLabel("Adicionar Autor"), deleteConstraints);
@@ -61,14 +70,21 @@ public class AuthorView implements ViewInterface {
         deleteConstraints.gridy = 2;
         panel.add(new JLabel("Segundo nome"), deleteConstraints);
         panel.add(secondNameTextField, deleteConstraints);
-        deleteConstraints.gridy = 3;
+        //mensagem de output após ação do usuário
+        constraints.gridy = 3;
+        panel.add(outputMsg, constraints);
+
+        deleteConstraints.gridy = 4;
         panel.add(addAuthorBtn, deleteConstraints);
         dialog.setVisible(true);
     }
 
     //Popup de exclusão de autor
     public void deletePopup() {
+        // Limpa a view
+        showMessage("");
         clearDialog(dialog);
+        // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
         dialog.setSize(450, 150);
         panel = new JPanel(new GridBagLayout());
@@ -76,17 +92,25 @@ public class AuthorView implements ViewInterface {
         authorIdField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
+        // Adiciona os elementos ao painel da view
         dialog.add(panel);
         deleteConstraints.gridy = 0;
         panel.add(new JLabel("Excluir Autor"), deleteConstraints);
         deleteConstraints.gridy = 1;
         panel.add(authorIdField, deleteConstraints);
         panel.add(delAuthorBtn, deleteConstraints);
+        //mensagem de output após ação do usuário
+        constraints.gridy = 2;
+        panel.add(outputMsg, constraints);
+
         dialog.setVisible(true);
     }
 
     public void modifyPopup() {
+        // Limpa a view
+        showMessage("");
         clearDialog(dialog);
+        // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
         dialog.setSize(450, 300);
         panel = new JPanel(new GridBagLayout());
@@ -95,6 +119,7 @@ public class AuthorView implements ViewInterface {
         secondNameTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
+        // Adiciona os elementos ao painel da view
         dialog.add(panel);
         deleteConstraints.gridy = 0;
         panel.add(new JLabel("Modificar Autor"), deleteConstraints);
@@ -104,12 +129,18 @@ public class AuthorView implements ViewInterface {
         deleteConstraints.gridy = 2;
         panel.add(new JLabel("Segundo nome"), deleteConstraints);
         panel.add(secondNameTextField, deleteConstraints);
-        deleteConstraints.gridy = 3;
+        //mensagem de output após ação do usuário
+        constraints.gridy = 3;
+        panel.add(outputMsg, constraints);
+
+        deleteConstraints.gridy = 4;
         panel.add(addAuthorBtn, deleteConstraints);
         dialog.setVisible(true);
     }
     public void searchPopup() {
+        // Limpa a view
         clearDialog(dialog);
+        // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
         dialog.setSize(550, 250);
         panel = new JPanel(new GridBagLayout());
@@ -118,6 +149,7 @@ public class AuthorView implements ViewInterface {
         secondNameTextField = new JTextField(20);
         int padding = 10;
         deleteConstraints.insets = new Insets(padding, padding, padding, padding);
+        // Adiciona os elementos ao painel da view
         dialog.add(panel);
         deleteConstraints.gridy = 0;
         panel.add(new JLabel("Pesquisar Autor"), deleteConstraints);
@@ -133,23 +165,23 @@ public class AuthorView implements ViewInterface {
     }
 
     public void showSearchResult(DefaultTableModel model) {
-        // remove a tabela para que outra seja inserida no lugar
+        // Remove a tabela para que outra seja inserida no lugar
         clearSearchPane();
         dialog.setSize(1100, 300);
         constraints.gridy = 1;
-        // cria uma nova tabela
+        // Cria uma nova tabela
         JTable table = new JTable(model);
         table.setPreferredScrollableViewportSize(new Dimension(500, 200));
         table.setFillsViewportHeight(true);
-        // define a largura de cada coluna
+        // Define a largura de cada coluna
         TableColumnModel columnModel = table.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(250);
         columnModel.getColumn(1).setPreferredWidth(250);
-        // cria um novo ScrollPane
+        // Cria um novo ScrollPane
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setName("authorScrollPane");
         scrollPane.setPreferredSize(new Dimension(500, 100));
-        // adiciona o scrollPane ao painel
+        // Adiciona o scrollPane ao painel
         panel.add(scrollPane, constraints);
         // Atualiza o painel
         panel.revalidate();

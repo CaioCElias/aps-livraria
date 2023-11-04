@@ -48,8 +48,10 @@ public class PublisherView implements ViewInterface {
     }
 
     public void addPopup() {
+        // Limpa a view
         showMessage("");
         clearDialog(dialog);
+        // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
         dialog.setSize(450, 300);
         panel = new JPanel(new GridBagLayout());
@@ -58,6 +60,7 @@ public class PublisherView implements ViewInterface {
         urlTextField = new JTextField(20);
         int padding = 10;
         constraints.insets = new Insets(padding, padding, padding, padding);
+        // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
         panel.add(new JLabel("Adicionar Editora"), constraints);
@@ -76,8 +79,10 @@ public class PublisherView implements ViewInterface {
         dialog.setVisible(true);
     }
     public void deletePopup() {
+        // Limpa a view
         showMessage("");
         clearDialog(dialog);
+        // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
         dialog.setSize(450, 150);
         panel = new JPanel(new GridBagLayout());
@@ -85,10 +90,11 @@ public class PublisherView implements ViewInterface {
         idTextField = new JTextField(20);
         int padding = 10;
         constraints.insets = new Insets(padding, padding, padding, padding);
+        // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
         panel.add(new JLabel("Excluir Editora"), constraints);
-        //mensagem de output após ação do usuário
+        // Mensagem de output após ação do usuário
         constraints.gridy = 1;
         panel.add(outputMsg, constraints);
 
@@ -99,7 +105,10 @@ public class PublisherView implements ViewInterface {
     }
 
     public void modifyPopup() {
+        // limpa a view
+        showMessage("");
         clearDialog(dialog);
+        // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
         dialog.setSize(450, 300);
         panel = new JPanel(new GridBagLayout());
@@ -108,6 +117,7 @@ public class PublisherView implements ViewInterface {
         urlTextField = new JTextField(20);
         int padding = 10;
         constraints.insets = new Insets(padding, padding, padding, padding);
+        // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
         panel.add(new JLabel("Modificar Editora"), constraints);
@@ -122,8 +132,10 @@ public class PublisherView implements ViewInterface {
         dialog.setVisible(true);
     }
     public void searchPopup() {
+        // Limpa a view
         showMessage("");
         clearDialog(dialog);
+        // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
         dialog.setSize(550, 200);
         panel = new JPanel(new GridBagLayout());
@@ -131,6 +143,7 @@ public class PublisherView implements ViewInterface {
         nameTextField = new JTextField(20);
         int padding = 10;
         constraints.insets = new Insets(padding, padding, padding, padding);
+        // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
         panel.add(new JLabel("Pesquisar Editora"), constraints);
@@ -143,23 +156,23 @@ public class PublisherView implements ViewInterface {
     }
 
     public void showSearchResult(DefaultTableModel model) {
-        // remove a tabela para que outra seja inserida no lugar
+        // Remove a tabela para que outra seja inserida no lugar
         clearSearchPane();
         dialog.setSize(1100, 250);
         constraints.gridy = 1;
-        // cria uma nova tabela
+        // Cria uma nova tabela
         JTable table = new JTable(model);
         table.setPreferredScrollableViewportSize(new Dimension(500, 200));
         table.setFillsViewportHeight(true);
-        // define a largura de cada coluna
+        // Define a largura de cada coluna
         TableColumnModel columnModel = table.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(250);
         columnModel.getColumn(1).setPreferredWidth(250);
-        // cria um novo ScrollPane
+        // Cria um novo ScrollPane
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setName("publisherScrollPane");
         scrollPane.setPreferredSize(new Dimension(500, 100));
-        // adiciona o scrollPane ao painel
+        // Adiciona o scrollPane ao painel
         panel.add(scrollPane, constraints);
         // Atualiza o painel
         panel.revalidate();

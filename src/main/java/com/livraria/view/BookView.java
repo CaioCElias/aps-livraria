@@ -53,8 +53,10 @@ public class BookView implements ViewInterface {
 
     // Popup de Inclusão de livro
     public void addPopup() {
+        // Limpa a view
         showMessage("");
         clearDialog(dialog);
+        // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
         dialog.setSize(600, 450);
         panel = new JPanel(new GridBagLayout());
@@ -63,10 +65,11 @@ public class BookView implements ViewInterface {
         isbnTextField = new JTextField(20);
         priceTextField = new JTextField(20);
         publisherTextField = new JTextField(20);
-        //a lista de autores deve ser usada como input para a função JList
+        // A lista de autores deve ser usada como input para a função JList
         JComboBox bookAuthorsBox = new JComboBox(authors);
         int padding = 10;
         constraints.insets = new Insets(padding, padding, padding, padding);
+        // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
         panel.add(new JLabel("Adicionar Livro"), constraints);
@@ -84,6 +87,7 @@ public class BookView implements ViewInterface {
         panel.add(publisherTextField, constraints);
         constraints.gridy = 5;
         panel.add(bookAuthorsBox, constraints);
+
         //mensagem de output após ação do usuário
         constraints.gridy = 6;
         panel.add(outputMsg, constraints);
@@ -95,8 +99,10 @@ public class BookView implements ViewInterface {
 
     // Popup de exclusão de livro
     public void deletePopup() {
+        // Limpa a view
         showMessage("");
         clearDialog(dialog);
+        // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
         dialog.setSize(450, 200);
         panel = new JPanel(new GridBagLayout());
@@ -104,12 +110,14 @@ public class BookView implements ViewInterface {
         isbnTextField = new JTextField(20);
         int padding = 10;
         constraints.insets = new Insets(padding, padding, padding, padding);
+        // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
         panel.add(new JLabel("Excluir Livro"), constraints);
         constraints.gridy = 1;
         panel.add(isbnTextField, constraints);
         panel.add(delBookBtn, constraints);
+
         //mensagem de output após ação do usuário
         constraints.gridy = 2;
         panel.add(outputMsg, constraints);
@@ -118,8 +126,10 @@ public class BookView implements ViewInterface {
     }
 
     public void modifyPopup() {
+        // Limpa a view
         showMessage("");
         clearDialog(dialog);
+        // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
         dialog.setSize(600, 400);
         panel = new JPanel(new GridBagLayout());
@@ -128,10 +138,11 @@ public class BookView implements ViewInterface {
         isbnTextField = new JTextField(20);
         priceTextField = new JTextField(20);
         publisherTextField = new JTextField(20);
-        //a lista de autores deve ser usada como input para a função JList
+        // A lista de autores deve ser usada como input para a função JList
         JComboBox bookAuthorsBox = new JComboBox(authors);
         int padding = 10;
         constraints.insets = new Insets(padding, padding, padding, padding);
+        // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
         panel.add(new JLabel("Modificar Livro"), constraints);
@@ -150,11 +161,18 @@ public class BookView implements ViewInterface {
         constraints.gridy = 5;
         panel.add(bookAuthorsBox, constraints);
         constraints.gridy = 6;
+
+        //mensagem de output após ação do usuário
+        panel.add(outputMsg, constraints);
+        constraints.gridy = 7;
+
         panel.add(addBookBtn, constraints);
         dialog.setVisible(true);
     }
     public void searchPopup() {
+        // Limpa a view
         clearDialog(dialog);
+        // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
         dialog.setSize(550, 250);
         panel = new JPanel(new GridBagLayout());
@@ -162,6 +180,7 @@ public class BookView implements ViewInterface {
         titleTextField = new JTextField(20);
         int padding = 10;
         constraints.insets = new Insets(padding, padding, padding, padding);
+        // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
         panel.add(new JLabel("Pesquisar Livro"), constraints);
@@ -187,31 +206,31 @@ public class BookView implements ViewInterface {
     }
 
     public void showSearchResult(DefaultTableModel model) {
-        // remove a tabela para que outra seja inserida no lugar
+        // Remove a tabela para que outra seja inserida no lugar
         clearSearchPane();
         dialog.setSize(1100, 250);
         constraints.gridy = 1;
-        // cria uma nova tabela
+        // Cria uma nova tabela
         JTable table = new JTable(model);
         table.setPreferredScrollableViewportSize(new Dimension(500, 200));
         table.setFillsViewportHeight(true);
-        // define a largura de cada coluna
+        // Define a largura de cada coluna
         TableColumnModel columnModel = table.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(400);
         columnModel.getColumn(1).setPreferredWidth(50);
         columnModel.getColumn(2).setPreferredWidth(50);
-        // cria um novo ScrollPane
+        // Cria um novo ScrollPane
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setName("bookScrollPane");
         scrollPane.setPreferredSize(new Dimension(500, 100));
-        // adiciona o scrollPane ao painel
+        // Adiciona o scrollPane ao painel
         panel.add(scrollPane, constraints);
         // Atualiza o painel
         panel.revalidate();
         panel.repaint();
     }
 
-    // listeners dos botões
+    // Listeners dos botões
     public void addActionListener(ActionListener l) {
         addBookBtn.addActionListener(l);
     }
