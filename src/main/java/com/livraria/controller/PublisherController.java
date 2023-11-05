@@ -26,6 +26,7 @@ public class PublisherController implements ControllerInterface {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    publisherView.clearMessage();
                     validateInputNotEmpty(publisherView.getNameInput(), publisherView.getUrlInput());
                     String name = publisherView.getNameInput();
                     String url = publisherView.getUrlInput();
@@ -49,13 +50,21 @@ public class PublisherController implements ControllerInterface {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                validateInputNotEmpty(publisherView.getIdInput());
-                validateParseInt(publisherView.getIdInput());
+                    publisherView.clearMessage();
+                    validateInputNotEmpty(publisherView.getIdInput());
+                    validateParseInt(publisherView.getIdInput());
                     int publisherId = Integer.parseInt(publisherView.getIdInput());
-                    publisherDao.deletePublisherAndBooks(publisherId);
-                    System.out.println("Botão funcionando");
+                    boolean res = publisherDao.deletePublisherAndBooks(publisherId);
+                    if(res) {
+                        publisherView.showMessage("Editora excluída com sucesso");
+                        System.out.println("Editora excluída com sucesso");
+                    } else {
+                        publisherView.showMessage("Não foi possível excluir a editora");
+                        System.out.println("Não foi possível excluir a editora");
+                    }
                 } catch (SQLIntegrityConstraintViolationException e1) {
-                    e1.printStackTrace();
+                    publisherView.showMessage("As informações inseridas estão incorretas");
+                    System.out.println("As informações inseridas estão incorretas");
                 } catch (ValidationException ve) {
                     System.out.println("Erro de validação: " + ve.getMessage());
                 }
@@ -65,6 +74,7 @@ public class PublisherController implements ControllerInterface {
         publisherView.modifyActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                publisherView.clearMessage();
                 System.out.println("Botão funcionando");
             }
         });
@@ -73,6 +83,7 @@ public class PublisherController implements ControllerInterface {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    publisherView.clearMessage();
                     validateInputNotEmpty(publisherView.getNameInput());
                     String name = publisherView.getNameInput();
                     validateSearchOutputNotEmpty(publisherDao, name);

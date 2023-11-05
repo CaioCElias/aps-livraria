@@ -43,9 +43,14 @@ public class AuthorView implements ViewInterface {
         }
     }
     @Override
+    public void clearMessage() {
+        outputMsg.setText("");
+    }
+    @Override
     public void showMessage(String message) {
         outputMsg.setText(message);
     }
+    //Popup de inclusão de autor
     @Override
     public void addPopup() {
         // Limpa a view
@@ -53,7 +58,7 @@ public class AuthorView implements ViewInterface {
         clearDialog(dialog);
         // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
-        dialog.setSize(450, 300);
+        dialog.setSize(500, 300);
         panel = new JPanel(new GridBagLayout());
         constraints = new GridBagConstraints();
         firstNameTextField = new JTextField(20);

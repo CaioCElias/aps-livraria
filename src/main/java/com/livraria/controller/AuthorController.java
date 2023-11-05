@@ -27,14 +27,21 @@ public class AuthorController implements ControllerInterface {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    authorView.clearMessage();
                     validateInputNotEmpty(authorView.getNameInput(), authorView.getFNameInput());
                     String name = authorView.getNameInput();
                     String fName = authorView.getFNameInput();
                     Authors author = new Authors(name, fName);
-                    authorDao.addAuthors(author);
-                    System.out.println("Botão funcionando");
+                    boolean res = authorDao.addAuthors(author);
+                    if(res) {
+                        authorView.showMessage("Autor adicionado com sucesso");
+                        System.out.println("Autor adicionado com sucesso");
+                    } else {
+
+                    }
                 } catch (SQLIntegrityConstraintViolationException ex) {
-                    ex.printStackTrace();
+                    authorView.showMessage("As informações inseridas estão incorretas");
+                    System.out.println("As informações inseridas estão incorretas");
                 } catch (ValidationException ve) {
                     System.out.println("Erro de validação: " + ve.getMessage());
                 }
@@ -46,15 +53,21 @@ public class AuthorController implements ControllerInterface {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    authorView.clearMessage();
                     validateInputNotEmpty(authorView.getIdInput());
                     validateParseInt(authorView.getIdInput());
                     int authorId = Integer.parseInt(authorView.getIdInput());
-
-                    try {
-                        authorDao.deleteAuthorsAndBooks(authorId);
-                    } catch (SQLIntegrityConstraintViolationException e1) {
-                        e1.printStackTrace();
+                    boolean res = authorDao.deleteAuthorsAndBooks(authorId);
+                    if(res) {
+                        authorView.showMessage("Autor excluído com sucesso");
+                        System.out.println("Autor excluído com sucesso");
+                    } else {
+                        authorView.showMessage("Não foi possível excluir o autor");
+                        System.out.println("Não foi possível excluir o autor");
                     }
+                } catch (SQLIntegrityConstraintViolationException e1) {
+                    authorView.showMessage("Não foi possível excluir o autor");
+                    System.out.println("Não foi possível excluir o autor");
                 } catch (ValidationException ve) {
                     System.out.println("Erro de validação: " + ve.getMessage());
                 }
@@ -72,6 +85,7 @@ public class AuthorController implements ControllerInterface {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    authorView.clearMessage();
                     validateInputNotEmpty(authorView.getNameInput(), authorView.getFNameInput());
                     String name = authorView.getNameInput();
                     String fName = authorView.getFNameInput();

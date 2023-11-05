@@ -37,7 +37,6 @@ public class BookView implements ViewInterface {
     public void clearDialog(JDialog dialog) {
         dialog.getContentPane().removeAll();
     }
-
     @Override
     public void clearSearchPane() {
         Component[] components = panel.getComponents();
@@ -48,11 +47,14 @@ public class BookView implements ViewInterface {
             }
         }
     }
-
+    @Override
+    public void clearMessage() {
+        outputMsg.setText("");
+    }
+    @Override
     public void showMessage(String message) {
         outputMsg.setText(message);
     }
-
     // Popup de Inclusão de livro
     @Override
     public void addPopup() {

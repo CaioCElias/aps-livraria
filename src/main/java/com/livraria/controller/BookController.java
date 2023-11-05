@@ -20,11 +20,12 @@ public class BookController implements ControllerInterface {
 	}
 
 	public void startController() {
-		// listener para o botão de adicionar livros
+		// Listener para o botão de adicionar livros
 		bookView.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					bookView.clearMessage();
 					validateInputNotEmpty(bookView.getTitleInput(), bookView.getIsbnInput(),
 							bookView.getPriceInput(), bookView.getPublisherInput());
 					validateParseInt(bookView.getPublisherInput());
@@ -41,17 +42,19 @@ public class BookController implements ControllerInterface {
 						bookView.showMessage("Não foi possível adicionar o livro");
 					}
 				} catch (SQLIntegrityConstraintViolationException e1) {
-					e1.printStackTrace();
+					bookView.showMessage("As informações inseridas estão incorretas");
+					System.out.println("As informações inseridas estão incorretas");
 				} catch (ValidationException ve) {
 					System.out.println("Erro de validação: " + ve.getMessage());
 				}
 			}
 		});
-		// listener para o botão de excluir livros
+		// Listener para o botão de excluir livros
 		bookView.delActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					bookView.clearMessage();
 					validateInputNotEmpty(bookView.getIsbnInput());
 					String isbn = bookView.getIsbnInput();
 					System.out.println(isbn);
@@ -63,7 +66,8 @@ public class BookController implements ControllerInterface {
 						bookView.showMessage("Não foi possível excluir o livro");
 					}
 				} catch (SQLIntegrityConstraintViolationException e1) {
-					e1.printStackTrace();
+					bookView.showMessage("Não foi possível excluir o livro");
+					System.out.println("Não foi possível excluir o livro");
 				} catch (ValidationException ve) {
 					System.out.println("Erro de validação: " + ve.getMessage());
 				}
@@ -75,6 +79,7 @@ public class BookController implements ControllerInterface {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Botão funcionando");
 				try {
+					bookView.clearMessage();
 					validateInputNotEmpty(bookView.getTitleInput(), bookView.getIsbnInput(),
 							bookView.getPriceInput(), bookView.getPublisherInput());
 
@@ -88,6 +93,7 @@ public class BookController implements ControllerInterface {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					bookView.clearMessage();
 					validateInputNotEmpty(bookView.getTitleInput());
 					String title = bookView.getTitleInput();
 					validateSearchOutputNotEmpty(bookDao, title);

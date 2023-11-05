@@ -43,6 +43,10 @@ public class PublisherView implements ViewInterface {
         }
     }
     @Override
+    public void clearMessage() {
+        outputMsg.setText("");
+    }
+    @Override
     public void showMessage(String message) {
         outputMsg.setText(message);
     }

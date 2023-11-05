@@ -87,12 +87,14 @@ public class AuthorDAO extends ConnectionDAO {
 			String firstQuery = "DELETE FROM BooksAuthors WHERE author_id = ?";
 			PreparedStatement firstStatement = dbconn.prepareStatement(firstQuery);
 			firstStatement.setInt(1, authorId);
+            //arrancar firstRes
 			int firstRes = firstStatement.executeUpdate();
             firstStatement.close();
 
             String secondQuery = "DELETE FROM Books WHERE isbn NOT IN (SELECT isbn FROM BooksAuthors)";
 			PreparedStatement secondStatement = dbconn.prepareStatement(secondQuery);
 			// secondStatement.setInt(1, authorId);
+            //arrancar secondRes
 			int secondRes = secondStatement.executeUpdate();
             secondStatement.close();
 
@@ -104,15 +106,13 @@ public class AuthorDAO extends ConnectionDAO {
 
             dbconn.commit();
 
-			return (firstRes > 0) && (secondRes > 0) && (thirdRes > 0);
+			return (thirdRes > 0);
 		}catch(SQLIntegrityConstraintViolationException e) {
 			System.out.println("Nao foi possivel apagar: " + e.getMessage());
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 		return false;
-		
 	}
 }
