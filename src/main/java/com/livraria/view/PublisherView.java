@@ -112,6 +112,7 @@ public class PublisherView implements ViewInterface {
 
         // Mensagem de output após ação do usuário
         constraints.gridy = 2;
+        constraints.gridwidth = 3;
         panel.add(outputMsg, constraints);
 
         dialog.setVisible(true);

@@ -9,16 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.livraria.model.Books;
-import com.livraria.model.Authors;
 
 public class BookDAO extends ConnectionDAO {
 
 public List<Books> searchBooksTitle(String name) {
-		
 		List<Books> searchBookList = new ArrayList<>();
-		
 		try(Connection dbconn = DriverManager.getConnection(URL, USER, PASS)){
-			
 			String query = ""
 					+ "SELECT * FROM books "
 					+ "WHERE LOWER(title) "
@@ -39,10 +35,8 @@ public List<Books> searchBooksTitle(String name) {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("DEU CERTO, MEU BOM!"); // DE TESTE
         System.out.println(searchBookList.get(0));
 		return searchBookList;
-		
 	}
 
 	public boolean addBooks(Books book, ArrayList<String> authorsName, ArrayList<String> authorsFName)
@@ -76,7 +70,6 @@ public List<Books> searchBooksTitle(String name) {
 					secondStatement.executeUpdate();
 				}
 			}
-
 			System.out.println("resultado: " + res);
 			return res > 0;
 		}catch(SQLIntegrityConstraintViolationException e) {
@@ -86,14 +79,10 @@ public List<Books> searchBooksTitle(String name) {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 		return false;
 	}
 
 	public boolean deleteBooksAuthors(String isbn) throws SQLIntegrityConstraintViolationException {
-		
-		Books bookauhtor = null;
-		
 		try(Connection dbconn = DriverManager.getConnection(URL, USER, PASS)){
 			
 			String query = "DELETE FROM BooksAuthors WHERE isbn = ?";
@@ -110,9 +99,7 @@ public List<Books> searchBooksTitle(String name) {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 		return false;
-		
 	}
 
 	public boolean deleteBooks(String isbn) throws SQLIntegrityConstraintViolationException {
