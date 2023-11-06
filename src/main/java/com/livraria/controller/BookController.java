@@ -1,6 +1,8 @@
 package com.livraria.controller;
 
+import com.livraria.dao.AuthorDAO;
 import com.livraria.dao.BookDAO;
+import com.livraria.model.Authors;
 import com.livraria.model.Books;
 import com.livraria.view.BookView;
 import javax.swing.*;
@@ -8,18 +10,22 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookController implements ControllerInterface {
     BookDAO bookDao;
 	BookView bookView;
+	AuthorDAO authorDao;
 
-	public BookController(BookDAO bookDao, BookView bookView) {
+	public BookController(BookDAO bookDao, BookView bookView, AuthorDAO authorDao) {
 		this.bookDao = bookDao;
 		this.bookView = bookView;
+		this.authorDao = authorDao;
 	}
 
 	public void startController() {
+		instanciateAuthorsList(authorDao);
 		// Listener para o botão de adicionar livros
 		bookView.addActionListener(new ActionListener() {
 			@Override
@@ -35,7 +41,18 @@ public class BookController implements ControllerInterface {
 					int publisherId = Integer.parseInt(bookView.getPublisherInput());
 					double price = Double.parseDouble(bookView.getPriceInput());
 					Books book = new Books(title, isbn, publisherId, price);
-					boolean res = bookDao.addBooks(book);
+					int[] selectedRows = bookView.getAuthorsTable().getSelectedRows();
+					ArrayList<String> selectedAuthorsName = new ArrayList<>();
+					ArrayList<String> selectedAuthorsSecondName = new ArrayList<>();
+					for(int i : selectedRows) {
+						String selectedAuthorName = bookView.getAuthorsTable().getValueAt(i, 0).toString();
+						String selectedAuthorSecondName = bookView.getAuthorsTable()
+								.getValueAt(i, 1).toString();
+						selectedAuthorsName.add(selectedAuthorName);
+						selectedAuthorsSecondName.add(selectedAuthorSecondName);
+						System.out.println(selectedAuthorName);
+					}
+					boolean res = bookDao.addBooks(book, selectedAuthorsName, selectedAuthorsSecondName);
 					if (res) {
 						bookView.showMessage("Livro adicionado com sucesso");
 					} else {
@@ -88,7 +105,7 @@ public class BookController implements ControllerInterface {
 				}
 			}
 		});
-		// listener para o botão de pesquisar livros
+		// Listener para o botão de pesquisar livros
 		bookView.searchActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -114,6 +131,24 @@ public class BookController implements ControllerInterface {
 			}
 		});
 	}
+	// Método que puxa os autores para inserir na respectiva lista na view de adicionar livros
+	private void instanciateAuthorsList(AuthorDAO authorDao) {
+		// Cria um DefaultListModel para armazenar os autores
+		DefaultListModel<String> authorsListModel = new DefaultListModel<>();
+		List<Authors> authors = authorDao.searchAuthors("%", "%");
+		// Define as colunas da tabela
+		String[] columnNames = {"Nome", "Sobrenome"};
+		DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+		// guarda as instâncias de autores em listModel e adiciona as instâncias na tabela
+		for (Authors i : authors) {
+			authorsListModel.addElement(i.getName() + " " + i.getFName());
+			model.addRow(new Object[]{i.getName(), i.getFName()});
+		}
+		bookView.setTableModel(model);
+		JList<String> authorsJList = new JList<String>(authorsListModel);
+		bookView.setAuthorsList(authorsJList, model);
+	}
+
 	// Validações
 	// Verifica se algum elemento foi encontrado na busca
 	private void validateSearchOutputNotEmpty(BookDAO bookDao, String title) throws ValidationException {

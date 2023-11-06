@@ -90,7 +90,7 @@ public class AuthorController implements ControllerInterface {
                     String name = authorView.getNameInput();
                     String fName = authorView.getFNameInput();
                     validateSearchOutputNotEmpty(authorDao, name, fName);
-                    List<Authors> searchAuthorsList = authorDao.searchAuthorsTitle(name, fName);
+                    List<Authors> searchAuthorsList = authorDao.searchAuthors(name, fName);
                     DefaultListModel listModel = new DefaultListModel();
                     String[] columnNames = {"Nome", "Sobrenome"};
                     DefaultTableModel model = new DefaultTableModel(columnNames, 0);
@@ -111,7 +111,7 @@ public class AuthorController implements ControllerInterface {
     // Verifica se algum elemento foi encontrado na busca
     private void validateSearchOutputNotEmpty(AuthorDAO authorDao, String name, String fName) throws ValidationException {
         try {
-            authorDao.searchAuthorsTitle(name, fName);
+            authorDao.searchAuthors(name, fName);
         } catch (IndexOutOfBoundsException ve) {
             authorView.showMessage("Nenhum autor encontrado");
             throw new ValidationException("Nenhum autor encontrado");

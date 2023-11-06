@@ -68,8 +68,10 @@ public class AuthorView implements ViewInterface {
         // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
+        constraints.gridwidth = 3;
         panel.add(new JLabel("Adicionar Autor"), constraints);
         constraints.gridy = 1;
+        constraints.gridwidth = 1;
         panel.add(new JLabel("Primeiro nome"), constraints);
         panel.add(firstNameTextField, constraints);
         constraints.gridy = 2;
@@ -78,6 +80,7 @@ public class AuthorView implements ViewInterface {
 
         //mensagem de output após ação do usuário
         this.constraints.gridy = 3;
+        constraints.gridwidth = 3;
         panel.add(outputMsg, this.constraints);
 
         constraints.gridy = 4;
@@ -92,7 +95,7 @@ public class AuthorView implements ViewInterface {
         clearDialog(dialog);
         // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
-        dialog.setSize(450, 200);
+        dialog.setSize(550, 200);
         panel = new JPanel(new GridBagLayout());
         constraints = new GridBagConstraints();
         authorIdField = new JTextField(20);
@@ -101,13 +104,16 @@ public class AuthorView implements ViewInterface {
         // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
+        constraints.gridwidth = 3;
         panel.add(new JLabel("Excluir Autor"), constraints);
         constraints.gridy = 1;
+        constraints.gridwidth = 1;
+        panel.add(new JLabel("ID"), constraints);
         panel.add(authorIdField, constraints);
         panel.add(delAuthorBtn, constraints);
 
         //mensagem de output após ação do usuário
-        this.constraints.gridy = 2;
+        constraints.gridy = 2;
         panel.add(outputMsg, this.constraints);
 
         dialog.setVisible(true);
@@ -138,7 +144,7 @@ public class AuthorView implements ViewInterface {
         panel.add(secondNameTextField, constraints);
 
         //mensagem de output após ação do usuário
-        this.constraints.gridy = 3;
+        constraints.gridy = 3;
         panel.add(outputMsg, this.constraints);
 
         constraints.gridy = 4;
@@ -162,8 +168,10 @@ public class AuthorView implements ViewInterface {
         // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
+        constraints.gridwidth = 3;
         panel.add(new JLabel("Pesquisar Autor"), constraints);
         constraints.gridy = 1;
+        constraints.gridwidth = 1;
         panel.add(new JLabel("Primeiro nome"), constraints);
         panel.add(firstNameTextField, constraints);
         constraints.gridy = 2;
@@ -172,6 +180,7 @@ public class AuthorView implements ViewInterface {
 
         //mensagem de output após ação do usuário
         constraints.gridy = 3;
+        constraints.gridwidth = 3;
         panel.add(outputMsg, constraints);
 
         constraints.gridy = 4;

@@ -9,10 +9,15 @@ public class Authors {
         this.name = name;
         this.fName = fName;
     }
+    public Authors(int authorId, String name, String fName) {
+        this.authorId = authorId;
+        this.name = name;
+        this.fName = fName;
+    }
 
     // Getters
     public int getAuthorId() {
-        return authorId;
+        return this.authorId;
     }
 
     public String getName() {
@@ -32,7 +37,7 @@ public class Authors {
         this.name = name;
     }
 
-    public void getFName(String fName) {
+    public void setFName(String fName) {
         this.fName = fName;
     }
 }

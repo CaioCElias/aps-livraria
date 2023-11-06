@@ -10,11 +10,10 @@ import java.util.List;
 import java.sql.Statement;
 
 import com.livraria.model.Authors;
-import com.livraria.model.Books;
 
 public class AuthorDAO extends ConnectionDAO {
     
-        public List<Authors> searchAuthorsTitle(String name, String fName) {
+        public List<Authors> searchAuthors(String name, String fName) {
 
         List<Authors> searchAuthorList = new ArrayList<>();
 
@@ -78,9 +77,6 @@ public class AuthorDAO extends ConnectionDAO {
     }
 
     public boolean deleteAuthorsAndBooks(int authorId) throws SQLIntegrityConstraintViolationException {
-		
-		Authors author = null;
-		
 		try(Connection dbconn = DriverManager.getConnection(URL, USER, PASS)){
             dbconn.setAutoCommit(false);
 			

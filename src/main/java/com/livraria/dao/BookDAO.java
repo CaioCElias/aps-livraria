@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.livraria.model.Books;
+import com.livraria.model.Authors;
 
 public class BookDAO extends ConnectionDAO {
 
@@ -44,7 +45,8 @@ public List<Books> searchBooksTitle(String name) {
 		
 	}
 
-	public boolean addBooks(Books book) throws SQLIntegrityConstraintViolationException {
+	public boolean addBooks(Books book, ArrayList<String> authorsName, ArrayList<String> authorsFName)
+			throws SQLIntegrityConstraintViolationException {
 		try(Connection dbconn = DriverManager.getConnection(URL, USER, PASS)){
 			String query = "INSERT INTO Books(title, isbn, publisher_id, price) VALUES (?, ?, ?, ?)";
 			PreparedStatement statement = dbconn.prepareStatement(query);
@@ -55,6 +57,26 @@ public List<Books> searchBooksTitle(String name) {
 			statement.setDouble(4, book.getPrice());
 			
 			int res = statement.executeUpdate();
+
+			for(int i = 0; i < authorsName.size(); i++) {
+				String searchQuery = "SELECT * FROM authors WHERE name = ? AND fname = ?";
+				PreparedStatement searchStatement = dbconn.prepareStatement(searchQuery);
+				searchStatement.setString(1, authorsName.get(i));
+				searchStatement.setString(2, authorsFName.get(i));
+				ResultSet rs = searchStatement.executeQuery();
+				while(rs.next()) {
+					String authorID = rs.getString("author_id");
+					String secondQuery = "INSERT INTO booksauthors(isbn, author_id, seq_no) VALUES (?, ?, ?)";
+					PreparedStatement secondStatement = dbconn.prepareStatement(secondQuery);
+
+					secondStatement.setString(1, book.getIsbn());
+					secondStatement.setString(2, authorID);
+					secondStatement.setInt(3, book.getPublisherId());
+
+					secondStatement.executeUpdate();
+				}
+			}
+
 			System.out.println("resultado: " + res);
 			return res > 0;
 		}catch(SQLIntegrityConstraintViolationException e) {
@@ -94,9 +116,6 @@ public List<Books> searchBooksTitle(String name) {
 	}
 
 	public boolean deleteBooks(String isbn) throws SQLIntegrityConstraintViolationException {
-		
-		Books book = null;
-		
 		try(Connection dbconn = DriverManager.getConnection(URL, USER, PASS)){
 			
 			String query = "DELETE FROM Books WHERE isbn = ?";

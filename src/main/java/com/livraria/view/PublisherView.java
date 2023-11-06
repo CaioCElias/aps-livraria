@@ -67,8 +67,10 @@ public class PublisherView implements ViewInterface {
         // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
+        constraints.gridwidth = 3;
         panel.add(new JLabel("Adicionar Editora"), constraints);
         constraints.gridy = 1;
+        constraints.gridwidth = 1;
         panel.add(new JLabel("Nome"), constraints);
         panel.add(nameTextField, constraints);
         constraints.gridy = 2;
@@ -77,6 +79,7 @@ public class PublisherView implements ViewInterface {
 
         //mensagem de output após ação do usuário
         constraints.gridy = 3;
+        constraints.gridwidth = 3;
         panel.add(outputMsg, constraints);
 
         constraints.gridy = 4;
@@ -90,7 +93,7 @@ public class PublisherView implements ViewInterface {
         clearDialog(dialog);
         // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
-        dialog.setSize(450, 200);
+        dialog.setSize(550, 200);
         panel = new JPanel(new GridBagLayout());
         constraints = new GridBagConstraints();
         idTextField = new JTextField(20);
@@ -99,8 +102,11 @@ public class PublisherView implements ViewInterface {
         // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
+        constraints.gridwidth = 3;
         panel.add(new JLabel("Excluir Editora"), constraints);
         constraints.gridy = 1;
+        constraints.gridwidth = 1;
+        panel.add(new JLabel("ID"), constraints);
         panel.add(idTextField, constraints);
         panel.add(delPublisherBtn, constraints);
 
@@ -159,13 +165,16 @@ public class PublisherView implements ViewInterface {
         // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
+        constraints.gridwidth = 3;
         panel.add(new JLabel("Pesquisar Editora"), constraints);
         constraints.gridy = 1;
+        constraints.gridwidth = 1;
         panel.add(new JLabel("Nome"), constraints);
         panel.add(nameTextField, constraints);
 
         //mensagem de output após ação do usuário
         constraints.gridy = 2;
+        constraints.gridwidth = 3;
         panel.add(outputMsg, constraints);
 
         constraints.gridy = 3;
