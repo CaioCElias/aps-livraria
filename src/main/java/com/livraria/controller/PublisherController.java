@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
-public class PublisherController {
+public class PublisherController implements ControllerInterface {
     PublisherDAO publisherDao;
     PublisherView publisherView;
 
@@ -20,12 +20,13 @@ public class PublisherController {
         this.publisherView = publisherView;
     }
 
-    public void startPublisherController() {
+    public void startController() {
         // Listener para o botão de adicionar editoras
         publisherView.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    publisherView.clearMessage();
                     validateInputNotEmpty(publisherView.getNameInput(), publisherView.getUrlInput());
                     String name = publisherView.getNameInput();
                     String url = publisherView.getUrlInput();
@@ -49,13 +50,21 @@ public class PublisherController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                validateInputNotEmpty(publisherView.getIdInput());
-                validateParseInt(publisherView.getIdInput());
+                    publisherView.clearMessage();
+                    validateInputNotEmpty(publisherView.getIdInput());
+                    validateParseInt(publisherView.getIdInput());
                     int publisherId = Integer.parseInt(publisherView.getIdInput());
-                    publisherDao.deletePublisherAndBooks(publisherId);
-                    System.out.println("Botão funcionando");
+                    boolean res = publisherDao.deletePublisherAndBooks(publisherId);
+                    if(res) {
+                        publisherView.showMessage("Editora excluída com sucesso");
+                        System.out.println("Editora excluída com sucesso");
+                    } else {
+                        publisherView.showMessage("Não foi possível excluir a editora");
+                        System.out.println("Não foi possível excluir a editora");
+                    }
                 } catch (SQLIntegrityConstraintViolationException e1) {
-                    e1.printStackTrace();
+                    publisherView.showMessage("As informações inseridas estão incorretas");
+                    System.out.println("As informações inseridas estão incorretas");
                 } catch (ValidationException ve) {
                     System.out.println("Erro de validação: " + ve.getMessage());
                 }
@@ -65,6 +74,7 @@ public class PublisherController {
         publisherView.modifyActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                publisherView.clearMessage();
                 System.out.println("Botão funcionando");
             }
         });
@@ -73,6 +83,7 @@ public class PublisherController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    publisherView.clearMessage();
                     validateInputNotEmpty(publisherView.getNameInput());
                     String name = publisherView.getNameInput();
                     validateSearchOutputNotEmpty(publisherDao, name);
@@ -99,11 +110,12 @@ public class PublisherController {
         try {
             publisherDao.searchPublishersTitle(name);
         } catch (IndexOutOfBoundsException ve) {
+            publisherView.showMessage("Nenhuma editora encontrada");
             throw new ValidationException("Nenhuma editora encontrada");
         }
     }
     // Verifica se o input não possui campos vazios
-    private void validateInputNotEmpty(String... inputs) throws ValidationException {
+    public void validateInputNotEmpty(String... inputs) throws ValidationException {
         for(int i = 0; i < inputs.length; i++) {
             if(inputs[i].equals("")) {
                 publisherView.showMessage("Preencha todos os campos");
@@ -116,6 +128,7 @@ public class PublisherController {
         try {
             Integer.parseInt(num);
         } catch (NumberFormatException ve) {
+            publisherView.showMessage("Id inválido");
             throw new ValidationException("Número inválido");
         }
     }

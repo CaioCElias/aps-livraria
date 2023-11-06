@@ -77,12 +77,14 @@ public class PublisherDAO extends ConnectionDAO {
             String deleteBooksAuthorsQuery = "DELETE FROM BooksAuthors WHERE isbn IN (SELECT isbn FROM Books WHERE publisher_id = ?)";
             PreparedStatement booksAuthorsStatement = dbconn.prepareStatement(deleteBooksAuthorsQuery);
             booksAuthorsStatement.setInt(1, publisherId);
+            //arrancar booksAuthorsDeleted
             int booksAuthorsDeleted = booksAuthorsStatement.executeUpdate();
             booksAuthorsStatement.close();
     
             String deleteBooksQuery = "DELETE FROM Books WHERE publisher_id = ?";
             PreparedStatement booksStatement = dbconn.prepareStatement(deleteBooksQuery);
             booksStatement.setInt(1, publisherId);
+            //arrancar booksDeleted
             int booksDeleted = booksStatement.executeUpdate();
             booksStatement.close();
     
@@ -96,7 +98,7 @@ public class PublisherDAO extends ConnectionDAO {
             dbconn.commit();
     
             // Se todos os passos forem bem-sucedidos, retorne true
-            return (booksAuthorsDeleted > 0) && (booksDeleted > 0) && (publisherDeleted > 0);
+            return (publisherDeleted > 0);
         } catch (SQLException e) {
             System.out.println("Não foi possível apagar: " + e.getMessage());
         }

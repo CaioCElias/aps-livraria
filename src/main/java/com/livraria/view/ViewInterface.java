@@ -5,6 +5,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 
 public interface ViewInterface {
+
+    // Popups do CRUD
     void addPopup();
     void deletePopup();
     void modifyPopup();
@@ -12,6 +14,7 @@ public interface ViewInterface {
 
     void clearDialog(JDialog dialog);
     void clearSearchPane();
+    void clearMessage();
     void showSearchResult(DefaultTableModel model);
     void showMessage(String message);
 

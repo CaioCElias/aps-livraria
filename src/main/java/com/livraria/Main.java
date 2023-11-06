@@ -20,7 +20,7 @@ public class Main {
     static PublisherView publisherView = new PublisherView();
     //controllers
     static MainController controller = new MainController(view, bookView, authorView, publisherView);
-    static BookController bookController = new BookController(bookDAO, bookView);
+    static BookController bookController = new BookController(bookDAO, bookView, authorDao);
     static AuthorController authorController = new AuthorController(authorDao, authorView);
     static PublisherController publisherController = new PublisherController(publisherDao, publisherView);
 
@@ -29,7 +29,7 @@ public class Main {
         controller.startMainController();
         bookController.startController();
         authorController.startController();
-        publisherController.startPublisherController();
+        publisherController.startController();
         dao.openDatabase();
         //dao.closeDatabase();
     }

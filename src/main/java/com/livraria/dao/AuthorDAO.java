@@ -10,11 +10,10 @@ import java.util.List;
 import java.sql.Statement;
 
 import com.livraria.model.Authors;
-import com.livraria.model.Books;
 
 public class AuthorDAO extends ConnectionDAO {
     
-        public List<Authors> searchAuthorsTitle(String name, String fName) {
+        public List<Authors> searchAuthors(String name, String fName) {
 
         List<Authors> searchAuthorList = new ArrayList<>();
 
@@ -78,21 +77,20 @@ public class AuthorDAO extends ConnectionDAO {
     }
 
     public boolean deleteAuthorsAndBooks(int authorId) throws SQLIntegrityConstraintViolationException {
-		
-		Authors author = null;
-		
 		try(Connection dbconn = DriverManager.getConnection(URL, USER, PASS)){
             dbconn.setAutoCommit(false);
 			
 			String firstQuery = "DELETE FROM BooksAuthors WHERE author_id = ?";
 			PreparedStatement firstStatement = dbconn.prepareStatement(firstQuery);
 			firstStatement.setInt(1, authorId);
+            //arrancar firstRes
 			int firstRes = firstStatement.executeUpdate();
             firstStatement.close();
 
             String secondQuery = "DELETE FROM Books WHERE isbn NOT IN (SELECT isbn FROM BooksAuthors)";
 			PreparedStatement secondStatement = dbconn.prepareStatement(secondQuery);
 			// secondStatement.setInt(1, authorId);
+            //arrancar secondRes
 			int secondRes = secondStatement.executeUpdate();
             secondStatement.close();
 
@@ -104,15 +102,13 @@ public class AuthorDAO extends ConnectionDAO {
 
             dbconn.commit();
 
-			return (firstRes > 0) && (secondRes > 0) && (thirdRes > 0);
+			return (thirdRes > 0);
 		}catch(SQLIntegrityConstraintViolationException e) {
 			System.out.println("Nao foi possivel apagar: " + e.getMessage());
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 		return false;
-		
 	}
 }

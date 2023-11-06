@@ -28,11 +28,11 @@ public class AuthorView implements ViewInterface {
         modifyAuthorBtn = new JButton("Modificar");
         searchAuthorBtn = new JButton("Pesquisar");
     }
-
+    @Override
     public void clearDialog(JDialog dialog) {
         dialog.getContentPane().removeAll();
     }
-
+    @Override
     public void clearSearchPane() {
         Component[] components = panel.getComponents();
         for (Component component : components) {
@@ -42,18 +42,23 @@ public class AuthorView implements ViewInterface {
             }
         }
     }
-
+    @Override
+    public void clearMessage() {
+        outputMsg.setText("");
+    }
+    @Override
     public void showMessage(String message) {
         outputMsg.setText(message);
     }
-
+    //Popup de inclusão de autor
+    @Override
     public void addPopup() {
         // Limpa a view
         showMessage("");
         clearDialog(dialog);
         // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
-        dialog.setSize(450, 300);
+        dialog.setSize(500, 300);
         panel = new JPanel(new GridBagLayout());
         constraints = new GridBagConstraints();
         firstNameTextField = new JTextField(20);
@@ -63,8 +68,10 @@ public class AuthorView implements ViewInterface {
         // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
+        constraints.gridwidth = 3;
         panel.add(new JLabel("Adicionar Autor"), constraints);
         constraints.gridy = 1;
+        constraints.gridwidth = 1;
         panel.add(new JLabel("Primeiro nome"), constraints);
         panel.add(firstNameTextField, constraints);
         constraints.gridy = 2;
@@ -73,21 +80,22 @@ public class AuthorView implements ViewInterface {
 
         //mensagem de output após ação do usuário
         this.constraints.gridy = 3;
+        constraints.gridwidth = 3;
         panel.add(outputMsg, this.constraints);
 
         constraints.gridy = 4;
         panel.add(addAuthorBtn, constraints);
         dialog.setVisible(true);
     }
-
     //Popup de exclusão de autor
+    @Override
     public void deletePopup() {
         // Limpa a view
         showMessage("");
         clearDialog(dialog);
         // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
-        dialog.setSize(450, 200);
+        dialog.setSize(550, 200);
         panel = new JPanel(new GridBagLayout());
         constraints = new GridBagConstraints();
         authorIdField = new JTextField(20);
@@ -96,18 +104,21 @@ public class AuthorView implements ViewInterface {
         // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
+        constraints.gridwidth = 3;
         panel.add(new JLabel("Excluir Autor"), constraints);
         constraints.gridy = 1;
+        constraints.gridwidth = 1;
+        panel.add(new JLabel("ID"), constraints);
         panel.add(authorIdField, constraints);
         panel.add(delAuthorBtn, constraints);
 
         //mensagem de output após ação do usuário
-        this.constraints.gridy = 2;
+        constraints.gridy = 2;
         panel.add(outputMsg, this.constraints);
 
         dialog.setVisible(true);
     }
-
+    @Override
     public void modifyPopup() {
         // Limpa a view
         showMessage("");
@@ -133,13 +144,14 @@ public class AuthorView implements ViewInterface {
         panel.add(secondNameTextField, constraints);
 
         //mensagem de output após ação do usuário
-        this.constraints.gridy = 3;
+        constraints.gridy = 3;
         panel.add(outputMsg, this.constraints);
 
         constraints.gridy = 4;
         panel.add(addAuthorBtn, constraints);
         dialog.setVisible(true);
     }
+    @Override
     public void searchPopup() {
         // Limpa a view
         showMessage("");
@@ -156,8 +168,10 @@ public class AuthorView implements ViewInterface {
         // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
+        constraints.gridwidth = 3;
         panel.add(new JLabel("Pesquisar Autor"), constraints);
         constraints.gridy = 1;
+        constraints.gridwidth = 1;
         panel.add(new JLabel("Primeiro nome"), constraints);
         panel.add(firstNameTextField, constraints);
         constraints.gridy = 2;
@@ -166,15 +180,17 @@ public class AuthorView implements ViewInterface {
 
         //mensagem de output após ação do usuário
         constraints.gridy = 3;
+        constraints.gridwidth = 3;
         panel.add(outputMsg, constraints);
 
         constraints.gridy = 4;
         panel.add(searchAuthorBtn, constraints);
         dialog.setVisible(true);
     }
-
+    @Override
     public void showSearchResult(DefaultTableModel model) {
-        // Remove a tabela para que outra seja inserida no lugar
+        // Limpa a view
+        showMessage("");
         clearSearchPane();
         // Redimensiona a janela
         dialog.setSize(1100, 350);
@@ -209,15 +225,19 @@ public class AuthorView implements ViewInterface {
     }
 
     // Listeners dos botões
+    @Override
     public void addActionListener(ActionListener l) {
         addAuthorBtn.addActionListener(l);
     }
+    @Override
     public void delActionListener(ActionListener l) {
         delAuthorBtn.addActionListener(l);
     }
+    @Override
     public void modifyActionListener(ActionListener l) {
         modifyAuthorBtn.addActionListener(l);
     }
+    @Override
     public void searchActionListener(ActionListener l) {
         searchAuthorBtn.addActionListener(l);
     }

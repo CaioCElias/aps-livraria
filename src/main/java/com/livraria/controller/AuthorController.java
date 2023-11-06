@@ -12,7 +12,7 @@ import com.livraria.model.Authors;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class AuthorController {
+public class AuthorController implements ControllerInterface {
     AuthorDAO authorDao;
     AuthorView authorView;
 
@@ -27,14 +27,21 @@ public class AuthorController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    authorView.clearMessage();
                     validateInputNotEmpty(authorView.getNameInput(), authorView.getFNameInput());
                     String name = authorView.getNameInput();
                     String fName = authorView.getFNameInput();
                     Authors author = new Authors(name, fName);
-                    authorDao.addAuthors(author);
-                    System.out.println("Botão funcionando");
+                    boolean res = authorDao.addAuthors(author);
+                    if(res) {
+                        authorView.showMessage("Autor adicionado com sucesso");
+                        System.out.println("Autor adicionado com sucesso");
+                    } else {
+
+                    }
                 } catch (SQLIntegrityConstraintViolationException ex) {
-                    ex.printStackTrace();
+                    authorView.showMessage("As informações inseridas estão incorretas");
+                    System.out.println("As informações inseridas estão incorretas");
                 } catch (ValidationException ve) {
                     System.out.println("Erro de validação: " + ve.getMessage());
                 }
@@ -46,15 +53,21 @@ public class AuthorController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    authorView.clearMessage();
                     validateInputNotEmpty(authorView.getIdInput());
                     validateParseInt(authorView.getIdInput());
                     int authorId = Integer.parseInt(authorView.getIdInput());
-
-                    try {
-                        authorDao.deleteAuthorsAndBooks(authorId);
-                    } catch (SQLIntegrityConstraintViolationException e1) {
-                        e1.printStackTrace();
+                    boolean res = authorDao.deleteAuthorsAndBooks(authorId);
+                    if(res) {
+                        authorView.showMessage("Autor excluído com sucesso");
+                        System.out.println("Autor excluído com sucesso");
+                    } else {
+                        authorView.showMessage("Não foi possível excluir o autor");
+                        System.out.println("Não foi possível excluir o autor");
                     }
+                } catch (SQLIntegrityConstraintViolationException e1) {
+                    authorView.showMessage("Não foi possível excluir o autor");
+                    System.out.println("Não foi possível excluir o autor");
                 } catch (ValidationException ve) {
                     System.out.println("Erro de validação: " + ve.getMessage());
                 }
@@ -72,11 +85,12 @@ public class AuthorController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    authorView.clearMessage();
                     validateInputNotEmpty(authorView.getNameInput(), authorView.getFNameInput());
                     String name = authorView.getNameInput();
                     String fName = authorView.getFNameInput();
                     validateSearchOutputNotEmpty(authorDao, name, fName);
-                    List<Authors> searchAuthorsList = authorDao.searchAuthorsTitle(name, fName);
+                    List<Authors> searchAuthorsList = authorDao.searchAuthors(name, fName);
                     DefaultListModel listModel = new DefaultListModel();
                     String[] columnNames = {"Nome", "Sobrenome"};
                     DefaultTableModel model = new DefaultTableModel(columnNames, 0);
@@ -97,8 +111,9 @@ public class AuthorController {
     // Verifica se algum elemento foi encontrado na busca
     private void validateSearchOutputNotEmpty(AuthorDAO authorDao, String name, String fName) throws ValidationException {
         try {
-            authorDao.searchAuthorsTitle(name, fName);
+            authorDao.searchAuthors(name, fName);
         } catch (IndexOutOfBoundsException ve) {
+            authorView.showMessage("Nenhum autor encontrado");
             throw new ValidationException("Nenhum autor encontrado");
         }
     }
@@ -116,6 +131,7 @@ public class AuthorController {
         try {
             Integer.parseInt(num);
         } catch (NumberFormatException ve) {
+            authorView.showMessage("Número inválido");
             throw new ValidationException("Número inválido");
         }
     }

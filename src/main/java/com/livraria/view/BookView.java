@@ -1,5 +1,7 @@
 package com.livraria.view;
 
+import com.livraria.model.Books;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -11,6 +13,10 @@ public class BookView implements ViewInterface {
     private final JDialog dialog = new JDialog();
     private JPanel panel;
     private GridBagConstraints constraints = new GridBagConstraints();
+
+    JList<String> authors;
+    DefaultTableModel authorsModel;
+    JTable authorsTable = new JTable(authorsModel);
 
     private JLabel outputMsg = new JLabel("");
     private JTextField titleTextField;
@@ -24,7 +30,6 @@ public class BookView implements ViewInterface {
     JButton searchBookBtn;
 
     // recebe os autores com seus respectivos nomes
-    String[] authors = {"Caio", "Gustavo"};
 
     public BookView() {
         addBookBtn = new JButton("Adicionar");
@@ -32,11 +37,11 @@ public class BookView implements ViewInterface {
         modifyBookBtn = new JButton("Modificar");
         searchBookBtn = new JButton("Pesquisar");
     }
-
+    @Override
     public void clearDialog(JDialog dialog) {
         dialog.getContentPane().removeAll();
     }
-
+    @Override
     public void clearSearchPane() {
         Component[] components = panel.getComponents();
         for (Component component : components) {
@@ -46,12 +51,16 @@ public class BookView implements ViewInterface {
             }
         }
     }
-
+    @Override
+    public void clearMessage() {
+        outputMsg.setText("");
+    }
+    @Override
     public void showMessage(String message) {
         outputMsg.setText(message);
     }
-
     // Popup de Inclusão de livro
+    @Override
     public void addPopup() {
         // Limpa a view
         showMessage("");
@@ -66,14 +75,25 @@ public class BookView implements ViewInterface {
         priceTextField = new JTextField(20);
         publisherTextField = new JTextField(20);
         // A lista de autores deve ser usada como input para a função JList
-        JComboBox bookAuthorsBox = new JComboBox(authors);
+        authorsTable = new JTable(authorsModel);
+        authorsTable.setPreferredSize(new Dimension(350, 150));
+        authorsTable.setFillsViewportHeight(true);
+        TableColumnModel columnModel = authorsTable.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(100);
+        columnModel.getColumn(0).setPreferredWidth(150);
+        System.out.println(authorsTable.getValueAt(0, 0));
+        JScrollPane scrollPane = new JScrollPane(authorsTable);
+        scrollPane.setName("Autores");
+        scrollPane.setPreferredSize(new Dimension(350, 150));
         int padding = 10;
         constraints.insets = new Insets(padding, padding, padding, padding);
         // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
+        constraints.gridwidth = 3;
         panel.add(new JLabel("Adicionar Livro"), constraints);
         constraints.gridy = 1;
+        constraints.gridwidth = 1;
         panel.add(new JLabel("Título"), constraints);
         panel.add(titleTextField, constraints);
         constraints.gridy = 2;
@@ -86,7 +106,8 @@ public class BookView implements ViewInterface {
         panel.add(new JLabel("Editora"), constraints);
         panel.add(publisherTextField, constraints);
         constraints.gridy = 5;
-        panel.add(bookAuthorsBox, constraints);
+        constraints.gridwidth = 3;
+        panel.add(scrollPane, constraints);
 
         //mensagem de output após ação do usuário
         constraints.gridy = 6;
@@ -96,15 +117,15 @@ public class BookView implements ViewInterface {
         panel.add(addBookBtn, constraints);
         dialog.setVisible(true);
     }
-
     // Popup de exclusão de livro
+    @Override
     public void deletePopup() {
         // Limpa a view
         showMessage("");
         clearDialog(dialog);
         // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
-        dialog.setSize(450, 200);
+        dialog.setSize(550, 200);
         panel = new JPanel(new GridBagLayout());
         constraints = new GridBagConstraints();
         isbnTextField = new JTextField(20);
@@ -115,6 +136,7 @@ public class BookView implements ViewInterface {
         constraints.gridy = 0;
         panel.add(new JLabel("Excluir Livro"), constraints);
         constraints.gridy = 1;
+        panel.add(new JLabel("ISBN"), constraints);
         panel.add(isbnTextField, constraints);
         panel.add(delBookBtn, constraints);
 
@@ -124,7 +146,7 @@ public class BookView implements ViewInterface {
 
         dialog.setVisible(true);
     }
-
+    @Override
     public void modifyPopup() {
         // Limpa a view
         showMessage("");
@@ -139,7 +161,7 @@ public class BookView implements ViewInterface {
         priceTextField = new JTextField(20);
         publisherTextField = new JTextField(20);
         // A lista de autores deve ser usada como input para a função JList
-        JComboBox bookAuthorsBox = new JComboBox(authors);
+        ScrollPane bookAuthorsBox = new ScrollPane();
         int padding = 10;
         constraints.insets = new Insets(padding, padding, padding, padding);
         // Adiciona os elementos ao painel da view
@@ -169,6 +191,7 @@ public class BookView implements ViewInterface {
         panel.add(addBookBtn, constraints);
         dialog.setVisible(true);
     }
+    @Override
     public void searchPopup() {
         // Limpa a view
         showMessage("");
@@ -184,20 +207,23 @@ public class BookView implements ViewInterface {
         // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
+        constraints.gridwidth = 3;
         panel.add(new JLabel("Pesquisar Livro"), constraints);
         constraints.gridy = 1;
+        constraints.gridwidth = 1;
         panel.add(new JLabel("Título"), constraints);
         panel.add(titleTextField, constraints);
 
         //mensagem de output após ação do usuário
         constraints.gridy = 2;
+        constraints.gridwidth = 3;
         panel.add(outputMsg, constraints);
 
         constraints.gridy = 3;
         panel.add(searchBookBtn, constraints);
         dialog.setVisible(true);
     }
-
+    @Override
     public void showSearchResult(DefaultTableModel model) {
         // Limpa a view
         showMessage("");
@@ -237,17 +263,33 @@ public class BookView implements ViewInterface {
     public String getPublisherInput() {
         return this.publisherTextField.getText();
     }
+    public JTable getAuthorsTable() {
+        return this.authorsTable;
+    }
+
+    public void setAuthorsList(JList authors, DefaultTableModel authorsModel) {
+        this.authors = authors;
+        this.authorsModel = authorsModel;
+    }
+
+    public void setTableModel(DefaultTableModel model) {
+        this.authorsModel = model;
+    }
 
     // Listeners dos botões
+    @Override
     public void addActionListener(ActionListener l) {
         addBookBtn.addActionListener(l);
     }
+    @Override
     public void delActionListener(ActionListener l) {
         delBookBtn.addActionListener(l);
     }
+    @Override
     public void modifyActionListener(ActionListener l) {
         modifyBookBtn.addActionListener(l);
     }
+    @Override
     public void searchActionListener(ActionListener l) {
         searchBookBtn.addActionListener(l);
     }
