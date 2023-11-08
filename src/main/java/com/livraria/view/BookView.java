@@ -67,7 +67,7 @@ public class BookView implements ViewInterface {
         clearDialog(dialog);
         // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
-        dialog.setSize(600, 450);
+        dialog.setSize(600, 500);
         panel = new JPanel(new GridBagLayout());
         constraints = new GridBagConstraints();
         titleTextField = new JTextField(20);
@@ -76,7 +76,6 @@ public class BookView implements ViewInterface {
         publisherTextField = new JTextField(20);
         // A lista de autores deve ser usada como input para a função JList
         authorsTable = new JTable(authorsModel);
-        authorsTable.setPreferredSize(new Dimension(350, 150));
         authorsTable.setFillsViewportHeight(true);
         TableColumnModel columnModel = authorsTable.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(100);
@@ -134,14 +133,17 @@ public class BookView implements ViewInterface {
         // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
+        constraints.gridwidth = 3;
         panel.add(new JLabel("Excluir Livro"), constraints);
         constraints.gridy = 1;
+        constraints.gridwidth = 1;
         panel.add(new JLabel("ISBN"), constraints);
         panel.add(isbnTextField, constraints);
         panel.add(delBookBtn, constraints);
 
         //mensagem de output após ação do usuário
         constraints.gridy = 2;
+        constraints.gridwidth = 3;
         panel.add(outputMsg, constraints);
 
         dialog.setVisible(true);
@@ -153,7 +155,7 @@ public class BookView implements ViewInterface {
         clearDialog(dialog);
         // Define as variáveis, tamanho e título da view
         dialog.setTitle("Livraria UNIP");
-        dialog.setSize(600, 400);
+        dialog.setSize(600, 500);
         panel = new JPanel(new GridBagLayout());
         constraints = new GridBagConstraints();
         titleTextField = new JTextField(20);
@@ -167,8 +169,10 @@ public class BookView implements ViewInterface {
         // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
+        constraints.gridwidth = 3;
         panel.add(new JLabel("Modificar Livro"), constraints);
         constraints.gridy = 1;
+        constraints.gridwidth = 1;
         panel.add(new JLabel("Título"), constraints);
         panel.add(titleTextField, constraints);
         constraints.gridy = 2;
@@ -185,6 +189,7 @@ public class BookView implements ViewInterface {
 
         //mensagem de output após ação do usuário
         constraints.gridy = 6;
+        constraints.gridwidth = 3;
         panel.add(outputMsg, constraints);
 
         constraints.gridy = 7;

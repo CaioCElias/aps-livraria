@@ -114,6 +114,7 @@ public class AuthorView implements ViewInterface {
 
         //mensagem de output após ação do usuário
         constraints.gridy = 2;
+        constraints.gridwidth = 3;
         panel.add(outputMsg, this.constraints);
 
         dialog.setVisible(true);
@@ -135,8 +136,10 @@ public class AuthorView implements ViewInterface {
         // Adiciona os elementos ao painel da view
         dialog.add(panel);
         constraints.gridy = 0;
+        constraints.gridwidth = 3;
         panel.add(new JLabel("Modificar Autor"), constraints);
         constraints.gridy = 1;
+        constraints.gridwidth = 1;
         panel.add(new JLabel("Primeiro nome"), constraints);
         panel.add(firstNameTextField, constraints);
         constraints.gridy = 2;
@@ -145,6 +148,7 @@ public class AuthorView implements ViewInterface {
 
         //mensagem de output após ação do usuário
         constraints.gridy = 3;
+        constraints.gridwidth = 3;
         panel.add(outputMsg, this.constraints);
 
         constraints.gridy = 4;
